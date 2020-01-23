@@ -2,7 +2,7 @@
 ### Authors
 * Simon Lim (tech lead) | 
 * Émilie Martin | @ emilie-martin
-* Daniela Venuta | 
+* Daniela Venuta | @ daniela-venuta
 * Minh-Tam Do |
 * Luc Nguyen |
 * Karin Kazarian |
