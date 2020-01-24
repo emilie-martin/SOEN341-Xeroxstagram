@@ -3,9 +3,12 @@
 * Simon Lim (tech lead) | 
 * Émilie Martin | @ emilie-martin
 * Daniela Venuta | @ daniela-venuta
-* Minh-Tam Do |
+* Minh-Tam Do | @ mint47
 * Luc Nguyen |
 * Karin Kazarian |
+
+### Description
+This is an application based on instagram built in partial fulfillement for SOEN341 at Concordia University.
 
 ### Technology Used
 #### React
@@ -27,3 +30,11 @@ Watch mode implies that when any part of the code is modified, the modified test
 Running the `npm build` command builds the app for production.
 It correctly bundles React in production mode and optimizes the build for the best performance.
 [Read more](https://facebook.github.io/create-react-app/docs/deployment)
+
+##### Spring Boot
+
+
+### Objectives
+
+
+### Core Features
