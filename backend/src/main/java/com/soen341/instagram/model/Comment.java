@@ -1,11 +1,10 @@
 package com.soen341.instagram.model;
 
-import com.sun.istack.NotNull;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity

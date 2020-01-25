@@ -1,9 +1,9 @@
 package com.soen341.instagram.model;
 
 import com.soen341.instagram.exception.SameAccountException;
-import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
