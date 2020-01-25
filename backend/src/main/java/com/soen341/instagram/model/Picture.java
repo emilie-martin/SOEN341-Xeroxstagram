@@ -2,14 +2,13 @@ package com.soen341.instagram.model;
 
 import com.sun.istack.NotNull;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class Picture {
     @Id
-    private String id; // to be discussed: file path or save picture in DB directly?
+    private long id; // to be discussed: file path or save picture in DB directly?
 
     // following fields need to be discussed
     private int numLikes;
@@ -19,11 +18,15 @@ public class Picture {
     @NotNull
     private Account accountId;
 
-    public String getId() {
+    @Temporal(TemporalType.DATE)
+    @NotNull
+    private Date created;
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

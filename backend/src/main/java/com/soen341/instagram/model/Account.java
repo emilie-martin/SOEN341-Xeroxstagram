@@ -29,6 +29,10 @@ public class Account {
     @NotNull
     private Date dateOfBirth;
 
+    @Temporal(TemporalType.DATE)
+    @NotNull
+    private Date created;
+
     // Following field can be moved to a new "Profile" class. To be discussed
     private String biography;
 
