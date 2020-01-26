@@ -1,4 +1,4 @@
-package com.soen341.instagram.exception;
+package com.soen341.instagram.exception.account;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

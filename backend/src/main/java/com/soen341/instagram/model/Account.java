@@ -1,12 +1,11 @@
 package com.soen341.instagram.model;
 
-import com.soen341.instagram.exception.SameAccountException;
+import com.soen341.instagram.exception.account.AlreadyFollowingException;
+import com.soen341.instagram.exception.account.SameAccountException;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 public class Account {
@@ -37,7 +36,7 @@ public class Account {
     private String biography;
 
     @ManyToMany
-    private List<Account> following;
+    private Set<Account> following;
 
     // Following fields are redundant but could be more efficient. To be discussed
     private int numFollowers;
@@ -46,9 +45,6 @@ public class Account {
 
     @OneToOne
     private Picture profilePicture;
-
-
-    // Getters and Setters
 
     public String getUsername() {
         return username;
@@ -106,18 +102,73 @@ public class Account {
         this.biography = biography;
     }
 
-    public List<Account> getFollowing() {
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public int getNumFollowers() {
+        return numFollowers;
+    }
+
+    public void setNumFollowers(int numFollowers) {
+        this.numFollowers = numFollowers;
+    }
+
+    public int getNumFollowing() {
+        return numFollowing;
+    }
+
+    public void setNumFollowing(int numFollowing) {
+        this.numFollowing = numFollowing;
+    }
+
+    public int getNumPosts() {
+        return numPosts;
+    }
+
+    public void setNumPosts(int numPosts) {
+        this.numPosts = numPosts;
+    }
+
+    public Picture getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(Picture profilePicture) {
+        this.profilePicture = profilePicture;
+    }
+
+    public Set<Account> getFollowing() {
         // Never return a null object
-        if (this.following == null) {
-            this.following = new ArrayList<>();
+        if (following == null) {
+            following = new HashSet<>();
         }
-        return this.following;
+        return following;
     }
 
     public void follow(Account otherAccount) {
-        if (this.username.equals(otherAccount.username)) {
+        if (this.equals(otherAccount)) {
             throw new SameAccountException("You cannot follow yourself.");
+        } else if (getFollowing().contains(otherAccount)) {
+            throw new AlreadyFollowingException("You are already following this user.");
         }
-        this.getFollowing().add(otherAccount);
+        getFollowing().add(otherAccount);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Account account = (Account) o;
+        return username.equals(account.username);
+    }
+
+    @Override
+    public int hashCode() {
+        return username.hashCode();
     }
 }
