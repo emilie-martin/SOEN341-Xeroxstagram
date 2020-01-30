@@ -31,8 +31,8 @@ This app uses the following technologies :
 
 #### React
 React is a JavaScript library that boasts component reusability and is greatly used for frontend purposes.
-For this project, React was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-[More about React](https://reactjs.org/)
+For this project, React was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).  
+[More about React](https://reactjs.org/)  
 [More about Create React App](https://facebook.github.io/create-react-app/docs/getting-started)
 
 ##### Start up this project
