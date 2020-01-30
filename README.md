@@ -28,7 +28,7 @@ This app uses the following technologies :
 * SQL
 * CI
 
-=============================================================================
+---
 
 #### React
 React is a JavaScript library that boasts component reusability and is greatly used for frontend purposes.
