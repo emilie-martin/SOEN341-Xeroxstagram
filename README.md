@@ -17,6 +17,7 @@ The app is a replication of the social media Instagram from which we will add on
 * Reacting (comment & likes)
 * Following other users
 * (other) tba
+
 [More about our core features](https://github.com/emilie-martin/SOEN341-InsertName/wiki/Program-Breakdown)
 
 ### Technology Used
