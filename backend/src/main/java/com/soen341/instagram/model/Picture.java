@@ -22,6 +22,9 @@ public class Picture {
     @NotNull
     private Date created;
 
+    @NotNull
+    private String filePath;
+
     private String caption;
 
     public long getId() {
@@ -70,5 +73,13 @@ public class Picture {
 
     public void setCaption(String caption) {
         this.caption = caption;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 }
