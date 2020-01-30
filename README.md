@@ -1,16 +1,34 @@
-# SOEN341-InsertName
+﻿# SOEN341-InsertName
 ### Authors
-* Simon Lim (tech lead) | 
-* Émilie Martin | @ emilie-martin
-* Daniela Venuta | @ daniela-venuta
-* Minh-Tam Do | @ mint47
-* Luc Nguyen |
-* Karin Kazarian |
+* Simon Lim (tech lead) | @nasaku898
+* Émilie Martin | @emilie-martin
+* Daniela Venuta | @daniela-venuta
+* Minh-Tam Do | @mint47
+* Luc Nguyen | @1999lucnguyen
+* Karin Kazarian | @Karin-kazarian
 
 ### Description
-This is an application based on instagram built in partial fulfillement for SOEN341 at Concordia University.
+This is a project partial fulfillement of the requirements for the course SOEN341 at Concordia University.
+### Objectives
+The app is a replication of the social media Instagram from which we will add on features.
+### Core Features
+* User Service (Login and account management)
+* Posting Pictures
+* Reacting (comment & likes)
+* Following other users
+* (other) tba
+[More about our core features](https://github.com/emilie-martin/SOEN341-InsertName/wiki/Program-Breakdown)
 
 ### Technology Used
+This app uses the following technologies :
+* React
+* Maven
+* Spring Boot
+* SQL
+* CI
+
+=============================================================================
+
 #### React
 React is a JavaScript library that boasts component reusability and is greatly used for frontend purposes.
 For this project, React was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -31,10 +49,4 @@ Running the `npm build` command builds the app for production.
 It correctly bundles React in production mode and optimizes the build for the best performance.
 [Read more](https://facebook.github.io/create-react-app/docs/deployment)
 
-##### Spring Boot
-
-
-### Objectives
-
-
-### Core Features
+##### Spring Boot (?)
