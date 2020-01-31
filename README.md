@@ -1,16 +1,19 @@
 ﻿# SOEN341-InsertName
 ### Authors
-* Simon Lim (tech lead) | @nasaku898
-* Émilie Martin | @emilie-martin
-* Daniela Venuta | @daniela-venuta
-* Minh-Tam Do | @mint47
-* Luc Nguyen | @1999lucnguyen
-* Karin Kazarian | @Karin-kazarian
+| Simon Lim (tech lead) | @nasaku898 |
+| Émilie Martin | @emilie-martin |
+| Daniela Venuta | @daniela-venuta |
+| Minh-Tam Do | @mint47 |
+| Luc Nguyen | @1999lucnguyen |
+| Karin Kazarian | @Karin-kazarian |
 
 ### Description
-This is a project partial fulfillement of the requirements for the course SOEN341 at Concordia University.
+This is a social media project based on the main features of instagram.
+The project was created for SOEN341 at Concordia University.
+
 ### Objectives
-The app is a replication of the social media Instagram from which we will add on features.
+The app is intended to implement the core features of Instagram, such that the user is able to post a picture, follow another user, and be allowed to comment under posted pictures.
+
 ### Core Features
 * User Service (Login and account management)
 * Posting Pictures
@@ -21,16 +24,19 @@ The app is a replication of the social media Instagram from which we will add on
 [More about our core features](https://github.com/emilie-martin/SOEN341-InsertName/wiki/Program-Breakdown)
 
 ### Technology Used
-This app uses the following technologies :
-* React
-* Maven
-* Spring Boot
-* SQL
-* CI
+* Front End
+** JS
+** React
+* Back End
+** Java
+** Maven
+** Spring Boot
+** MySQL
+** Travis CI
 
 ---
 
-#### React
+### React
 React is a JavaScript library that boasts component reusability and is greatly used for frontend purposes.
 For this project, React was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).  
 [More about React](https://reactjs.org/)  
@@ -50,4 +56,6 @@ Running the `npm build` command builds the app for production.
 It correctly bundles React in production mode and optimizes the build for the best performance.
 [Read more](https://facebook.github.io/create-react-app/docs/deployment)
 
-##### Spring Boot (?)
+#### Spring Boot
+Spring Boot is an open source Java-based framework used to create a micro Service.
+It is developed by Pivotal Team and is used to build stand-alone and production ready spring applications.
