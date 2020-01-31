@@ -1,11 +1,12 @@
 ﻿# SOEN341-InsertName
 ### Authors
-| Simon Lim (tech lead) | @nasaku898 |
-| Émilie Martin | @emilie-martin |
-| Daniela Venuta | @daniela-venuta |
-| Minh-Tam Do | @mint47 |
-| Luc Nguyen | @1999lucnguyen |
-| Karin Kazarian | @Karin-kazarian |
+Simon Lim (tech lead) | @nasaku898
+---|---
+Émilie Martin | @emilie-martin  
+Daniela Venuta | @daniela-venuta
+Minh-Tam Do | @mint47
+Luc Nguyen | @1999lucnguyen  
+Karin Kazarian | @Karin-kazarian  
 
 ### Description
 This is a social media project based on the main features of instagram.
@@ -15,7 +16,7 @@ The project was created for SOEN341 at Concordia University.
 The app is intended to implement the core features of Instagram, such that the user is able to post a picture, follow another user, and be allowed to comment under posted pictures.
 
 ### Core Features
-* User Service (Login and account management)
+* User Service (Registration, Login and account management)
 * Posting Pictures
 * Reacting (comment & likes)
 * Following other users
@@ -24,17 +25,17 @@ The app is intended to implement the core features of Instagram, such that the u
 [More about our core features](https://github.com/emilie-martin/SOEN341-InsertName/wiki/Program-Breakdown)
 
 ### Technology Used
-* Front End
-** JS
-** React
-* Back End
-** Java
-** Maven
-** Spring Boot
-** MySQL
-** Travis CI
+##### Front End
+* JS
+* React
+##### Back End
+* Java
+* Maven
+* Spring Boot
+* MySQL
+* Travis CI
 
----
+- - -
 
 ### React
 React is a JavaScript library that boasts component reusability and is greatly used for frontend purposes.
