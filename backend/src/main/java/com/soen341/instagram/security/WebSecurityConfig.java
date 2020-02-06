@@ -15,9 +15,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
+/*
+ * This class main purpose is to get the authentication manager bean. All HTTP
+ * request configuration should be done in
+ * com.soen341.instagram.security.ResourceServerConfig
+ */
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 {
-
+	// This class main purpose is to get the authentication manager bean. All HTTP
+	// request configuration should be done in
+	// com.soen341.instagram.security.ResourceServerConfig
 	@Autowired
 	@Qualifier("UserDetailsService")
 	private UserDetailsService userDetailsService;
@@ -25,17 +32,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 	@Autowired
 	public void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception
 	{
-		auth.userDetailsService(userDetailsService);
+		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 	}
 
 	@Override
 	public void configure(HttpSecurity http) throws Exception
 	{
-		http.authorizeRequests().antMatchers("oauth/token").permitAll().and().authorizeRequests().anyRequest()
-				.permitAll().and().httpBasic().and().csrf().disable();
-
-		// I'm letting all the request as permitAll for now. It will be easier to
-		// developp API. We can configure the authentication later
+		http.authorizeRequests().antMatchers("oauth/token").permitAll().and().csrf().disable();
 	}
 
 	@Bean

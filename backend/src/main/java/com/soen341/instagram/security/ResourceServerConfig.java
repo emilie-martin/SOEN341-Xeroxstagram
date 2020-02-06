@@ -21,6 +21,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter
 	{
 		http.headers().frameOptions().disable().and().authorizeRequests().antMatchers("/", "/register", "/login")
 				.permitAll();
+
+		// I'm letting all the request as permitAll for now. It will be easier to
+		// developp API. We can configure the authentication later
 	}
 
 }
