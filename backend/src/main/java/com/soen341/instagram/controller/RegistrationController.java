@@ -1,6 +1,6 @@
 package com.soen341.instagram.controller;
 
-import java.text.ParseException;
+import javax.validation.Valid;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.soen341.instagram.dto.AccountDTO;
-import com.soen341.instagram.exception.account.BadRequestException;
+import com.soen341.instagram.dto.CreateAccountRequestDTO;
 import com.soen341.instagram.model.Account;
 import com.soen341.instagram.service.impl.RegistrationService;
 
@@ -25,18 +24,11 @@ public class RegistrationController
 	@Autowired
 	private RegistrationService registrationService;
 
-	@PostMapping(value = "Account/register")
+	@PostMapping(value = "account/register")
 	@ResponseStatus(value = HttpStatus.CREATED)
-	public void createAccount(@RequestBody AccountDTO accountDTO)
+	public void createAccount(@RequestBody @Valid CreateAccountRequestDTO createAccountRequestDTO)
 	{
-		Account account = modelMapper.map(accountDTO, Account.class);
-		try
-		{
-			registrationService.createNewAccount(account);
-		}
-		catch (ParseException e)
-		{
-			throw new BadRequestException();
-		}
+		Account account = modelMapper.map(createAccountRequestDTO, Account.class);
+		registrationService.createNewAccount(account);
 	}
 }

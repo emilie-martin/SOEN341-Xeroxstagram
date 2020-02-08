@@ -4,7 +4,7 @@ import java.util.Date;
 
 import javax.validation.constraints.NotNull;
 
-public class AccountDTO
+public class CreateAccountRequestDTO
 {
 	@NotNull
 	private String username;

@@ -1,9 +1,5 @@
 package com.soen341.instagram.service.impl;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.regex.Pattern;
 
@@ -12,8 +8,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.soen341.instagram.dao.impl.AccountRepository;
-import com.soen341.instagram.exception.account.AccountExistException;
-import com.soen341.instagram.exception.account.InvalidEmailException;
+import com.soen341.instagram.exception.account.EmailTakenException;
+import com.soen341.instagram.exception.account.InvalidEmailFormatException;
+import com.soen341.instagram.exception.account.UsernameTakenException;
 import com.soen341.instagram.model.Account;
 
 @Service("registrationService")
@@ -25,37 +22,42 @@ public class RegistrationService
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	public void createNewAccount(final Account account) throws ParseException
+	public void createNewAccount(final Account account)
 	{
-		if (accountRepository.findByUsername(account.getUsername()) == null
-				&& accountRepository.findByEmail(account.getEmail()) == null)
+		if (!isEmailTaken(account.getEmail()) && !isUsernameTaken(account.getUsername()))
 		{
 			if (!isEmailFormatValid(account.getEmail()))
 			{
-				throw new InvalidEmailException();
+				throw new InvalidEmailFormatException();
 			}
 
 			account.setPassword(passwordEncoder.encode(account.getPassword()));
-			account.setCreated(getCurrentDate());
+			account.setCreated(new Date());
 			accountRepository.save(account);
-		}
-		else
-		{
-			throw new AccountExistException("Username already exists");
 		}
 	}
 
-	protected Date getCurrentDate() throws ParseException
+	protected boolean isEmailTaken(final String email)
 	{
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		LocalDateTime now = LocalDateTime.now();
-		return new SimpleDateFormat("yyyy-MM-dd").parse(dtf.format(now));
+		if (!(accountRepository.findByEmail(email) == null))
+		{
+			throw new EmailTakenException();
+		}
+		return false;
+	}
 
+	protected boolean isUsernameTaken(final String username)
+	{
+		if (!(accountRepository.findByUsername(username) == null))
+		{
+			throw new UsernameTakenException();
+		}
+		return false;
 	}
 
 	protected boolean isEmailFormatValid(final String email)
 	{
-		String regex = "\\w+\\@\\w+\\.[A-Za-z]+";
+		String regex = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
 		return Pattern.matches(regex, email);
 	}
 

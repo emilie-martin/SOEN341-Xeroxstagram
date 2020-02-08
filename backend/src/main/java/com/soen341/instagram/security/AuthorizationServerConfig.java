@@ -20,6 +20,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
+	private String CLIENT_ID = "instagram_client";
+	private String CLIENT_SECRET = "secret";
+	private int TOKEN_VALIDITY_SECONDS = 6000;
+
 	@Override
 	public void configure(final AuthorizationServerSecurityConfigurer security) throws Exception
 	{
@@ -30,10 +34,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Override
 	public void configure(final ClientDetailsServiceConfigurer clients) throws Exception
 	{
-		clients.inMemory().withClient("instagram_client").authorizedGrantTypes("client_credentials", "password")
-				.authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT").scopes("read", "write", "trust")
-				.resourceIds("oauth2-resource").accessTokenValiditySeconds(6000) // Token time subject to change
-				.secret(passwordEncoder.encode("secret"));
+		clients.inMemory().withClient(CLIENT_ID).authorizedGrantTypes("client_credentials", "password", "refresh_token")
+				.authorities().scopes("read", "write", "trust").resourceIds("oauth2-resource")
+				.accessTokenValiditySeconds(TOKEN_VALIDITY_SECONDS) // Token time subject to change
+				.secret(passwordEncoder.encode(CLIENT_SECRET));
 	}
 
 	@Override

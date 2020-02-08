@@ -4,10 +4,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-public class BadRequestException extends RuntimeException
+public class InvalidEmailFormatException extends RuntimeException
 {
-	public BadRequestException()
+	public InvalidEmailFormatException()
 	{
-		super("Bad Request");
+		super("Invalid Email Format");
+	}
+
+	public InvalidEmailFormatException(String message)
+	{
+		super(message);
 	}
 }
