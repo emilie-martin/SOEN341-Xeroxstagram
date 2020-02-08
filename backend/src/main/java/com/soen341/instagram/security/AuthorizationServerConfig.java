@@ -30,7 +30,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception
 	{
-		clients.inMemory().withClient("instragram-client").authorizedGrantTypes("client_credentials", "password")
+		clients.inMemory().withClient("instagram_client").authorizedGrantTypes("client_credentials", "password")
 				.authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT").scopes("read", "write", "trust")
 				.resourceIds("oauth2-resource").accessTokenValiditySeconds(6000) // Token time subject to change
 				.secret(passwordEncoder.encode("secret"));
