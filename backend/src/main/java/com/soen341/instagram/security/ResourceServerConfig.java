@@ -19,7 +19,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter
 	@Override
 	public void configure(HttpSecurity http) throws Exception
 	{
-		http.headers().frameOptions().disable().and().authorizeRequests().antMatchers("/", "/register", "/login")
+		http.headers().frameOptions().disable().and().authorizeRequests().antMatchers("/", "account/register", "/login")
 				.permitAll();
 
 		// I'm letting all the request as permitAll for now. It will be easier to
