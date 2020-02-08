@@ -15,20 +15,20 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter
 {
 	@Autowired
-	AuthenticationManager authenticationManager;
+	private AuthenticationManager authenticationManager;
 
 	@Autowired
-	PasswordEncoder passwordEncoder;
+	private PasswordEncoder passwordEncoder;
 
 	@Override
-	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception
+	public void configure(final AuthorizationServerSecurityConfigurer security) throws Exception
 	{
 		// returns true if user not anonymous
 		security.checkTokenAccess("isAuthenticated()");
 	}
 
 	@Override
-	public void configure(ClientDetailsServiceConfigurer clients) throws Exception
+	public void configure(final ClientDetailsServiceConfigurer clients) throws Exception
 	{
 		clients.inMemory().withClient("instagram_client").authorizedGrantTypes("client_credentials", "password")
 				.authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT").scopes("read", "write", "trust")
@@ -37,7 +37,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	}
 
 	@Override
-	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception
+	public void configure(final AuthorizationServerEndpointsConfigurer endpoints) throws Exception
 	{
 		endpoints.authenticationManager(authenticationManager);
 	}

@@ -12,10 +12,10 @@ import com.soen341.instagram.dao.impl.AccountRepository;
 public class UserDetailsServiceImpl implements UserDetailsService
 {
 	@Autowired
-	AccountRepository accountRepository;
+	private AccountRepository accountRepository;
 
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
+	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException
 	{
 		return new UserDetailsImpl(accountRepository.findByUsername(username));
 	}

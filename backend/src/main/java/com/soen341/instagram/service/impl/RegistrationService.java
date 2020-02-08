@@ -20,12 +20,12 @@ import com.soen341.instagram.model.Account;
 public class RegistrationService
 {
 	@Autowired
-	AccountRepository accountRepository;
+	private AccountRepository accountRepository;
 
 	@Autowired
-	PasswordEncoder passwordEncoder;
+	private PasswordEncoder passwordEncoder;
 
-	public void createNewAccount(Account account) throws ParseException
+	public void createNewAccount(final Account account) throws ParseException
 	{
 		if (accountRepository.findByUsername(account.getUsername()) == null
 				&& accountRepository.findByEmail(account.getEmail()) == null)
@@ -53,7 +53,7 @@ public class RegistrationService
 
 	}
 
-	protected boolean isEmailFormatValid(String email)
+	protected boolean isEmailFormatValid(final String email)
 	{
 		String regex = "\\w+\\@\\w+\\.[A-Za-z]+";
 		return Pattern.matches(regex, email);

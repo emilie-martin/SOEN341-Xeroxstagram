@@ -23,7 +23,7 @@ public class RegistrationController
 	private ModelMapper modelMapper;
 
 	@Autowired
-	RegistrationService registrationService;
+	private RegistrationService registrationService;
 
 	@PostMapping(value = "Account/register")
 	@ResponseStatus(value = HttpStatus.CREATED)
