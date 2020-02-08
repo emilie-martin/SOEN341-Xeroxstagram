@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.soen341.instagram.dto.CreateAccountRequestDTO;
+import com.soen341.instagram.dto.account.CreateAccountRequestDTO;
 import com.soen341.instagram.model.Account;
 import com.soen341.instagram.service.impl.RegistrationService;
 

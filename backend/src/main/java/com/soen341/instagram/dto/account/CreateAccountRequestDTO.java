@@ -1,4 +1,4 @@
-package com.soen341.instagram.dto;
+package com.soen341.instagram.dto.account;
 
 import java.util.Date;
 
