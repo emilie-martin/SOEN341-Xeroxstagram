@@ -26,6 +26,6 @@ public class PictureController {
     @GetMapping(value = "/picture/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
     @ResponseBody
     public byte[] getPicture(@PathVariable String id) {
-        return pictureService.loadPicture(Long.valueOf(id));
+        return pictureService.loadPicture(id);
     }
 }

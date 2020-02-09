@@ -2,10 +2,7 @@ package com.soen341.instagram.service.impl;
 
 import com.soen341.instagram.dao.impl.AccountRepository;
 import com.soen341.instagram.dao.impl.PictureRepository;
-import com.soen341.instagram.exception.picture.FileNotFoundException;
-import com.soen341.instagram.exception.picture.NotAPictureException;
-import com.soen341.instagram.exception.picture.PictureNotFoundException;
-import com.soen341.instagram.exception.picture.UnknownIOException;
+import com.soen341.instagram.exception.picture.*;
 import com.soen341.instagram.model.Picture;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -21,7 +18,6 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.nio.Buffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -88,8 +84,14 @@ public class PictureService {
         }
     }
 
-    public byte[] loadPicture(long id) {
-        Optional<Picture> optionalPic = pictureRepository.findById(id);
+    public byte[] loadPicture(String id) {
+        long pictureId;
+        try {
+            pictureId = Long.valueOf(id);
+        } catch (NumberFormatException e) {
+            throw new InvalidIdException("Invalid picture ID.");
+        }
+        Optional<Picture> optionalPic = pictureRepository.findById(pictureId);
         if (!optionalPic.isPresent()) {
             throw new PictureNotFoundException("The specified picture does not exist.");
         }
@@ -102,7 +104,6 @@ public class PictureService {
             byte[] pictureBytes = Files.readAllBytes(Paths.get(pic.getFilePath()));
             return pictureBytes;
         } catch (IOException e) {
-            e.printStackTrace();
             throw new UnknownIOException("An unknown error occurred.", e);
         }
     }
