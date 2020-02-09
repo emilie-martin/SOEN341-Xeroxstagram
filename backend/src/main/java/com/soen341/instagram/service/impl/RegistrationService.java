@@ -66,7 +66,7 @@ public class RegistrationService
 	private void checkIfUsernameFormatValid(final String username)
 	{
 		String regex = "(?!.*\\.\\.)(?!.*\\.$)[^\\W][\\w.]+";
-		if (!Pattern.matches(regex, username) || username.length() < 3)
+		if (!Pattern.matches(regex, username) || username.length() < 3 || username.length() > 30)
 		{
 			throw new InvalidUsernameFormatException();
 		}
