@@ -69,7 +69,7 @@ public class RegistrationService
 
 	protected boolean isUsernameFormatValid(final String username)
 	{
-		String regex = "[\\w+|.*\\d+]+";
+		String regex = "[\\w+.*\\d+]+";
 		return Pattern.matches(regex, username);
 	}
 
