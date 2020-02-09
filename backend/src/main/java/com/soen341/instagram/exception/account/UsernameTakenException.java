@@ -8,6 +8,6 @@ public class UsernameTakenException extends RuntimeException
 {
 	public UsernameTakenException()
 	{
-		super("Username is taken");
+		super("Username is already taken");
 	}
 }
