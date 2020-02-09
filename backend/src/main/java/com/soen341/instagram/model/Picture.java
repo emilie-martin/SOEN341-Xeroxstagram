@@ -8,7 +8,7 @@ import java.util.Date;
 public class Picture {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id; // to be discussed: file path or save picture in DB directly?
+    private long id;
 
     // following fields need to be discussed
     private int numLikes;

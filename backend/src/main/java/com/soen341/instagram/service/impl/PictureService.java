@@ -35,7 +35,7 @@ public class PictureService {
     @Autowired
     private PictureRepository pictureRepository;
 
-    public void uploadPicture(String caption, MultipartFile picture, Account user) {
+    public Picture uploadPicture(String caption, MultipartFile picture, Account user) {
         Picture newPicture = new Picture();
         newPicture.setAccount(user);
         newPicture.setCaption(caption);
@@ -56,14 +56,15 @@ public class PictureService {
             // save compressed image to file
             ImageIO.write(compressedImage, "jpg", pictureFile);
         } catch (IOException e) {
-            throw new UnknownIOException("An unknown error occurred.", e);
+            throw new UnknownIOException("An unknown error occurred while trying to upload the picture.", e);
         }
 
         newPicture.setFilePath(pictureFile.getPath());
         pictureRepository.save(newPicture);
+        return newPicture;
     }
 
-    public byte[] loadPicture(String id) {
+    public Picture getPictureFromId(String id) {
         long pictureId;
         try {
             pictureId = Long.valueOf(id);
@@ -74,16 +75,21 @@ public class PictureService {
         if (!optionalPic.isPresent()) {
             throw new PictureNotFoundException("The specified picture does not exist.");
         }
+        return optionalPic.get();
+    }
+
+
+    public byte[] loadPicture(String id) {
+        Picture pic = getPictureFromId(id);
+        Path picPath = Paths.get(pic.getFilePath());
+        if (!Files.exists(picPath)) {
+            throw new FileNotFoundException("The image file could not be found.");
+        }
         try {
-            Picture pic = optionalPic.get();
-            Path picPath = Paths.get(pic.getFilePath());
-            if (!Files.exists(picPath)) {
-                throw new FileNotFoundException("The image file could not be found.");
-            }
             byte[] pictureBytes = Files.readAllBytes(Paths.get(pic.getFilePath()));
             return pictureBytes;
         } catch (IOException e) {
-            throw new UnknownIOException("An unknown error occurred.", e);
+            throw new UnknownIOException("An unknown error occurred while trying to access the picture.", e);
         }
     }
 
