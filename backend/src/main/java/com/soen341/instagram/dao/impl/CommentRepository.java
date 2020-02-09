@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface CommentRepository extends PagingAndSortingRepository<Comment, Long> {
     List<Comment> findByPicture(Picture picture);
+
 }

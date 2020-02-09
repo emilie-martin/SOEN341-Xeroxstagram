@@ -3,6 +3,7 @@ package com.soen341.instagram.service.impl;
 import com.soen341.instagram.dao.impl.AccountRepository;
 import com.soen341.instagram.dao.impl.PictureRepository;
 import com.soen341.instagram.exception.picture.*;
+import com.soen341.instagram.model.Account;
 import com.soen341.instagram.model.Picture;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -34,54 +35,32 @@ public class PictureService {
     @Autowired
     private PictureRepository pictureRepository;
 
-    @Transactional
-    public void uploadPicture(String caption, MultipartFile picture) {
+    public void uploadPicture(String caption, MultipartFile picture, Account user) {
+        Picture newPicture = new Picture();
+        newPicture.setAccount(user);
+        newPicture.setCaption(caption);
+        newPicture.setCreated(new Date());
+
+        File pictureFile;
         try {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            String username = ((UserDetails)authentication.getPrincipal()).getUsername();
+            BufferedImage image = ImageIO.read(new ByteArrayInputStream(picture.getBytes()));
 
-            Picture newPicture = new Picture();
-            newPicture.setAccount(accountRepository.findByUsername(username));
-            newPicture.setCaption(caption);
-            BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(picture.getBytes()));
-
-            if (bufferedImage == null) {
+            if (image == null) {
                 throw new NotAPictureException("Please upload a valid picture file.");
             }
 
-            File pictureFile;
-            Date currentDate;
+            // create a file for the picture with a unique file name
+            pictureFile = createNewFileWithUniqueName("./pictures/" + user.getUsername());
+            BufferedImage compressedImage = compressImage(image);
 
-            // find a name for the file that is available
-            int retries = 0;
-            while (true) {
-                if (retries >= MAX_RETRIES) {
-                    throw new UnknownIOException("Failed to upload picture.");
-                }
-                currentDate = new Date();
-                String currentDateString = String.valueOf(currentDate.getTime());
-                pictureFile = new File("./pictures/" + username + "/" + currentDateString + ".jpg");
-                pictureFile.getParentFile().mkdirs(); // create parent directories if they don't exist
-                if(pictureFile.createNewFile()) {
-                    // if we successfully create the file (i.e. file did not exist previously), then exit loop
-                    break;
-                }
-                retries++;
-            }
-            newPicture.setFilePath(pictureFile.getPath());
-            newPicture.setCreated(currentDate);
-
-            // compress image
-            BufferedImage compressedImage = new BufferedImage(bufferedImage.getWidth(),
-                    bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
-            // change invisible pixels to white pixels (png to img)
-            compressedImage.createGraphics().drawImage(bufferedImage, 0, 0, Color.WHITE, null);
-
+            // save compressed image to file
             ImageIO.write(compressedImage, "jpg", pictureFile);
-            pictureRepository.save(newPicture);
         } catch (IOException e) {
             throw new UnknownIOException("An unknown error occurred.", e);
         }
+
+        newPicture.setFilePath(pictureFile.getPath());
+        pictureRepository.save(newPicture);
     }
 
     public byte[] loadPicture(String id) {
@@ -106,5 +85,31 @@ public class PictureService {
         } catch (IOException e) {
             throw new UnknownIOException("An unknown error occurred.", e);
         }
+    }
+
+    private File createNewFileWithUniqueName(String directory) throws IOException {
+        File pictureFile;
+        int retries = 0;
+        while (true) {
+            if (retries >= MAX_RETRIES) {
+                throw new UnknownIOException("Failed to upload picture.");
+            }
+            String currentDateString = String.valueOf(new Date().getTime());
+            pictureFile = new File(directory + "/" + currentDateString + ".jpg");
+            pictureFile.getParentFile().mkdirs(); // create parent directories if they don't exist
+            if (pictureFile.createNewFile()) {
+                // if we successfully create the file (i.e. file did not exist previously), then exit loop
+                return pictureFile;
+            }
+            retries++;
+        }
+    }
+
+    private BufferedImage compressImage(BufferedImage image) {
+        BufferedImage compressedImage = new BufferedImage(image.getWidth(),
+                image.getHeight(), BufferedImage.TYPE_INT_RGB);
+        // change invisible pixels to white pixels (png to img)
+        compressedImage.createGraphics().drawImage(image, 0, 0, Color.WHITE, null);
+        return compressedImage;
     }
 }
