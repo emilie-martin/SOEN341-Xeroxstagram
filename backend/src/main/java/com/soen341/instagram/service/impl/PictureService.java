@@ -47,7 +47,6 @@ public class PictureService {
             Picture newPicture = new Picture();
             newPicture.setAccount(accountRepository.findByUsername(username));
             newPicture.setCaption(caption);
-            System.out.println(picture.getBytes().length);
             BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(picture.getBytes()));
 
             if (bufferedImage == null) {
@@ -61,7 +60,7 @@ public class PictureService {
             int retries = 0;
             while (true) {
                 if (retries >= MAX_RETRIES) {
-                    throw new UnknownIOException("Could not upload picture");
+                    throw new UnknownIOException("Failed to upload picture.");
                 }
                 currentDate = new Date();
                 String currentDateString = String.valueOf(currentDate.getTime());
@@ -84,7 +83,6 @@ public class PictureService {
 
             ImageIO.write(compressedImage, "jpg", pictureFile);
             pictureRepository.save(newPicture);
-            System.out.println(pictureFile.length());
         } catch (IOException e) {
             throw new UnknownIOException("An unknown error occurred.", e);
         }
