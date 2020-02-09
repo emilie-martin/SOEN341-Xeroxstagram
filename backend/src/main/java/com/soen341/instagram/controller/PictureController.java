@@ -26,9 +26,6 @@ public class PictureController {
     @Autowired
     private PictureService pictureService;
 
-    @Autowired
-    private ModelMapper modelMapper;
-
     @PostMapping(value = "/picture", headers = "Content-Type=multipart/form-data")
     @ResponseBody
     @ResponseStatus(value = HttpStatus.CREATED)
@@ -39,18 +36,13 @@ public class PictureController {
         String username = ((UserDetails)authentication.getPrincipal()).getUsername();
         Account user = accountRepository.findByUsername(username);
         Picture newPic = pictureService.uploadPicture(caption, picture, user);
-        PictureDTO newPicDTO = modelMapper.map(newPic, PictureDTO.class);
-        newPicDTO.setAccount(username);
-        return newPicDTO;
+        return pictureService.toPictureDTO(newPic);
     }
 
     @GetMapping(value = "/picture/{id}")
     @ResponseBody
     public PictureDTO getPicture(@PathVariable String id) {
-        Picture pic = pictureService.getPictureFromId(id);
-        PictureDTO picDTO = modelMapper.map(pic, PictureDTO.class);
-        picDTO.setAccount(pic.getAccount().getUsername());
-        return picDTO;
+        return pictureService.getPictureDTOFromId(id);
     }
 
     @GetMapping(value = "/picture/{id}.jpg", produces = MediaType.IMAGE_JPEG_VALUE)

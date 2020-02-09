@@ -2,9 +2,11 @@ package com.soen341.instagram.service.impl;
 
 import com.soen341.instagram.dao.impl.AccountRepository;
 import com.soen341.instagram.dao.impl.PictureRepository;
+import com.soen341.instagram.dto.picture.PictureDTO;
 import com.soen341.instagram.exception.picture.*;
 import com.soen341.instagram.model.Account;
 import com.soen341.instagram.model.Picture;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,9 +33,10 @@ public class PictureService {
     private final static int MAX_RETRIES = 1000;
 
     @Autowired
-    private AccountRepository accountRepository;
-    @Autowired
     private PictureRepository pictureRepository;
+    @Autowired
+    private ModelMapper modelMapper;
+
 
     public Picture uploadPicture(String caption, MultipartFile picture, Account user) {
         Picture newPicture = new Picture();
@@ -64,20 +67,10 @@ public class PictureService {
         return newPicture;
     }
 
-    public Picture getPictureFromId(String id) {
-        long pictureId;
-        try {
-            pictureId = Long.valueOf(id);
-        } catch (NumberFormatException e) {
-            throw new InvalidIdException("Invalid picture ID.");
-        }
-        Optional<Picture> optionalPic = pictureRepository.findById(pictureId);
-        if (!optionalPic.isPresent()) {
-            throw new PictureNotFoundException("The specified picture does not exist.");
-        }
-        return optionalPic.get();
+    public PictureDTO getPictureDTOFromId(String id) {
+        Picture pic = getPictureFromId(id);
+        return toPictureDTO(pic);
     }
-
 
     public byte[] loadPicture(String id) {
         Picture pic = getPictureFromId(id);
@@ -91,6 +84,26 @@ public class PictureService {
         } catch (IOException e) {
             throw new UnknownIOException("An unknown error occurred while trying to access the picture.", e);
         }
+    }
+
+    public PictureDTO toPictureDTO(Picture pic) {
+        PictureDTO picDTO = modelMapper.map(pic, PictureDTO.class);
+        picDTO.setAccount(pic.getAccount().getUsername());
+        return picDTO;
+    }
+
+    private Picture getPictureFromId(String id) {
+        long pictureId;
+        try {
+            pictureId = Long.valueOf(id);
+        } catch (NumberFormatException e) {
+            throw new InvalidIdException("Invalid picture ID.");
+        }
+        Optional<Picture> optionalPic = pictureRepository.findById(pictureId);
+        if (!optionalPic.isPresent()) {
+            throw new PictureNotFoundException("The specified picture does not exist.");
+        }
+        return optionalPic.get();
     }
 
     private File createNewFileWithUniqueName(String directory) throws IOException {
