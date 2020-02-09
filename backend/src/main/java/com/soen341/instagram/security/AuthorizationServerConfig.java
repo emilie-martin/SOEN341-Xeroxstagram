@@ -20,8 +20,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	private static String CLIENT_ID = "instagram_client";
-	private static String CLIENT_SECRET = "secret";
+	public static String CLIENT_ID = "instagram_client";
+	public static String CLIENT_SECRET = "secret";
 	private static int TOKEN_VALIDITY_SECONDS = 6000;
 
 	@Override
@@ -45,15 +45,4 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	{
 		endpoints.authenticationManager(authenticationManager);
 	}
-
-	public static String getCLIENT_ID()
-	{
-		return CLIENT_ID;
-	}
-
-	public static String getCLIENT_SECRET()
-	{
-		return CLIENT_SECRET;
-	}
-
 }
