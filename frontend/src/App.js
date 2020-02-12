@@ -65,30 +65,30 @@ class App extends React.Component {
         this.setState({id : e.target.value});
     }
     render() {
-      return (
-          <div className="App">
-              <header className="App-header">
-                  <h1>Instagram++</h1>
-              </header>
-              <Router>
-                  <div>
-                      <Link to="/register">Register</Link><br/>
-                      <Link to="/login">Login</Link><br/>
-                      <Link to={`/post/${this.state.id}`}>Post #</Link><input value={this.state.id} onChange={this.handleChange}/>
-                  </div>
-                  <hr/>
-                  <Switch>
-                      <Route exact path="/register">
-                          <Register/>
-                      </Route>
-                      <Route exact path="/login">
-                          <Login/>
-                      </Route>
-                      <Route path="/post/:id" component={Post}/>
-                  </Switch>
-              </Router>
-          </div>
-      );
+        return (
+            <div className="App">
+                <header className="App-header">
+                    <h1>Instagram++</h1>
+                </header>
+                <Router>
+                    <div>
+                        <Link to="/register">Register</Link><br/>
+                        <Link to="/login">Login</Link><br/>
+                        <Link to={`/post/${this.state.id}`}>Post #</Link><input value={this.state.id} onChange={this.handleChange}/>
+                    </div>
+                    <hr/>
+                    <Switch>
+                        <Route exact path="/register">
+                            <Register/>
+                        </Route>
+                        <Route exact path="/login">
+                            <Login/>
+                        </Route>
+                        <Route path="/post/:id" render={({match}) => (<Post id={match.params.id}/>)}/>
+                    </Switch>
+                </Router>
+            </div>
+        );
     }
 }
 export default App;
