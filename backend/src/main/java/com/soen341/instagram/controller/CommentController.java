@@ -1,6 +1,8 @@
 package com.soen341.instagram.controller;
 
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -20,6 +22,7 @@ import com.soen341.instagram.dao.impl.AccountRepository;
 import com.soen341.instagram.dao.impl.PictureRepository;
 import com.soen341.instagram.dto.comment.CommentDTO;
 import com.soen341.instagram.dto.comment.CommentResponseDTO;
+import com.soen341.instagram.dto.picture.PictureDTO;
 import com.soen341.instagram.model.Account;
 import com.soen341.instagram.model.Comment;
 import com.soen341.instagram.model.Picture;
@@ -80,9 +83,31 @@ public class CommentController
 		return convertCommentIntoDTO(comment);
 	}
 
+	@GetMapping(value = "/comment/commentByPicture/{pictureId}")
+	public List<CommentResponseDTO> getCommentsByPicture(@PathVariable long pictureId)
+	{
+		final List<Comment> comments = commentService.getCommentsByPicture(pictureId);
+		final List<CommentResponseDTO> commentsResponseDTO = new LinkedList<CommentResponseDTO>();
+
+		for (final Comment comment : comments)
+		{
+			commentsResponseDTO.add(convertCommentIntoDTO(comment));
+		}
+		return commentsResponseDTO;
+	}
+
 	private CommentResponseDTO convertCommentIntoDTO(final Comment comment)
 	{
 		final CommentResponseDTO commentResponseDTO = modelMapper.map(comment, CommentResponseDTO.class);
+
+		// Creating picture DTO
+		final Picture picture = comment.getPicture();
+		final PictureDTO pictureDTO = modelMapper.map(picture, PictureDTO.class);
+		pictureDTO.setAccount(picture.getAccount().getUsername());
+
+		commentResponseDTO.setPictureDTO(pictureDTO);
+		commentResponseDTO.setAccount(comment.getAccount().getUsername());
+
 		return commentResponseDTO;
 	}
 
@@ -97,6 +122,5 @@ public class CommentController
 		picture.setCreated(date);
 		picture.setFilePath(filepath);
 		rep.save(picture);
-
 	}
 }

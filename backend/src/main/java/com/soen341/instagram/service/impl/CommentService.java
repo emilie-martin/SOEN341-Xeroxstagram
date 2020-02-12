@@ -18,6 +18,7 @@ import com.soen341.instagram.dao.impl.PictureRepository;
 import com.soen341.instagram.exception.comment.CommentLengthTooLongException;
 import com.soen341.instagram.exception.comment.CommentNotFoundException;
 import com.soen341.instagram.exception.like.MultipleLikeException;
+import com.soen341.instagram.exception.picture.InvalidIdException;
 import com.soen341.instagram.exception.picture.PictureNotFoundException;
 import com.soen341.instagram.model.Account;
 import com.soen341.instagram.model.Comment;
@@ -115,7 +116,7 @@ public class CommentService
 
 	public List<Comment> getCommentsByPicture(long pictureId)
 	{
-		pictureRepository.findById(pictureId);
+		final Picture picture = findPicture(pictureId);
 		return commentRepository.findByPicture(picture);
 	}
 
@@ -124,9 +125,9 @@ public class CommentService
 		Optional<Picture> pictureOptional = pictureRepository.findById(pictureId);
 		if (!pictureOptional.isPresent())
 		{
-
+			throw new InvalidIdException("Picture Id is invalid");
 		}
-		return null;
+		return pictureOptional.get();
 	}
 
 	public Comment findComment(final long commentId)
