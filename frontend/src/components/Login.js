@@ -6,7 +6,7 @@ import '../config'
 export default function Login() {
   function submit(event) {
     event.preventDefault();
-    axios.post("http://localhost:" + global.config.BACKEND_PORT+"/account/login",
+    axios.post(global.config.BACKEND_URL + "/account/login",
         {
             "username": event.target.username.value,
             "password": event.target.password.value
