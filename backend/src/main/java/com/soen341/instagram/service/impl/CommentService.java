@@ -1,7 +1,9 @@
 package com.soen341.instagram.service.impl;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,6 +17,7 @@ import com.soen341.instagram.dao.impl.CommentRepository;
 import com.soen341.instagram.dao.impl.PictureRepository;
 import com.soen341.instagram.exception.comment.CommentLengthTooLongException;
 import com.soen341.instagram.exception.comment.CommentNotFoundException;
+import com.soen341.instagram.exception.like.MultipleLikeException;
 import com.soen341.instagram.exception.picture.PictureNotFoundException;
 import com.soen341.instagram.model.Account;
 import com.soen341.instagram.model.Comment;
@@ -63,17 +66,32 @@ public class CommentService
 	public int likeComment(final long commentId)
 	{
 		final Comment comment = findComment(commentId);
-		comment.setNumLikes(comment.getNumLikes() + 1);
+		final Set<Account> likedBy = comment.getLikedBy();
+		final boolean addedSuccessfully = likedBy.add(getCurrentUser());
+		if (!addedSuccessfully)
+		{
+			throw new MultipleLikeException("A comment can only be liked one time by the same user");
+		}
+
 		commentRepository.save(comment);
-		return comment.getNumLikes();
+
+		return likedBy.size();
 	}
 
 	public int unlikeComment(final long commentId)
 	{
 		final Comment comment = findComment(commentId);
-		comment.setNumLikes(comment.getNumLikes() - 1);
+		final Set<Account> likedBy = comment.getLikedBy();
+		final boolean removedSuccessfully = likedBy.remove(getCurrentUser());
+
+		if (!removedSuccessfully)
+		{
+			throw new MultipleLikeException("The comment has not been liked by this user");
+		}
+
 		commentRepository.save(comment);
-		return comment.getNumLikes();
+
+		return likedBy.size();
 	}
 
 	public void deleteComment(final long commentId)
@@ -82,7 +100,7 @@ public class CommentService
 		commentRepository.delete(comment);
 	}
 
-	protected Comment editComment(final long commentId, final String newComment)
+	public Comment editComment(final long commentId, final String newComment)
 	{
 		if (newComment.length() > maxCommentLength)
 		{
@@ -95,7 +113,23 @@ public class CommentService
 		return comment;
 	}
 
-	private Comment findComment(final long commentId)
+	public List<Comment> getCommentsByPicture(long pictureId)
+	{
+		pictureRepository.findById(pictureId);
+		return commentRepository.findByPicture(picture);
+	}
+
+	private Picture findPicture(final long pictureId)
+	{
+		Optional<Picture> pictureOptional = pictureRepository.findById(pictureId);
+		if (!pictureOptional.isPresent())
+		{
+
+		}
+		return null;
+	}
+
+	public Comment findComment(final long commentId)
 	{
 		Optional<Comment> commentOptional = commentRepository.findById(commentId);
 		if (!commentOptional.isPresent())
@@ -105,8 +139,9 @@ public class CommentService
 		return commentOptional.get();
 	}
 
-	// Get current user authenticated
-	public Account getCurrentUser()
+	// Get current user authenticated, maybe create a new class that handle this
+	// since it will be used by multiple service
+	private Account getCurrentUser()
 	{
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
