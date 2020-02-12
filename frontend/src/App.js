@@ -1,6 +1,5 @@
 import axios from "axios";
 import localStorageService from "./services/LocalStorageService";
-import loginService from "./services/LoginService";
 import React from "react";
 import {
     BrowserRouter as Router,
@@ -16,6 +15,7 @@ import Register from "./components/Register"
 import "./App.scss";
 import "./config"
 import User from "./components/User";
+import PostPicture from "./components/PostPicture";
 
 axios.interceptors.response.use(
     (response) => {
@@ -23,23 +23,25 @@ axios.interceptors.response.use(
         return response;
     },
     (error) => {
-        if (error.error === "invalid_token") {
+        if (error.response && error.response.data && error.response.data.error === "invalid_token") {
             // our access token has become invalid
             const request = error.config;
             delete axios.defaults.headers.common.Authorization;
+            delete request.headers.Authorization;
             if(!localStorageService.getRefreshToken()) {
                 localStorageService.clearAllTokens();
                 // retry request, but with no user logged in
                 return axios(request);
             }
             // our token is expired
-            return axios.post("http://localhost:"+global.config.BACKEND_PORT+"/account/refresh",
+            return axios.post(global.config.BACKEND_URL+"/account/refresh",
                 {
                     "token": localStorageService.getRefreshToken()
                 })
                 .then(
                     (response) => {
-                        loginService.setLoginToken(response.data);
+                        localStorageService.setToken(response.data);
+                        localStorageService.setBearerToken();
                         return axios(request);
                     },
                     () => {
@@ -60,9 +62,16 @@ class App extends React.Component {
         super(props);
         this.state = {
             post_id: 0,
-            username: null
+            username: "Enter username"
         }
     }
+
+    componentDidMount() {
+        if(localStorageService.getAccessToken()) {
+            localStorageService.setBearerToken();
+        }
+    }
+
     handleChangePostId = (e) => {
         this.setState({post_id : e.target.value});
     }
@@ -79,6 +88,7 @@ class App extends React.Component {
                     <div>
                         <Link to="/register">Register</Link><br/>
                         <Link to="/login">Login</Link><br/>
+                        <Link to="/post">Post Picture</Link><br/>
                         <Link to={`/post/${this.state.post_id}`}>Post #</Link><input value={this.state.post_id} onChange={this.handleChangePostId}/><br/>
                         <Link to={`/account/${this.state.username}`}>Search user</Link><input value={this.state.username} onChange={this.handleChangeUser}/>
                     </div>
@@ -89,6 +99,9 @@ class App extends React.Component {
                         </Route>
                         <Route exact path="/login">
                             <Login/>
+                        </Route>
+                        <Route exact path="/post">
+                            <PostPicture/>
                         </Route>
                         <Route path="/post/:id" render={({match}) => (<Post id={match.params.id}/>)}/>
                         <Route path="/account/:username" render={({match}) => (<User username={match.params.username}/>)}/>

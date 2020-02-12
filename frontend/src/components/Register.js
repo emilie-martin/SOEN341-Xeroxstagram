@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import loginService from "../services/LoginService";
+import localStorageService from "../services/LocalStorageService";
 import '../config'
 
 export default function Login() {
@@ -26,7 +26,7 @@ export default function Login() {
                 }
             ).then(
                 (response) => {
-                    loginService.setLoginToken(response.data);
+                    localStorageService.setLoginToken(response.data);
                 }
             ).catch(
                 (error) => {

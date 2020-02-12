@@ -1,24 +1,25 @@
 import React from "react";
 import axios from "axios";
-import loginService from "../services/LoginService";
+import localStorageService from "../services/LocalStorageService";
 import '../config'
 
 export default function Login() {
-  function submit(event) {
-    event.preventDefault();
-    axios.post(global.config.BACKEND_URL + "/account/login",
-        {
-            "username": event.target.username.value,
-            "password": event.target.password.value
-        })
-        .then(
-            (response) => {
-              loginService.setLoginToken(response.data);
-            },
-            (error) => {
-              console.log(error);
-            }
-        )
+    function submit(event) {
+        event.preventDefault();
+        axios.post(global.config.BACKEND_URL + "/account/login",
+            {
+                "username": event.target.username.value,
+                "password": event.target.password.value
+            })
+            .then(
+                (response) => {
+                    localStorageService.setToken(response.data);
+                    localStorageService.setBearerToken();
+                },
+                (error) => {
+                    console.log(error);
+                }
+            )
   }
 
   return(

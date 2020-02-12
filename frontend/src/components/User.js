@@ -44,7 +44,7 @@ class User extends React.Component {
             <div>
                 {
                     this.state.Pictures.map((id) => (
-                        <div>
+                        <div key={id}>
                             <Post id={id}/>
                             <br/>
                         </div>
