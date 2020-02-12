@@ -3,16 +3,19 @@ package com.soen341.instagram.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private int numLikes;
+
+    @NotNull
     private String comment;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIME)
     @NotNull
     private Date created;
 
@@ -24,20 +27,15 @@ public class Comment {
     @NotNull
     private Picture picture;
 
+    @ManyToMany
+    private Set<Account> likedBy;
+
     public long getId() {
         return id;
     }
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public int getNumLikes() {
-        return numLikes;
-    }
-
-    public void setNumLikes(int numLikes) {
-        this.numLikes = numLikes;
     }
 
     public Picture getPicture() {
@@ -70,5 +68,12 @@ public class Comment {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public Set<Account> getLikedBy() {
+        if (likedBy == null) {
+            likedBy = new HashSet<>();
+        }
+        return likedBy;
     }
 }
