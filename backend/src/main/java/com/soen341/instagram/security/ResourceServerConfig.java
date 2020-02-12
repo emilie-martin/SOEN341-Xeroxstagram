@@ -21,7 +21,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter
 	{
 		http.headers().frameOptions().disable().and().authorizeRequests().antMatchers("/", "account/register", "/login")
 
-				.permitAll().antMatchers("/picture").authenticated();
+				.permitAll().antMatchers("/picture").authenticated()
+				.antMatchers("/comment/commentByPicture", "/comment/commentById").permitAll().antMatchers("/comment/**")
+				.authenticated();
 
 		// I'm letting all the request as permitAll for now. It will be easier to
 		// developp API. We can configure the authentication later
