@@ -4,7 +4,6 @@ import "./Post.scss";
 import '../config'
 
 class Post extends React.Component {
-    // to access passed id: this.props.match.params.id
     constructor(props) {
         super(props);
         this.state = {

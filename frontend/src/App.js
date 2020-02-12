@@ -15,6 +15,7 @@ import Register from "./components/Register"
 
 import "./App.scss";
 import "./config"
+import User from "./components/User";
 
 axios.interceptors.response.use(
     (response) => {
@@ -58,11 +59,15 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: 0
+            post_id: 0,
+            username: null
         }
     }
-    handleChange = (e) => {
-        this.setState({id : e.target.value});
+    handleChangePostId = (e) => {
+        this.setState({post_id : e.target.value});
+    }
+    handleChangeUser = (e) => {
+        this.setState({username : e.target.value});
     }
     render() {
         return (
@@ -74,7 +79,8 @@ class App extends React.Component {
                     <div>
                         <Link to="/register">Register</Link><br/>
                         <Link to="/login">Login</Link><br/>
-                        <Link to={`/post/${this.state.id}`}>Post #</Link><input value={this.state.id} onChange={this.handleChange}/>
+                        <Link to={`/post/${this.state.post_id}`}>Post #</Link><input value={this.state.post_id} onChange={this.handleChangePostId}/><br/>
+                        <Link to={`/account/${this.state.username}`}>Search user</Link><input value={this.state.username} onChange={this.handleChangeUser}/>
                     </div>
                     <hr/>
                     <Switch>
@@ -85,6 +91,7 @@ class App extends React.Component {
                             <Login/>
                         </Route>
                         <Route path="/post/:id" render={({match}) => (<Post id={match.params.id}/>)}/>
+                        <Route path="/account/:username" render={({match}) => (<User username={match.params.username}/>)}/>
                     </Switch>
                 </Router>
             </div>

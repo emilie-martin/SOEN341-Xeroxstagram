@@ -15,7 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
+import java.util.List;
 
 @RestController
 public class PictureController {
@@ -49,5 +49,11 @@ public class PictureController {
     @ResponseBody
     public byte[] getPictureFile(@PathVariable String id) {
         return pictureService.loadPicture(id);
+    }
+
+    @GetMapping(value = "/{username}/pictures")
+    @ResponseBody
+    public List<Long> getAccountPictures(@PathVariable String username) {
+        return pictureService.getAccountPictures(accountRepository.findByUsername(username));
     }
 }
