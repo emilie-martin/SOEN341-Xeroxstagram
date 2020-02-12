@@ -114,7 +114,7 @@ public class CommentService
 		return comment;
 	}
 
-	public List<Comment> getCommentsByPicture(long pictureId)
+	public List<Comment> getCommentsByPicture(final long pictureId)
 	{
 		final Picture picture = findPicture(pictureId);
 		return commentRepository.findByPicture(picture);

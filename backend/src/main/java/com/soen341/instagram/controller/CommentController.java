@@ -1,6 +1,5 @@
 package com.soen341.instagram.controller;
 
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,7 +22,6 @@ import com.soen341.instagram.dao.impl.PictureRepository;
 import com.soen341.instagram.dto.comment.CommentDTO;
 import com.soen341.instagram.dto.comment.CommentResponseDTO;
 import com.soen341.instagram.dto.picture.PictureDTO;
-import com.soen341.instagram.model.Account;
 import com.soen341.instagram.model.Comment;
 import com.soen341.instagram.model.Picture;
 import com.soen341.instagram.service.impl.CommentService;
@@ -42,7 +40,8 @@ public class CommentController
 
 	@PostMapping(value = "/comment/newComment/{pictureId}")
 	@ResponseStatus(value = HttpStatus.CREATED)
-	public CommentResponseDTO addComment(@Valid @RequestBody final CommentDTO commentDTO, @PathVariable long pictureId)
+	public CommentResponseDTO addComment(@Valid @RequestBody final CommentDTO commentDTO,
+			@PathVariable final long pictureId)
 	{
 		final Comment comment = commentService.createComment(commentDTO.getComment(), pictureId);
 		final CommentResponseDTO commentResponse = modelMapper.map(comment, CommentResponseDTO.class);
@@ -77,7 +76,7 @@ public class CommentController
 	}
 
 	@GetMapping(value = "/comment/commentById/{commentId}")
-	public CommentResponseDTO getCommentById(@PathVariable long commentId)
+	public CommentResponseDTO getCommentById(@PathVariable final long commentId)
 	{
 		final Comment comment = commentService.findComment(commentId);
 		return convertCommentIntoDTO(comment);
@@ -109,18 +108,5 @@ public class CommentController
 		commentResponseDTO.setAccount(comment.getAccount().getUsername());
 
 		return commentResponseDTO;
-	}
-
-	@PostMapping(value = "/testPicture")
-	public void createTestPicture()
-	{
-		Picture picture = new Picture();
-		Account account = acrep.findByUsername("simon");
-		Date date = new Date();
-		String filepath = "hello";
-		picture.setAccount(account);
-		picture.setCreated(date);
-		picture.setFilePath(filepath);
-		rep.save(picture);
 	}
 }
