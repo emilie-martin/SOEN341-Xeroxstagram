@@ -11,6 +11,7 @@ import {
 
 import Post from "./components/Post";
 import Login from "./components/Login";
+import Register from "./components/Register"
 
 import "./App.scss";
 import "./config"
@@ -78,7 +79,7 @@ class App extends React.Component {
                   <hr/>
                   <Switch>
                       <Route exact path="/register">
-
+                          <Register/>
                       </Route>
                       <Route exact path="/login">
                           <Login/>

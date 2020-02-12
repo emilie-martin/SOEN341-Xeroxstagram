@@ -3,6 +3,7 @@ import React from "react";
 import "./Post.scss";
 
 class Post extends React.Component {
+    // to access passed id: this.props.match.params.id
     render() {
         return (
             <div className="post">
