@@ -1,0 +1,32 @@
+--- 
+matrix: 
+  include: 
+    - 
+      before_script: 
+        - "cd backend"
+        - "sudo mysql -e 'CREATE DATABASE instagram;'"
+        - "sudo mysql -e \"create user 'instagram_admin'@'localhost' identified by 'instagram';\""
+        - "sudo mysql -e \"grant all on instagram.* to 'instagram_admin'@'localhost';\""
+      cache: 
+        directories: 
+          - $HOME/.m2
+      dist: trusty
+      jdk: oraclejdk8
+      language: java
+      script: 
+        - "mvn clean install"
+      services: 
+        - mysql
+    - 
+      before_install: 
+        - "cd frontend"
+      cache: npm
+      install: 
+        - "npm install"
+      language: node_js
+      node_js: node
+      script: 
+        - "npm test"
+notifications: 
+  email: false
+
