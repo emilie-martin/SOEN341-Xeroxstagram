@@ -3,6 +3,8 @@ package com.soen341.instagram.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Picture {
@@ -10,15 +12,11 @@ public class Picture {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    // following fields need to be discussed
-    private int numLikes;
-    private int numComments;
-
     @ManyToOne
     @NotNull
     private Account account;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIME)
     @NotNull
     private Date created;
 
@@ -27,28 +25,15 @@ public class Picture {
 
     private String caption;
 
+    @ManyToMany
+    private Set<Account> likedBy;
+
     public long getId() {
         return id;
     }
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public int getNumLikes() {
-        return numLikes;
-    }
-
-    public void setNumLikes(int numLikes) {
-        this.numLikes = numLikes;
-    }
-
-    public int getNumComments() {
-        return numComments;
-    }
-
-    public void setNumComments(int numComments) {
-        this.numComments = numComments;
     }
 
     public Account getAccount() {
@@ -81,5 +66,13 @@ public class Picture {
 
     public void setFilePath(String filePath) {
         this.filePath = filePath;
+    }
+
+    public Set<Account> getLikedBy() {
+        // Never return a null object
+        if (likedBy == null) {
+            likedBy = new HashSet<>();
+        }
+        return likedBy;
     }
 }
