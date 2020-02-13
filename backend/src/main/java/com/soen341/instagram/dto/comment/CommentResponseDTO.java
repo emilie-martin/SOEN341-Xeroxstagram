@@ -11,6 +11,17 @@ public class CommentResponseDTO
 	private Date created;
 	private String account;
 	private PictureDTO pictureDTO;
+	private int nbLikes;
+
+	public int getNbLikes()
+	{
+		return nbLikes;
+	}
+
+	public void setNbLikes(int nbLikes)
+	{
+		this.nbLikes = nbLikes;
+	}
 
 	public String getAccount()
 	{

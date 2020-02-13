@@ -98,7 +98,7 @@ public class CommentController
 	private CommentResponseDTO convertCommentIntoDTO(final Comment comment)
 	{
 		final CommentResponseDTO commentResponseDTO = modelMapper.map(comment, CommentResponseDTO.class);
-
+		commentResponseDTO.setNbLikes(comment.getLikedBy().size());
 		// Creating picture DTO
 		final Picture picture = comment.getPicture();
 		final PictureDTO pictureDTO = modelMapper.map(picture, PictureDTO.class);

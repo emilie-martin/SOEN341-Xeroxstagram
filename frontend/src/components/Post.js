@@ -1,6 +1,7 @@
 import React from "react";
 
 import "./Post.scss";
+import CommentList from "./Comment/CommentList";
 
 class Post extends React.Component {
     // to access passed id: this.props.match.params.id
@@ -14,26 +15,7 @@ class Post extends React.Component {
                     {/* a Description component can be created to facilitate the creation of Post components */}
                     <div className="post-description">Insert description, timestamp, and poster info here</div>
                     <div className="post-comments">
-                        {/* similarly, a Comment component should be later created and implemented here */}
-                        <p>comment</p>
-                        <p>comment</p>
-                        <p>comment</p>
-                        <p>comment</p>
-                        <p>comment</p>
-                        <p>comment</p>
-                        <p>comment</p>
-                        <p>comment</p>
-                        <p>comment</p>
-                        <p>comment</p>
-                        <p>comment</p>
-                        <p>comment</p>
-                        <p>comment</p>
-                        <p>comment</p>
-                        <p>comment</p>
-                        <p>comment</p>
-                        <p>comment</p>
-                        <p>comment</p>
-                        <p>comment</p>
+                        <CommentList></CommentList>
                     </div>
                 </div>
             </div>
