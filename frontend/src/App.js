@@ -5,7 +5,7 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link
+    Link, withRouter
 } from "react-router-dom";
 
 import Post from "./components/Post";
@@ -58,6 +58,7 @@ axios.interceptors.response.use(
 );
 
 class App extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -84,6 +85,7 @@ class App extends React.Component {
 
     logout() {
         localStorageService.clearAllTokens();
+        this.props.history.push("/");
         window.location.reload();
     }
 
@@ -106,7 +108,7 @@ class App extends React.Component {
                                 <p>
                                     Logged in as: {this.state.currentUser.username} &nbsp;
                                     <span>
-                                        <button type="button" onClick={this.logout}>Logout</button>
+                                        <button type="button" onClick={this.logout.bind(this)}>Logout</button>
                                     </span>
                                 </p>
                                 <Link to="/post">Post Picture</Link><br/>
@@ -138,4 +140,4 @@ class App extends React.Component {
         );
     }
 }
-export default App;
+export default withRouter(App);
