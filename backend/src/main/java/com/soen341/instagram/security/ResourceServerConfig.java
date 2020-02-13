@@ -19,9 +19,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter
 	@Override
 	public void configure(HttpSecurity http) throws Exception
 	{
-		http.headers().frameOptions().disable().and().authorizeRequests().antMatchers("/", "account/register", "/login")
-
-				.permitAll().antMatchers("/picture").authenticated()
+		http.cors().and().headers().frameOptions().disable().and().authorizeRequests()
+				.antMatchers("/picture").authenticated()
 				.antMatchers("/comment/commentByPicture", "/comment/commentById/**").permitAll()
 				.antMatchers("/comment/**").authenticated();
 

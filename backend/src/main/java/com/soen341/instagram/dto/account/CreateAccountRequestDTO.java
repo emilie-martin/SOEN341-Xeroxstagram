@@ -2,23 +2,24 @@ package com.soen341.instagram.dto.account;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class CreateAccountRequestDTO
 {
-	@NotNull
+	@NotBlank
 	private String username;
 
-	@NotNull
+	@NotBlank
 	private String email;
 
-	@NotNull
+	@NotBlank
 	private String password;
 
-	@NotNull
+	@NotBlank
 	private String firstName;
 
-	@NotNull
+	@NotBlank
 	private String lastName;
 
 	@NotNull
