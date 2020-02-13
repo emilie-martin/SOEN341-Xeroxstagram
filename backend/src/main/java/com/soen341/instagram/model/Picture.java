@@ -10,7 +10,7 @@ import java.util.Set;
 public class Picture {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id; // to be discussed: file path or save picture in DB directly?
+    private long id;
 
     @ManyToOne
     @NotNull
