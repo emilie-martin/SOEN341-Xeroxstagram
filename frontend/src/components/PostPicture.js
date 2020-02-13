@@ -1,8 +1,13 @@
-import React from "react";
+import React, {useState} from "react";
 import axios from "axios";
+import "./PostPicture.scss";
 import '../config'
+import { useHistory } from "react-router-dom";
 
 export default function PostPicture() {
+    let history = useHistory();
+    const [error, setError] = useState({msg: null});
+
     function submit(event) {
         event.preventDefault();
 
@@ -13,10 +18,10 @@ export default function PostPicture() {
         axios.post(global.config.BACKEND_URL + "/picture", data)
             .then(
                 (response) => {
-                    console.log(response);
+                    history.push(`/post/${response.data.id}`);
                 },
-                (error) => {
-                    console.log(error);
+                (e) => {
+                    setError({msg: e.response.data.message});
                 }
             )
     }
@@ -25,11 +30,12 @@ export default function PostPicture() {
         <div className="postPicture">
             <form onSubmit={submit}>
                 <label>File</label>
-                <input name="picture" type="file"></input>
+                <input name="picture" type="file"/>
                 <br/>
                 <label>Caption</label>
-                <input name="caption"></input>
+                <input name="caption"/>
                 <br/>
+                {error.msg && <div className="error">Error: {error.msg}</div>}
                 <button type="submit">
                     Post
                 </button>

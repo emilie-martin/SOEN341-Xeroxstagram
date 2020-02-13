@@ -62,7 +62,8 @@ class App extends React.Component {
         super(props);
         this.state = {
             post_id: 0,
-            username: "Enter username"
+            username: "Enter username",
+            currentUser: undefined
         }
     }
 
@@ -70,6 +71,20 @@ class App extends React.Component {
         if(localStorageService.getAccessToken()) {
             localStorageService.setBearerToken();
         }
+        this.setLoggedInState();
+    }
+
+    setLoggedInState() {
+        axios.get(global.config.BACKEND_URL + "/account").then(
+            (response) => {
+                this.setState({currentUser: response.data});
+            }
+        )
+    }
+
+    logout() {
+        localStorageService.clearAllTokens();
+        window.location.reload();
     }
 
     handleChangePostId = (e) => {
@@ -86,9 +101,21 @@ class App extends React.Component {
                 </header>
                 <Router>
                     <div>
-                        <Link to="/register">Register</Link><br/>
-                        <Link to="/login">Login</Link><br/>
-                        <Link to="/post">Post Picture</Link><br/>
+                        {this.state.currentUser ?
+                            <div>
+                                <p>
+                                    Logged in as: {this.state.currentUser.username} &nbsp;
+                                    <span>
+                                        <button type="button" onClick={this.logout}>Logout</button>
+                                    </span>
+                                </p>
+                                <Link to="/post">Post Picture</Link><br/>
+                            </div>
+                            :
+                            <div>
+                                <Link to="/login">Login</Link><br/>
+                                <Link to="/register">Register</Link><br/>
+                            </div>}
                         <Link to={`/post/${this.state.post_id}`}>Post #</Link><input value={this.state.post_id} onChange={this.handleChangePostId}/><br/>
                         <Link to={`/account/${this.state.username}`}>Search user</Link><input value={this.state.username} onChange={this.handleChangeUser}/>
                     </div>

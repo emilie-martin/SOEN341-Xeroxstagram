@@ -5,7 +5,7 @@
   margin: 0 auto;
   border: $border-color;
   height: 720px;
-  width: 1430px;
+  width: 1476px;
   background-color: whitesmoke;
 }
 
@@ -30,6 +30,8 @@ h1 {
   flex-flow: column nowrap;
   border: $border-color;
   padding: 20px;
+  width: 350px;
+  word-wrap: break-word;
 }
 
 .post-comments {
@@ -39,4 +41,5 @@ h1 {
 .post-description {
   border-bottom: 1px solid black;
   height: 100px;
+  width: 350px;
 }

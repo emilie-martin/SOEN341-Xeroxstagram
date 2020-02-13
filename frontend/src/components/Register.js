@@ -1,9 +1,13 @@
-import React from "react";
+import React, {useState} from "react";
 import axios from "axios";
 import localStorageService from "../services/LocalStorageService";
 import '../config'
+import { useHistory } from "react-router-dom";
 
 export default function Login() {
+    let history = useHistory();
+    const [error, setError] = useState({msg: ""});
+
     function submit(event) {
         event.preventDefault();
         event.persist();
@@ -14,7 +18,7 @@ export default function Login() {
                 "email": event.target.email.value,
                 "firstName": event.target.firstName.value,
                 "lastName": event.target.lastName.value,
-                "dateOfBirth": new Date(event.target.dateOfBirth.value).toISOString()
+                "dateOfBirth": event.target.dateOfBirth.value
             })
             .then(
                 () => {
@@ -26,12 +30,18 @@ export default function Login() {
                 }
             ).then(
                 (response) => {
-                    localStorageService.setLoginToken(response.data);
+                    localStorageService.setToken(response.data);
+                    localStorageService.setBearerToken();
+                    history.push("/");
+                    window.location.reload();
                 }
             ).catch(
-                (error) => {
-                    // todo: handle error
-                    console.log(error);
+                (e) => {
+                    if(e.response.data.errors) {
+                        setError({msg: "Please fill the form correctly."});
+                    } else {
+                        setError({msg: e.response.data.message});
+                    }
                 }
             )
     }
@@ -57,6 +67,7 @@ export default function Login() {
                 <label>Birth date</label>
                 <input name="dateOfBirth" type="date"></input>
                 <br/>
+                {error.msg && <div className="error">Error: {error.msg}</div>}
                 <button type="submit">
                     Register
                 </button>

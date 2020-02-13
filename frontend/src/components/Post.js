@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import "./Post.scss";
 import '../config'
+import {Link} from "react-router-dom";
 
 class Post extends React.Component {
     constructor(props) {
@@ -48,7 +49,11 @@ class Post extends React.Component {
                         </div>
                         <div className="text-wrapper">
                             {/* a Description component can be created to facilitate the creation of Post components */}
-                            <div className="post-description">{this.state.Picture.account}: {this.state.Picture.caption}</div>
+                            <div className="post-description">
+                                <Link to={`/account/${this.state.Picture.account}`}>
+                                    {this.state.Picture.account}
+                                </Link>: {this.state.Picture.caption}
+                            </div>
                             <div className="post-comments">
                                 {/* similarly, a Comment component should be later created and implemented here */}
                                 <p>comment</p>
