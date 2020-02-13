@@ -71,6 +71,7 @@ public class Comment {
     }
 
     public Set<Account> getLikedBy() {
+        // Never return a null object
         if (likedBy == null) {
             likedBy = new HashSet<>();
         }
