@@ -1,14 +1,14 @@
 import React from "react";
 import axios from "axios";
-import "./Post.scss";
-import '../config'
 import {Link} from "react-router-dom";
+import "./Post.scss";
+import '../config';
 
 class Post extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            Picture: null
+            Picture: undefined
         }
     }
 
@@ -28,9 +28,7 @@ class Post extends React.Component {
                 this.setState({Picture: response.data});
             }
         ).catch(
-            (error) => {
-                // to do: handle error
-                console.log(error);
+            () => {
                 this.setState({
                     Picture: null
                 });
@@ -41,7 +39,7 @@ class Post extends React.Component {
     render() {
         return (
             <div>
-                {this.state.Picture &&
+                {this.state.Picture ?
                     <div className="post">
                         <div className="image-wrapper">
                             <img src={`${global.config.BACKEND_URL}/picture/${this.props.id}.jpg`}
@@ -78,6 +76,8 @@ class Post extends React.Component {
                             </div>
                         </div>
                     </div>
+                    :
+                    this.state.Picture === undefined ? null : <div className="error">The picture could not be found.</div>
                 }
             </div>
         );

@@ -2,6 +2,7 @@ package com.soen341.instagram.controller;
 
 import com.soen341.instagram.dao.impl.AccountRepository;
 import com.soen341.instagram.dto.picture.PictureDTO;
+import com.soen341.instagram.exception.account.AccountNotFoundException;
 import com.soen341.instagram.model.Account;
 import com.soen341.instagram.model.Picture;
 import com.soen341.instagram.service.impl.PictureService;
@@ -49,6 +50,9 @@ public class PictureController {
 
     @GetMapping(value = "/{username}/pictures")
     public List<Long> getAccountPictures(@PathVariable String username) {
-        return pictureService.getAccountPictures(accountRepository.findByUsername(username));
+        Account user = accountRepository.findByUsername(username);
+        if(user == null)
+            throw new AccountNotFoundException("The specified user could not be found");
+        return pictureService.getAccountPictures(user);
     }
 }

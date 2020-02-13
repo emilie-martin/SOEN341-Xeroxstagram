@@ -1,14 +1,16 @@
-import React, {useState} from "react";
+import React from "react";
 import axios from "axios";
-import localStorageService from "../services/LocalStorageService";
 import '../config'
-import { useHistory } from "react-router-dom";
 
-export default function Login() {
-    let history = useHistory();
-    const [error, setError] = useState({msg: ""});
+class Login extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            errorMsg: ""
+        }
+    }
 
-    function submit(event) {
+    submit(event) {
         event.preventDefault();
         axios.post(global.config.BACKEND_URL + "/account/login",
             {
@@ -17,31 +19,32 @@ export default function Login() {
             })
             .then(
                 (response) => {
-                    localStorageService.setToken(response.data);
-                    localStorageService.setBearerToken();
-                    history.push("/");
-                    window.location.reload();
+                    this.props.onSuccess(response);
                 },
                 () => {
-                    setError({msg: "Invalid credentials"});
+                    this.setState({errorMsg: "Invalid credentials"});
                 }
             )
     }
 
-    return (
-        <div className="login">
-            <form onSubmit={submit}>
-                <label>Username</label>
-                <input name="username"/>
-                <br/>
-                <label>Password</label>
-                <input name="password" type="password"/>
-                <br/>
-                {error.msg && <div className="error">Error: {error.msg}</div>}
-                <button type="submit">
-                    Login
-                </button>
-            </form>
-        </div>
-    );
+    render() {
+        return (
+            <div className="login">
+                <form onSubmit={this.submit.bind(this)}>
+                    <label>Username</label>
+                    <input name="username"/>
+                    <br/>
+                    <label>Password</label>
+                    <input name="password" type="password"/>
+                    <br/>
+                    {this.state.errorMsg && <div className="error">Error: {this.state.errorMsg}</div>}
+                    <button type="submit">
+                        Login
+                    </button>
+                </form>
+            </div>
+        );
+    }
 }
+
+export default Login;

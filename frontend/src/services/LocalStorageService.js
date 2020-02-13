@@ -15,7 +15,7 @@ const LocalStorageService = (function(){
             localStorage.removeItem('access_token');
             localStorage.removeItem('refresh_token');
         },
-        setBearerToken: function(dontRefresh) {
+        setBearerToken: function() {
             axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem('access_token');
         }
     }

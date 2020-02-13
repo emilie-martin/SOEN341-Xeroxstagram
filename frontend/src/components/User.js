@@ -1,14 +1,14 @@
 import React from "react";
 import axios from "axios";
-import '../config'
 import Post from "./Post";
+import '../config';
 
 class User extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            User: null,
-            Pictures: []
+            Pictures: [],
+            errorMsg: ""
         }
     }
 
@@ -23,17 +23,18 @@ class User extends React.Component {
     }
 
     loadUser() {
-        // to do
         axios.get(global.config.BACKEND_URL + "/" + this.props.username + "/pictures").then(
             (response) => {
-                this.setState({Pictures: response.data});
+                this.setState({
+                    Pictures: response.data,
+                    errorMsg: ""
+                });
             }
         ).catch(
             (error) => {
-                // to do: handle error
-                console.log(error);
                 this.setState({
-                    Pictures: null
+                    Pictures: [],
+                    errorMsg: error.response.data.message
                 });
             }
         )
@@ -42,6 +43,7 @@ class User extends React.Component {
     render() {
         return (
             <div>
+                {this.state.errorMsg && <div className="error">Error: {this.state.errorMsg}</div>}
                 {
                     this.state.Pictures.map((id) => (
                         <div key={id}>
