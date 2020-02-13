@@ -2,10 +2,10 @@ package com.soen341.instagram.controller;
 
 import com.soen341.instagram.dao.impl.AccountRepository;
 import com.soen341.instagram.dto.picture.PictureDTO;
+import com.soen341.instagram.exception.account.AccountNotFoundException;
 import com.soen341.instagram.model.Account;
 import com.soen341.instagram.model.Picture;
 import com.soen341.instagram.service.impl.PictureService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,7 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
+import java.util.List;
 
 @RestController
 public class PictureController {
@@ -26,8 +26,7 @@ public class PictureController {
     @Autowired
     private PictureService pictureService;
 
-    @PostMapping(value = "/picture", headers = "Content-Type=multipart/form-data")
-    @ResponseBody
+    @PostMapping(value = "/picture", consumes = {"multipart/form-data"})
     @ResponseStatus(value = HttpStatus.CREATED)
     // cant use RequestBody with multipart, so have to use RequestParam
     public PictureDTO uploadPicture(@RequestParam(required = false) String caption,
@@ -40,14 +39,20 @@ public class PictureController {
     }
 
     @GetMapping(value = "/picture/{id}")
-    @ResponseBody
     public PictureDTO getPicture(@PathVariable String id) {
         return pictureService.getPictureDTOFromId(id);
     }
 
     @GetMapping(value = "/picture/{id}.jpg", produces = MediaType.IMAGE_JPEG_VALUE)
-    @ResponseBody
     public byte[] getPictureFile(@PathVariable String id) {
         return pictureService.loadPicture(id);
+    }
+
+    @GetMapping(value = "/{username}/pictures")
+    public List<Long> getAccountPictures(@PathVariable String username) {
+        Account user = accountRepository.findByUsername(username);
+        if(user == null)
+            throw new AccountNotFoundException("The specified user could not be found");
+        return pictureService.getAccountPictures(user);
     }
 }
