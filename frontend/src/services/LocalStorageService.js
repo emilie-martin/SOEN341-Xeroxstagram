@@ -1,3 +1,4 @@
+import axios from "axios";
 const LocalStorageService = (function(){
     return {
         setToken: function(token) {
@@ -13,6 +14,9 @@ const LocalStorageService = (function(){
         clearAllTokens: function() {
             localStorage.removeItem('access_token');
             localStorage.removeItem('refresh_token');
+        },
+        setBearerToken: function() {
+            axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem('access_token');
         }
     }
 })();

@@ -8,14 +8,10 @@ import com.soen341.instagram.model.Account;
 import com.soen341.instagram.model.Picture;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
-import javax.transaction.Transactional;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -26,6 +22,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
 import java.util.Optional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service("pictureService")
 public class PictureService {
@@ -84,6 +82,10 @@ public class PictureService {
         } catch (IOException e) {
             throw new UnknownIOException("An unknown error occurred while trying to access the picture.", e);
         }
+    }
+
+    public List<Long> getAccountPictures(Account account) {
+        return pictureRepository.findByAccount(account).stream().map(pic -> pic.getId()).collect(Collectors.toList());
     }
 
     public PictureDTO toPictureDTO(Picture pic) {

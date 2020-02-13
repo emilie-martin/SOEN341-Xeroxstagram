@@ -1,10 +1,16 @@
 import React from "react";
 import axios from "axios";
-import loginService from "../services/LoginService";
-import '../config'
+import '../config';
 
-export default function Login() {
-    function submit(event) {
+class Register extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            errorMsg: ""
+        };
+    }
+
+    submit(event) {
         event.preventDefault();
         event.persist();
         axios.post(global.config.BACKEND_URL + "/account/register",
@@ -14,7 +20,7 @@ export default function Login() {
                 "email": event.target.email.value,
                 "firstName": event.target.firstName.value,
                 "lastName": event.target.lastName.value,
-                "dateOfBirth": new Date(event.target.dateOfBirth.value).toISOString()
+                "dateOfBirth": event.target.dateOfBirth.value
             })
             .then(
                 () => {
@@ -26,41 +32,53 @@ export default function Login() {
                 }
             ).then(
                 (response) => {
-                    loginService.setLoginToken(response.data);
+                    this.props.onSuccess(response);
                 }
             ).catch(
-                (error) => {
-                    // todo: handle error
-                    console.log(error);
+                (e) => {
+                    if (e.response.data) {
+                        if (e.response.data.errors) {
+                            this.setState({errorMsg: "Please fill the form correctly."});
+                        } else {
+                            this.setState({errorMsg: e.response.data.message});
+                        }
+                    } else {
+                        this.setState({errorMsg: "An unknown error occured."});
+                    }
                 }
             )
     }
 
-    return(
-        <div className="register">
-            <form onSubmit={submit}>
-                <label>Username</label>
-                <input name="username"></input>
-                <br/>
-                <label>Password</label>
-                <input name="password" type="password"></input>
-                <br/>
-                <label>Email</label>
-                <input name="email"></input>
-                <br/>
-                <label>First name</label>
-                <input name="firstName"></input>
-                <br/>
-                <label>Last name</label>
-                <input name="lastName"></input>
-                <br/>
-                <label>Birth date</label>
-                <input name="dateOfBirth" type="date"></input>
-                <br/>
-                <button type="submit">
-                    Register
-                </button>
-            </form>
-        </div>
-    );
+    render() {
+        return (
+            <div className="register">
+                <form onSubmit={this.submit.bind(this)}>
+                    <label>Username</label>
+                    <input name="username"/>
+                    <br/>
+                    <label>Password</label>
+                    <input name="password" type="password"/>
+                    <br/>
+                    <label>Email</label>
+                    <input name="email"/>
+                    <br/>
+                    <label>First name</label>
+                    <input name="firstName"/>
+                    <br/>
+                    <label>Last name</label>
+                    <input name="lastName"/>
+                    <br/>
+                    <label>Birth date</label>
+                    <input name="dateOfBirth" type="date"/>
+                    <br/>
+                    {this.state.errorMsg && <div className="error">Error: {this.state.errorMsg}</div>}
+                    <button type="submit">
+                        Register
+                    </button>
+                </form>
+            </div>
+        );
+    }
 }
+
+export default Register;
