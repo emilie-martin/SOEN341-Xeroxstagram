@@ -20,9 +20,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	private String CLIENT_ID = "instagram_client";
-	private String CLIENT_SECRET = "secret";
-	private int TOKEN_VALIDITY_SECONDS = 6000;
+	public final static String CLIENT_ID = "instagram_client";
+	public final static String CLIENT_SECRET = "secret";
+	private final static int TOKEN_VALIDITY_SECONDS = 6000;
 
 	@Override
 	public void configure(final AuthorizationServerSecurityConfigurer security) throws Exception
@@ -45,5 +45,4 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	{
 		endpoints.authenticationManager(authenticationManager);
 	}
-
 }
