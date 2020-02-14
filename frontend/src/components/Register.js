@@ -36,7 +36,7 @@ class Register extends React.Component {
                 }
             ).catch(
                 (e) => {
-                    if (e.response.data) {
+                    if (e.response && e.response.data) {
                         if (e.response.data.errors) {
                             this.setState({errorMsg: "Please fill the form correctly."});
                         } else {
