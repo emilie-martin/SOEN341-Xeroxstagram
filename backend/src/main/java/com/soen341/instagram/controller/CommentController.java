@@ -44,7 +44,7 @@ public class CommentController
 			@PathVariable final long pictureId)
 	{
 		final Comment comment = commentService.createComment(commentDTO.getComment(), pictureId);
-		final CommentResponseDTO commentResponse = modelMapper.map(comment, CommentResponseDTO.class);
+		final CommentResponseDTO commentResponse = convertCommentIntoDTO(comment);
 		return commentResponse;
 	}
 
@@ -98,7 +98,7 @@ public class CommentController
 	private CommentResponseDTO convertCommentIntoDTO(final Comment comment)
 	{
 		final CommentResponseDTO commentResponseDTO = modelMapper.map(comment, CommentResponseDTO.class);
-
+		commentResponseDTO.setNbLikes(comment.getLikedBy().size());
 		// Creating picture DTO
 		final Picture picture = comment.getPicture();
 		final PictureDTO pictureDTO = modelMapper.map(picture, PictureDTO.class);

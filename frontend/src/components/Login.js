@@ -21,8 +21,12 @@ class Login extends React.Component {
                 (response) => {
                     this.props.onSuccess(response);
                 },
-                () => {
-                    this.setState({errorMsg: "Invalid credentials"});
+                (error) => {
+                    if (error.response) {
+                        this.setState({errorMsg: "Invalid credentials"});
+                    } else {
+                        this.setState({errorMsg: "An unknown error occurred."});
+                    }
                 }
             )
     }

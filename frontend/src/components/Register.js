@@ -36,14 +36,14 @@ class Register extends React.Component {
                 }
             ).catch(
                 (e) => {
-                    if (e.response.data) {
+                    if (e.response && e.response.data) {
                         if (e.response.data.errors) {
                             this.setState({errorMsg: "Please fill the form correctly."});
                         } else {
                             this.setState({errorMsg: e.response.data.message});
                         }
                     } else {
-                        this.setState({errorMsg: "An unknown error occured."});
+                        this.setState({errorMsg: "An unknown error occurred."});
                     }
                 }
             )

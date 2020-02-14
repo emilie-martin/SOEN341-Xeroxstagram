@@ -29,17 +29,18 @@ h1 {
   display: flex;
   flex-flow: column nowrap;
   border: $border-color;
-  padding: 20px;
   width: 350px;
   word-wrap: break-word;
 }
 
-.post-comments {
+.comments {
   overflow-y: auto;
+  flex-grow: 1;
 }
 
 .post-description {
-  border-bottom: 1px solid black;
-  height: 100px;
+  border-bottom: 3px solid black;
+  padding: 20px;
+  min-height: 100px;
   width: 350px;
 }

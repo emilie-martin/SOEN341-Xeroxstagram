@@ -33,9 +33,17 @@ class User extends React.Component {
         ).catch(
             (error) => {
                 this.setState({
-                    Pictures: [],
-                    errorMsg: error.response.data.message
+                    Pictures: []
                 });
+                if(error.response && error.response.data && error.response.data.message) {
+                    this.setState({
+                        errorMsg: error.response.data.message
+                    });
+                } else {
+                    this.setState({
+                        errorMsg: "An unknown error occurred."
+                    });
+                }
             }
         )
     }

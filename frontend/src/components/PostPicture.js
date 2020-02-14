@@ -20,7 +20,15 @@ class PostPicture extends React.Component {
                     this.props.history.push(`/post/${response.data.id}`);
                 },
                 (e) => {
-                    this.setState({errorMsg: e.response.data.message});
+                    if (e.response) {
+                        if(e.response.status === 401) {
+                            this.setState({errorMsg: "You must be logged in."});
+                        } else {
+                            this.setState({errorMsg: e.response.data.message});
+                        }
+                    } else {
+                        this.setState({errorMsg: "An unknown error occured."});
+                    }
                 }
             )
     }
