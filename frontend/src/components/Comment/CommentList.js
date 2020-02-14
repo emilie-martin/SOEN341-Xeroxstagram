@@ -30,7 +30,8 @@ class CommentList extends React.Component {
             <div className="comment-list-wrapper">
                 <div className="comment-list">
                     {
-                        this.state.commentList.reverse().map(comment => <Comment key={comment.id} comment={comment}></Comment>)
+                        this.state.commentList.slice().reverse()
+                            .map(comment => <Comment key={comment.id} comment={comment}></Comment>)
                     }
                 </div>
             </div>

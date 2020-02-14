@@ -120,7 +120,7 @@ class App extends React.Component {
                     <div>
                         {this.state.currentUser ?
                             <div>
-                                <p>Logged in as: {this.state.currentUser.username}</p>
+                                <p>Logged in as: <Link to={`/account/${this.state.currentUser.username}`}>{this.state.currentUser.username}</Link></p>
                                 <Link to="/logout">Logout</Link><br/>
                                 <Link to="/post">Post Picture</Link><br/>
                             </div>
