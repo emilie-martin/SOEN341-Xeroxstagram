@@ -1,6 +1,7 @@
 ﻿# SOEN341-InsertName
 ### Authors
 Simon Lim (tech lead) | @nasaku898
+:--|:--
 Émilie Martin         | @emilie-martin  
 Daniela Venuta        | @daniela-venuta
 Minh-Tam Do           | @mint47
