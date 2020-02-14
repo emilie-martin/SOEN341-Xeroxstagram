@@ -1,27 +1,42 @@
 import React from 'react'
-import { Comment } from './Comment'
-import { useState, useEffect } from 'react'
-import CommentAPI, { getCommentByPicture } from './CommentAPI';
+import Comment from './Comment'
+import { getCommentByPicture } from './CommentAPI';
 
-const CommentList = () => {
-    const [commentList, setcommentList] = useState([]);
-    useEffect(() => {
-        Promise.resolve(getCommentByPicture(1)).then((response) => {
-            setcommentList(response);
-        })
-    })
-    return (
+class CommentList extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            commentList: []
+        }
+    }
+    componentDidMount() {
+        this.loadComments();
+    }
 
-        <div>
-            <ul>
-                {
-                    commentList.map(comment => <Comment comment={comment}></Comment>)
-                }
-            </ul>
-            {/* {commentList} */}
-        </div>
-    )
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(prevProps.postId !== this.props.postId) {
+            this.loadPicture();
+        }
+    }
+
+    loadComments() {
+        getCommentByPicture(this.props.postId).then((response) => {
+            this.setState({commentList: response});
+        });
+    }
+
+    render() {
+        return (
+            <div className="comment-list-wrapper">
+                <div className="comment-list">
+                    {
+                        this.state.commentList.reverse().map(comment => <Comment key={comment.id} comment={comment}></Comment>)
+                    }
+                </div>
+            </div>
+        );
+    }
 }
 
 
-export default CommentList
+export default CommentList;

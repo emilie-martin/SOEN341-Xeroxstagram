@@ -43,7 +43,7 @@ class Register extends React.Component {
                             this.setState({errorMsg: e.response.data.message});
                         }
                     } else {
-                        this.setState({errorMsg: "An unknown error occured."});
+                        this.setState({errorMsg: "An unknown error occurred."});
                     }
                 }
             )

@@ -23,7 +23,7 @@ public class Comment {
     @NotNull
     private String comment;
 
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.TIMESTAMP)
     @NotNull
     private Date created;
 

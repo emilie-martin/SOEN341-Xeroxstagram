@@ -24,7 +24,7 @@ public class Picture {
     @NotNull
     private Account account;
 
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.TIMESTAMP)
     @NotNull
     private Date created;
 

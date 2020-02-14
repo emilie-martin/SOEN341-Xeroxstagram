@@ -1,8 +1,9 @@
 import React from "react";
 import axios from "axios";
 import {Link} from "react-router-dom";
-import "./Post.scss";
 import CommentList from "./Comment/CommentList";
+import PostComment from "./Comment/PostComment";
+import "./Post.scss";
 import '../config';
 
 class Post extends React.Component {
@@ -11,6 +12,7 @@ class Post extends React.Component {
         this.state = {
             Picture: undefined
         }
+        this.commentListElement = React.createRef();
     }
 
     componentDidMount() {
@@ -37,6 +39,10 @@ class Post extends React.Component {
         )
     }
 
+    onCommentPosted() {
+        this.commentListElement.current.loadComments();
+    }
+
     render() {
         return (
             <div>
@@ -53,9 +59,12 @@ class Post extends React.Component {
                                     {this.state.Picture.account}
                                 </Link>: {this.state.Picture.caption}
                             </div>
-                            <div className="post-comments">
+                            <div className="comments">
                                 {/* similarly, a Comment component should be later created and implemented here */}
-                                <CommentList/>
+                                <CommentList ref={this.commentListElement} postId={this.props.id}/>
+                            </div>
+                            <div>
+                                <PostComment postId={this.props.id} onCommentPosted={this.onCommentPosted.bind(this)}/>
                             </div>
                         </div>
                     </div>

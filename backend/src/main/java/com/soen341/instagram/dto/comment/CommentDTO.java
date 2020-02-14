@@ -1,10 +1,10 @@
 package com.soen341.instagram.dto.comment;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 public class CommentDTO
 {
-	@NotNull
+	@NotBlank
 	private String comment;
 
 	public String getComment()
