@@ -57,6 +57,6 @@ Running the `npm build` command builds the app for production.
 It correctly bundles React in production mode and optimizes the build for the best performance.
 [Read more](https://facebook.github.io/create-react-app/docs/deployment)
 
-#### Spring Boot
+### Spring Boot
 Spring Boot is an open source Java-based framework used to create a micro Service.
 It is developed by Pivotal Team and is used to build stand-alone and production ready spring applications.
