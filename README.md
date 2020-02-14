@@ -1,19 +1,18 @@
 ﻿# SOEN341-InsertName
 ### Authors
 Simon Lim (tech lead) | @nasaku898
----|---
-Émilie Martin | @emilie-martin  
-Daniela Venuta | @daniela-venuta
-Minh-Tam Do | @mint47
-Luc Nguyen | @1999lucnguyen  
-Karin Kazarian | @Karin-kazarian  
+Émilie Martin         | @emilie-martin  
+Daniela Venuta        | @daniela-venuta
+Minh-Tam Do           | @mint47
+Luc Nguyen            | @1999lucnguyen  
+Karin Kazarian        | @Karin-kazarian  
 
 ### Description
-This is a social media project based on the main features of instagram.
+This is a social media project based on the main features of instagram. This project is an introduction that we created to help us learn  the basics of industrial software development process.
 The project was created for SOEN341 at Concordia University.
 
 ### Objectives
-The app is intended to implement the core features of Instagram, such that the user is able to post a picture, follow another user, and be allowed to comment under posted pictures.
+The app is intended to implement the core features of Instagram, such that the user is able to post a picture, follow another user, and be allowed to comment under posted pictures. The project guideline also requires us to implement additional features.
 
 ### Core Features
 * User Service (Registration, Login and account management)
