@@ -15,7 +15,7 @@ class CommentList extends React.Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if(prevProps.postId !== this.props.postId) {
-            this.loadPicture();
+            this.loadComments();
         }
     }
 
