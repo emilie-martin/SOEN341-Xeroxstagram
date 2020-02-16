@@ -39,7 +39,7 @@ The app is intended to implement the core features of Instagram, such that the u
 - - -
 
 ### React
-React is a JavaScript library that boasts component reusability and is greatly used for frontend purposes.
+React is a JavaScript library that boasts component reusability and is greatly used for frontend purposes.  
 For this project, React was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).  
 [More about React](https://reactjs.org/)  
 [More about Create React App](https://facebook.github.io/create-react-app/docs/getting-started)
