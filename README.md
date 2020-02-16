@@ -9,8 +9,9 @@ Luc Nguyen            | @1999lucnguyen
 Karin Kazarian        | @Karin-kazarian  
 
 ### Description
-This is a social media project based on the main features of instagram. This project is an introduction that we created to help us learn  the basics of industrial software development process.
-The project was created for SOEN341 at Concordia University.
+This is a social media project based on the main features of Instagram.  
+This project aims for us to learn the basics of the industrial software development process.
+The project was created for the course SOEN341 - software processes at Concordia University.
 
 ### Objectives
 The app is intended to implement the core features of Instagram, such that the user is able to post a picture, follow another user, and be allowed to comment under posted pictures. The project guideline also requires us to implement additional features.
@@ -58,5 +59,9 @@ It correctly bundles React in production mode and optimizes the build for the be
 [Read more](https://facebook.github.io/create-react-app/docs/deployment)
 
 ### Spring Boot
-Spring Boot is an open source Java-based framework used to create a micro Service.
+Spring Boot is an open source Java-based framework used to create a microservice.
 It is developed by Pivotal Team and is used to build stand-alone and production ready spring applications.
+
+### Travis CI
+Travis CI is a hosted continuous integration service used to build and test software projects hosted at GitHub.
+
