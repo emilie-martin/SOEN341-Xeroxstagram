@@ -4,10 +4,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+public class InvalidNameException extends RuntimeException {
+	
+	public InvalidNameException()
+	{
+		super("Name format is invalid");
+	}
 
-//Thrown when a user tries to follow their own account
-public class SameAccountException extends RuntimeException {
-    public SameAccountException(String msg) {
-        super(msg);
-    }
 }
