@@ -6,10 +6,6 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import com.soen341.instagram.dao.impl.AccountRepository;
@@ -23,6 +19,7 @@ import com.soen341.instagram.exception.picture.PictureNotFoundException;
 import com.soen341.instagram.model.Account;
 import com.soen341.instagram.model.Comment;
 import com.soen341.instagram.model.Picture;
+import com.soen341.instagram.utils.UserAccessor;
 
 @Service("commentService")
 public class CommentService
@@ -33,9 +30,6 @@ public class CommentService
 	private AccountRepository accountRepository;
 	@Autowired
 	private PictureRepository pictureRepository;
-	@Autowired
-	@Qualifier("UserDetailsService")
-	private UserDetailsService userDetailsService;
 
 	private static int maxCommentLength = 250;
 
@@ -46,7 +40,7 @@ public class CommentService
 			throw new CommentLengthTooLongException("Comment length exceeds " + maxCommentLength + " characters");
 		}
 
-		final Account account = getCurrentUser();
+		final Account account = UserAccessor.getCurrentUser(accountRepository);
 		final Optional<Picture> picture = pictureRepository.findById(pictureId);
 
 		if (!picture.isPresent())
@@ -68,7 +62,7 @@ public class CommentService
 	{
 		final Comment comment = findComment(commentId);
 		final Set<Account> likedBy = comment.getLikedBy();
-		final boolean addedSuccessfully = likedBy.add(getCurrentUser());
+		final boolean addedSuccessfully = likedBy.add(UserAccessor.getCurrentUser(accountRepository));
 		if (!addedSuccessfully)
 		{
 			throw new MultipleLikeException("A comment can only be liked one time by the same user");
@@ -83,7 +77,7 @@ public class CommentService
 	{
 		final Comment comment = findComment(commentId);
 		final Set<Account> likedBy = comment.getLikedBy();
-		final boolean removedSuccessfully = likedBy.remove(getCurrentUser());
+		final boolean removedSuccessfully = likedBy.remove(UserAccessor.getCurrentUser(accountRepository));
 
 		if (!removedSuccessfully)
 		{
@@ -139,23 +133,4 @@ public class CommentService
 		}
 		return commentOptional.get();
 	}
-
-	// Get current user authenticated, maybe create a new class that handle this
-	// since it will be used by multiple service
-	private Account getCurrentUser()
-	{
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-		if (principal instanceof UserDetails)
-		{
-			String username = userDetailsService.loadUserByUsername(((UserDetails) principal).getUsername())
-					.getUsername();
-			return accountRepository.findByUsername(username);
-		}
-		else
-		{
-			throw new IllegalStateException("No user authenticated");
-		}
-	}
-
 }
