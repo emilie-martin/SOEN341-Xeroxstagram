@@ -10,5 +10,4 @@ public class InvalidNameException extends RuntimeException {
 	{
 		super("Name format is invalid");
 	}
-
 }

@@ -100,13 +100,13 @@ public class ProfileService {
 		return pictureRepository.findByAccount(getCurrentAccount()).size();
 	}
 	
-	public Set<Account> getFollowers() {
-		
+	public Set<Account> getFollowers()
+	{	
 		return getCurrentAccount().getFollowers();
 	}
 
-	public String getDisplayName() {
-		
+	public String getDisplayName()
+	{	
 		return getCurrentAccount().getDisplayName();
 	}
 
@@ -136,7 +136,7 @@ public class ProfileService {
 	{
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = ((UserDetails)authentication.getPrincipal()).getUsername();
+        
         return accountRepository.findByUsername(username);
 	}
-	
 }

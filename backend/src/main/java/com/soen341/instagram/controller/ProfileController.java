@@ -62,66 +62,30 @@ public class ProfileController {
 //		profileService.setProfilePicture(picture);
 //	}
 
-	@GetMapping(value = "account/profile/pictureCount")
-	public ProfileRequestDTO getNumberOfPictures()
+	@GetMapping(value = "account/profile/profile")
+	public ProfileRequestDTO getProfile()
 	{
 		ProfileRequestDTO profileRequestDTO = new ProfileRequestDTO();
+		
+		// Pictures
 		profileRequestDTO.setNumPictures(profileService.getNumberOfPictures());
 		
-		return profileRequestDTO;
-	}
-	
-	
-	@GetMapping(value = "account/profile/followerCount")
-	public ProfileRequestDTO getNumberOfFollowers()
-	{
-		ProfileRequestDTO profileRequestDTO = new ProfileRequestDTO();
+		// Followers
 		profileRequestDTO.setNumFollowers(profileService.getNumberOfFollowers());
-		
-		return profileRequestDTO;
-	}
-	
-	@GetMapping(value = "account/profile/followers")
-	public ProfileRequestDTO getFollowers()
-	{
-		ProfileRequestDTO profileRequestDTO = new ProfileRequestDTO();
 		profileRequestDTO.setFollowers(profileService.getFollowers());
 		
-		return profileRequestDTO;
-	}
-	
-	@GetMapping(value = "account/profile/displayName")
-	public ProfileRequestDTO getDisplayName()
-	{
-		ProfileRequestDTO profileRequestDTO = new ProfileRequestDTO();
-		profileRequestDTO.setFirstName(profileService.getFirstName());
+		// Display Name
+		profileRequestDTO.setDisplayName(profileService.getDisplayName());
 		
-		return profileRequestDTO;
-	}
-	
-	@GetMapping(value = "account/profile/biography")
-	public ProfileRequestDTO getBiography()
-	{
-		ProfileRequestDTO profileRequestDTO = new ProfileRequestDTO();
+		// Full Name
+		profileRequestDTO.setFirstName(profileService.getFirstName());
+		profileRequestDTO.setLastName(profileService.getLastName());
+		
+		//Biography
 		profileRequestDTO.setBiography(profileService.getBiography());
 		
-		return profileRequestDTO;
-	}
-	
-	@GetMapping(value = "account/profile/firstName")
-	public ProfileRequestDTO getFirstName()
-	{
-		ProfileRequestDTO profileRequestDTO = new ProfileRequestDTO();
-		profileRequestDTO.setFirstName(profileService.getFirstName());
-		
-		return profileRequestDTO;
-	}
-	
-	@GetMapping(value = "account/profile/lastName")
-	public ProfileRequestDTO getLastName()
-	{
-		ProfileRequestDTO profileRequestDTO = new ProfileRequestDTO();
-		profileRequestDTO.setLastName(profileService.getLastName());
+		// Email
+		profileRequestDTO.setEmail(profileService.getEmail());
 		
 		return profileRequestDTO;
 	}
