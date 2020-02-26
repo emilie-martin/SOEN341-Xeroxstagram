@@ -23,11 +23,11 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter
 				.antMatchers("/picture").authenticated()
 				.antMatchers("/comment/commentByPicture/**", "/comment/commentById/**").permitAll()
 				.antMatchers("/comment/**").authenticated()
-				.antMatchers("/account/profile/**").authenticated();
+				.antMatchers("/account/profile/**").authenticated()
+				.antMatchers("/account/following/**").authenticated();
 		
-
 		// I'm letting all the request as permitAll for now. It will be easier to
-		// developp API. We can configure the authentication later
+		// develop API. We can configure the authentication later
 	}
 
 }

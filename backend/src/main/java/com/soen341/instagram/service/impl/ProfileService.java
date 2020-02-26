@@ -130,7 +130,6 @@ public class ProfileService {
 	}
 	
 	// Helper methods
-	// TODO: Remove code duplication of this method in multiple classes 
 	private Account getCurrentAccount()
 	{
 		return UserAccessor.getCurrentAccount(accountRepository);
