@@ -4,15 +4,14 @@ import java.util.Set;
 
 // Spring
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 // Project
 import com.soen341.instagram.dao.impl.AccountRepository;
 import com.soen341.instagram.dao.impl.PictureRepository;
 import com.soen341.instagram.model.Account;
+import com.soen341.instagram.utils.AccountVerifier;
+import com.soen341.instagram.utils.UserAccessor;
 
 @Service
 public class ProfileService {
@@ -134,9 +133,6 @@ public class ProfileService {
 	// TODO: Remove code duplication of this method in multiple classes 
 	private Account getCurrentAccount()
 	{
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = ((UserDetails)authentication.getPrincipal()).getUsername();
-        
-        return accountRepository.findByUsername(username);
+		return UserAccessor.getCurrentAccount(accountRepository);
 	}
 }
