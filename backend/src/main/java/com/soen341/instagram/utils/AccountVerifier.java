@@ -1,4 +1,4 @@
-package com.soen341.instagram.service.impl;
+package com.soen341.instagram.utils;
 
 import com.soen341.instagram.dao.impl.*;
 import com.soen341.instagram.exception.account.EmailTakenException;
