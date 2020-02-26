@@ -1,6 +1,5 @@
 package com.soen341.instagram.dto.account;
 
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class AccountDTO {
@@ -8,6 +7,7 @@ public class AccountDTO {
     private String email;
     private String firstName;
     private String lastName;
+    private String displayName;
     private Date dateOfBirth;
     private Date created;
 
@@ -57,5 +57,15 @@ public class AccountDTO {
 
     public void setCreated(Date created) {
         this.created = created;
+    }
+    
+    public String getDisplayName()
+    {
+    	return displayName;
+    }
+    
+    public void setDisplayName(String displayName)
+    {
+    	this.displayName = displayName;
     }
 }
