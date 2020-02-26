@@ -2,24 +2,28 @@ package com.soen341.instagram.dto.account;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class CreateAccountRequestDTO
 {
-	@NotNull
+	@NotBlank
 	private String username;
 
-	@NotNull
+	@NotBlank
 	private String email;
 
-	@NotNull
+	@NotBlank
 	private String password;
 
-	@NotNull
+	@NotBlank
 	private String firstName;
 
-	@NotNull
+	@NotBlank
 	private String lastName;
+	
+	@NotBlank
+	private String displayName;
 
 	@NotNull
 	private Date dateOfBirth;
@@ -38,7 +42,7 @@ public class CreateAccountRequestDTO
 	{
 		return username;
 	}
-
+	
 	public void setUsername(String username)
 	{
 		this.username = username;
@@ -82,5 +86,15 @@ public class CreateAccountRequestDTO
 	public void setLastName(String lastName)
 	{
 		this.lastName = lastName;
+	}
+	
+	public String getDisplayName()
+	{
+		return displayName;
+	}
+
+	public void setDisplayName(String displayName)
+	{
+		this.displayName = displayName;
 	}
 }

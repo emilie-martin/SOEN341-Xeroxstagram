@@ -3,9 +3,9 @@
 .post {
   display: flex;
   margin: 0 auto;
-  width: 750px;
-  height: 500px;
   border: $border-color;
+  height: 720px;
+  width: 1476px;
   background-color: whitesmoke;
 }
 
@@ -14,11 +14,13 @@ h1 {
 }
 
 .image-wrapper {
-  flex: 2;
+  width: 1080px;
+  height: 100%;
   border: $border-color;
 }
 
 .image-wrapper img {
+  width: 100%;
   height: 100%;
 }
 
@@ -27,13 +29,18 @@ h1 {
   display: flex;
   flex-flow: column nowrap;
   border: $border-color;
+  width: 350px;
+  word-wrap: break-word;
 }
 
-.text-wrapper {
-  width: 100%;
-  padding: 20px;
-}
-
-.post-comments {
+.comments {
   overflow-y: auto;
+  flex-grow: 1;
+}
+
+.post-description {
+  border-bottom: 3px solid black;
+  padding: 20px;
+  min-height: 100px;
+  width: 350px;
 }

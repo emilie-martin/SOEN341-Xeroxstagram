@@ -19,8 +19,12 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter
 	@Override
 	public void configure(HttpSecurity http) throws Exception
 	{
-		http.headers().frameOptions().disable().and().authorizeRequests().antMatchers("/", "account/register", "/login")
-				.permitAll();
+		http.cors().and().headers().frameOptions().disable().and().authorizeRequests()
+				.antMatchers("/picture").authenticated()
+				.antMatchers("/comment/commentByPicture/**", "/comment/commentById/**").permitAll()
+				.antMatchers("/comment/**").authenticated()
+				.antMatchers("/account/profile/**").authenticated();
+		
 
 		// I'm letting all the request as permitAll for now. It will be easier to
 		// developp API. We can configure the authentication later

@@ -32,20 +32,30 @@ public class Account {
     @NotNull
     private Date created;
 
-    // Following field can be moved to a new "Profile" class. To be discussed
     private String biography;
+    
+   @NotNull
+    private String displayName;
 
     @ManyToMany
     private Set<Account> following;
-
-    // Following fields are redundant but could be more efficient. To be discussed
-    private int numFollowers;
-    private int numFollowing;
-    private int numPosts;
+    
+    @ManyToMany
+    private Set<Account> followers;
 
     @OneToOne
     private Picture profilePicture;
 
+    public String getDisplayName()
+    {
+    	return displayName;
+    }
+    
+    public void setDisplayName(String displayName)
+    {
+    	this.displayName = displayName;
+    }
+    
     public String getUsername() {
         return username;
     }
@@ -110,30 +120,6 @@ public class Account {
         this.created = created;
     }
 
-    public int getNumFollowers() {
-        return numFollowers;
-    }
-
-    public void setNumFollowers(int numFollowers) {
-        this.numFollowers = numFollowers;
-    }
-
-    public int getNumFollowing() {
-        return numFollowing;
-    }
-
-    public void setNumFollowing(int numFollowing) {
-        this.numFollowing = numFollowing;
-    }
-
-    public int getNumPosts() {
-        return numPosts;
-    }
-
-    public void setNumPosts(int numPosts) {
-        this.numPosts = numPosts;
-    }
-
     public Picture getProfilePicture() {
         return profilePicture;
     }
@@ -148,6 +134,14 @@ public class Account {
             following = new HashSet<>();
         }
         return following;
+    }
+    
+    public Set<Account> getFollowers() {
+    	// Never return a null object
+    	if(followers == null) {
+    		followers = new HashSet<>();
+    	}
+    	return followers;
     }
 
     public void follow(Account otherAccount) {
