@@ -46,7 +46,12 @@ public class FollowingService {
 		}
 		
 		Set<Account> followingSet = accountFollowing.getFollowing();
-		followingSet.add(accountBeingFollowed);
+		
+		if(!followingSet.add(accountBeingFollowed))
+		{
+			throw new AlreadyFollowingException("Account is already following this user");
+		}
+		
 		accountRepository.save(accountFollowing);
 	}
 	
@@ -58,18 +63,19 @@ public class FollowingService {
 		}
 		
 		Set<Account> followingSet = accountFollowing.getFollowing();
-		followingSet.remove(accountBeingFollowed);
+		
+		if(!followingSet.remove(accountBeingFollowed))
+		{
+			throw new AccountNotFoundException("Cannot unfollow an account that is not already being followed");
+		}
+		
 		accountRepository.save(accountFollowing);
 	}
 	
 	private void addFollower(final Account accountFollowing, final Account accountBeingFollowed)
 	{
 		Set<Account> followerSet = accountBeingFollowed.getFollowers();
-		
-		if(!followerSet.add(accountFollowing))
-		{
-			throw new AlreadyFollowingException("Account is already following this user");
-		}
+		followerSet.add(accountFollowing);
 		
 		accountRepository.save(accountBeingFollowed);
 	}
@@ -77,11 +83,7 @@ public class FollowingService {
 	private void removeFollower(final Account accountFollowing, final Account accountBeingFollowed)
 	{
 		Set<Account> followerSet = accountBeingFollowed.getFollowers();
-		
-		if(!followerSet.remove(accountFollowing))
-		{
-			throw new AccountNotFoundException("Cannot unfollow an account that is not already being followed");
-		}
+		followerSet.remove(accountFollowing);
 		
 		accountRepository.save(accountBeingFollowed);
 	}
