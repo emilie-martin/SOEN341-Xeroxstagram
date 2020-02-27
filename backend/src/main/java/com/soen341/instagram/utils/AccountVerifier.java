@@ -7,6 +7,7 @@ import com.soen341.instagram.exception.account.InvalidNameException;
 import com.soen341.instagram.exception.account.InvalidUsernameFormatException;
 import com.soen341.instagram.exception.account.UsernameTakenException;
 import java.util.regex.Pattern;
+import com.soen341.instagram.exception.account.SamePasswordException;
 
 public class AccountVerifier {
 	
@@ -50,6 +51,14 @@ public class AccountVerifier {
 		if(Pattern.matches(regex, name))
 		{
 			throw new InvalidNameException();
+		}
+	}
+
+	public static void checkIfSamePassword(final String oldPassword, final String newPassword)
+	{
+		if(oldPassword.equals(newPassword))
+		{
+			throw new SamePasswordException();
 		}
 	}
 }

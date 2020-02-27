@@ -1,5 +1,7 @@
 package com.soen341.instagram.controller;
 
+import java.util.Date;
+
 // Spring
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 // Project
-import com.soen341.instagram.dto.account.CreateAccountRequestDTO;
-import com.soen341.instgram.service.impl.AccountService;
+import com.soen341.instagram.dto.account.AccountRequestDTO;
+import com.soen341.instagram.service.impl.AccountService;
 
 @RestController
 public class AccountController {
@@ -17,23 +19,33 @@ public class AccountController {
   @Autowired
   private AccountService accountService;
 
-  public void updatePassword() {
-    // use PUT method to update pw in http request
+  @PutMapping(value = "account/passwordModification")
+  public void setPassword(@RequestBody final AccountRequestDTO accountRequest)
+  {
+    accountService.setPassword(accountRequest.getPassword());
   }
 
-  public void updateEmail() {
-    // use PUT method to update email in http request
+  @PutMapping(value = "account/emailModification")
+  public void setEmail(@RequestBody final AccountRequestDTO accountRequest)
+  {
+    String email = accountRequest.getEmail();
+    accountService.setEmail(email);
   }
 
-  public void updateBirthday() {
-    // use PUT method to update bday in http request
+  @PutMapping(value = "account/birthdayModification")
+  public void setBirthday(@RequestBody final AccountRequestDTO accountRequest)
+  {
+    Date birthday = accountRequest.getBirthday();
+    accountService.setBirthday(birthday);
   }
 
-  public void getEmail() {
-    // use GET method to retrieve email
-  }
+  @GetMapping(value = "account/account/account")
+  public AccountRequestDTO getAccount() {
+    AccountRequestDTO accountRequestDTO = new AccountRequestDTO();
 
-  public void getBirthday() {
-    // use GET method to retrieve bday
+    accountRequestDTO.setEmail(accountService.getEmail());
+    accountRequestDTO.setBirthday(accountService.getBirthday());
+
+    return accountRequestDTO;
   }
 }
