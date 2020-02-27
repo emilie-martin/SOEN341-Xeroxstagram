@@ -32,7 +32,7 @@ public class AccountService
     final Account account = UserAccessor.getCurrentAccount(accountRepository);
     String oldPassword = account.getPassword();
     
-    AccountVerifier.chekIfSamePassword(newPassword, oldPassword);
+    AccountVerifier.checkIfSamePassword(newPassword, oldPassword);
     
     account.setPassword(passwordEncoder.encode(newPassword));
     accountRepository.save(account);

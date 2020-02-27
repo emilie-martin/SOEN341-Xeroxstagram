@@ -12,8 +12,7 @@ import com.soen341.instagram.exception.account.UsernameTakenException;
 import com.soen341.instagram.exception.account.SamePasswordException;
 
 public class AccountVerifier {
-	@Autowired
-	PasswordEncoder passwordEncoder;
+	static PasswordEncoder passwordEncoder;
 	
 	public static void checkIfEmailTaken(final String email, AccountRepository accountRepository)
 	{
