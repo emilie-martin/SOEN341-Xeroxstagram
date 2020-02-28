@@ -1,12 +1,12 @@
 import React from "react";
 import axios from "axios";
-import { useState } from "react";
+import { useState} from "react";
 import '../config';
 
 export const Register = (props) => {
 
     const [errorMsg, setErrorMessage] = useState("");
-
+    
     // Submit registration form
     const submit = (event) => {
         event.preventDefault();
@@ -18,7 +18,8 @@ export const Register = (props) => {
                 "email": event.target.email.value,
                 "firstName": event.target.firstName.value,
                 "lastName": event.target.lastName.value,
-                "dateOfBirth": event.target.dateOfBirth.value
+                "dateOfBirth": event.target.dateOfBirth.value,
+                "displayName":event.target.displayName.value
             })
             .then(
                 () => {
@@ -44,9 +45,8 @@ export const Register = (props) => {
                         setErrorMessage("An unknown error occurred.");
                     }
                 }
-            )
+            )      
     }
-
         return (
             <div className="register">
                 <form onSubmit={submit}>
@@ -67,6 +67,9 @@ export const Register = (props) => {
                     <br/>
                     <label>Birth date</label>
                     <input name="dateOfBirth" type="date"/>
+                    <br/>
+                    <label>Display name</label>
+                    <input name="displayName"/>
                     <br/>
                     {errorMsg && <div className="error">Error: {errorMsg}</div>}
                     <button type="submit">
