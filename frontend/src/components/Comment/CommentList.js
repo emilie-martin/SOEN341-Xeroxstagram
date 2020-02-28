@@ -1,43 +1,31 @@
-import React from 'react'
-import Comment from './Comment'
-import { getCommentByPicture } from './CommentAPI';
+import React, { useState, useEffect } from 'react'
+import { getCommentByPicture } from './CommentAPI'
+import { Comment } from './Comment'
+import './SCSS/CommentList.scss'
 
-class CommentList extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            commentList: []
-        }
-    }
-    componentDidMount() {
-        this.loadComments();
-    }
+const CommentList = (props) => {
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if(prevProps.postId !== this.props.postId) {
-            this.loadComments();
-        }
-    }
+    const [commentList, setCommentList] = useState([])
 
-    loadComments() {
-        getCommentByPicture(this.props.postId).then((response) => {
-            this.setState({commentList: response});
+    useEffect(() => {
+        loadComments();
+    }, [props.postId, props.refreshComment]);
+
+    const loadComments = () => {
+        getCommentByPicture(props.postId).then((response) => {
+            setCommentList(response);
         });
     }
 
-    render() {
-        return (
-            <div className="comment-list-wrapper">
-                <div className="comment-list">
-                    {
-                        this.state.commentList.slice().reverse()
-                            .map(comment => <Comment key={comment.id} comment={comment}></Comment>)
-                    }
-                </div>
+    return (
+        <div className="comment-list-wrapper">
+            <div className="comment-list">
+                {
+                    commentList.slice().reverse()
+                        .map(comment => <Comment key={comment.id} comment={comment}></Comment>)
+                }
             </div>
-        );
-    }
+        </div>
+    );
 }
-
-
 export default CommentList;

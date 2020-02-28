@@ -1,10 +1,10 @@
 import React from "react";
 import axios from "axios";
-import {Link} from "react-router-dom";
-import CommentList from "./Comment/CommentList";
-import PostComment from "./Comment/PostComment";
+import { Link } from "react-router-dom";
+import { PostComment } from "./Comment/PostComment";
 import "./Post.scss";
 import '../config';
+import CommentList from "./Comment/CommentList";
 
 class Post extends React.Component {
     constructor(props) {
@@ -12,7 +12,6 @@ class Post extends React.Component {
         this.state = {
             Picture: undefined
         }
-        this.commentListElement = React.createRef();
     }
 
     componentDidMount() {
@@ -20,7 +19,7 @@ class Post extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(prevProps.id !== this.props.id) {
+        if (prevProps.id !== this.props.id) {
             this.loadPicture();
         }
     }
@@ -28,7 +27,7 @@ class Post extends React.Component {
     loadPicture() {
         axios.get(global.config.BACKEND_URL + "/picture/" + this.props.id).then(
             (response) => {
-                this.setState({Picture: response.data});
+                this.setState({ Picture: response.data });
             }
         ).catch(
             () => {
@@ -40,7 +39,9 @@ class Post extends React.Component {
     }
 
     onCommentPosted() {
-        this.commentListElement.current.loadComments();
+        //Whenver a comment is posted, inverse the boolean associated to refreshComment
+        //This state will be passed into a commentList in order to make the component rerender
+        this.setState({ refreshComment: !this.state.refreshComment })
     }
 
     render() {
@@ -50,7 +51,7 @@ class Post extends React.Component {
                     <div className="post">
                         <div className="image-wrapper">
                             <img src={`${global.config.BACKEND_URL}/picture/${this.props.id}.jpg`}
-                                 alt="insert post here"/>
+                                alt={`${this.props.id}`} />
                         </div>
                         <div className="text-wrapper">
                             {/* a Description component can be created to facilitate the creation of Post components */}
@@ -60,11 +61,10 @@ class Post extends React.Component {
                                 </Link>: {this.state.Picture.caption}
                             </div>
                             <div className="comments">
-                                {/* similarly, a Comment component should be later created and implemented here */}
-                                <CommentList ref={this.commentListElement} postId={this.props.id}/>
+                                <CommentList refreshComment={this.state.refreshComment} postId={this.props.id} />
                             </div>
-                            <div>
-                                <PostComment postId={this.props.id} onCommentPosted={this.onCommentPosted.bind(this)}/>
+                            <div className="postsComment">
+                                <PostComment postId={this.props.id} onCommentPosted={this.onCommentPosted.bind(this)} />
                             </div>
                         </div>
                     </div>
