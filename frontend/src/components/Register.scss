@@ -8,9 +8,22 @@ input{
     font-size: 17px;
     display:flex;
     justify-content: center;
+    color: white;
 }
 
-.user-names-left{
+.external{
+    border-radius: 25px;
+    border: 2px solid rgba(54, 52, 52, 0.707);;
+    padding: 20px;
+    background-color: rgba(54, 52, 52, 0.707);
+}
+
+.title{
+    display: flex;
+    justify-content: center;
+}
+
+.user-names-left, .user-names-right{
     margin-right:30px;
 }
 

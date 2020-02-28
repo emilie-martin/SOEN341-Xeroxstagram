@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { useState} from "react";
+import { useState } from "react";
 import '../config';
 import './Register.scss'
 
@@ -55,8 +55,11 @@ export const Register = (props) => {
                 }
             )      
     }
-        return (
-            <div className="register">
+    
+    return (
+        <div className="register">
+            <div className="external">
+                <div className="title"><h3>Register</h3></div>
                 <form className="register-form" onSubmit={submit}>
                     <div className="registration-form">
                         <div className = "user-names">
@@ -104,7 +107,8 @@ export const Register = (props) => {
                     </div>
                 </form>
             </div>
-        );
+        </div>
+    );
 };
 
 export default Register;
