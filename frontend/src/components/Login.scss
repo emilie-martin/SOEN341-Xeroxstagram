@@ -1,0 +1,32 @@
+@import "../styles/prelude.scss";
+
+.login-field{
+    width: 100%;
+    padding: 10px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+
+.input-field{
+    margin-bottom: 5%;
+}
+
+.login, .error{
+    display: flex;
+    justify-content: center;
+}
+
+.button{
+    color: rgb(25, 136, 240);
+    background-color: rgb(40, 40, 40);
+    outline: none;
+    border: none;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    border-radius: 2px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 8px 0;
+}
