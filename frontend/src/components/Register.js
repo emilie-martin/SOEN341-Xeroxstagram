@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { useState} from "react";
 import '../config';
+import './Register.scss'
 
 export const Register = (props) => {
 
@@ -72,7 +73,7 @@ export const Register = (props) => {
                     <input name="displayName"/>
                     <br/>
                     {errorMsg && <div className="error">Error: {errorMsg}</div>}
-                    <button type="submit">
+                    <button className ="button" type="submit">
                         Register
                     </button>
                 </form>
