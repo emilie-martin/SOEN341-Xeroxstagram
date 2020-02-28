@@ -56,30 +56,30 @@ export const Register = (props) => {
                             <div className="user-names-left">
                                 <label>Username</label>
                                 <br/>
-                                <input name="username"/>
+                                <input name="username" placeholder="Username"/>
                                 <br/>
                                 <label>First Name</label>
                                 <br/>
-                                <input name="firstName"/>
+                                <input name="firstName" placeholder="First name"/>
                             </div>
                             <div className="user-names-right">
                                 <label>Display name</label>
                                 <br/>
-                                <input name="displayName"/>
+                                <input name="displayName" placeholder="Display name"/>
                                 <br/>
                                 <label>Last Name</label>
                                 <br/>
-                                <input name="lastName"/>
+                                <input name="lastName" placeholder="Last name"/>
                             </div>
                         </div>
                         <div className = "user-info">
                             <label>Email</label>
                             <br/>
-                            <input name="email"/>
+                            <input name="email" placeholder="Email"/>
                             <br/>
                             <label>Password</label>
                             <br/>
-                            <input name="password" type="password"/>
+                            <input name="password" type="password" placeholder="Password"/>
                             <br/>
                             <label>Birthday</label>
                             <br/>

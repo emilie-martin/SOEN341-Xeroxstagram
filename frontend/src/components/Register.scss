@@ -1,12 +1,24 @@
 .register
 {
-    //border-bottom: 1px solid #a9a9a9;
-    padding-left: 5%;
-    margin-left: auto;
-    margin-right: auto;
+    
     font-size: 20px;
     display:flex;
     justify-content: center;
+}
+
+.registration-form
+{
+    
+}
+
+.user-names-left
+{
+    padding: 5%;
+}
+
+.user-names-right
+{
+    padding: 5%;
 }
 
 .user-names
