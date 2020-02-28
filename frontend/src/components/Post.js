@@ -12,7 +12,6 @@ class Post extends React.Component {
         this.state = {
             Picture: undefined
         }
-        this.commentListElement = React.createRef();
     }
 
     componentDidMount() {
