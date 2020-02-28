@@ -50,29 +50,44 @@ export const Register = (props) => {
     }
         return (
             <div className="register">
-                <form onSubmit={submit}>
-                    <label>Username</label>
-                    <input name="username"/>
-                    <br/>
-                    <label>Password</label>
-                    <input name="password" type="password"/>
-                    <br/>
-                    <label>Email</label>
-                    <input name="email"/>
-                    <br/>
-                    <label>First name</label>
-                    <input name="firstName"/>
-                    <br/>
-                    <label>Last name</label>
-                    <input name="lastName"/>
-                    <br/>
-                    <label>Birth date</label>
-                    <input name="dateOfBirth" type="date"/>
-                    <br/>
-                    <label>Display name</label>
-                    <input name="displayName"/>
-                    <br/>
-                    {errorMsg && <div className="error">Error: {errorMsg}</div>}
+                <form className="register-form" onSubmit={submit}>
+                    <div className="registration-form">
+                        <div className = "user-names">
+                            <div className="user-names-left">
+                                <label>Username</label>
+                                <br/>
+                                <input name="username"/>
+                                <br/>
+                                <label>First Name</label>
+                                <br/>
+                                <input name="firstName"/>
+                            </div>
+                            <div className="user-names-right">
+                                <label>Display name</label>
+                                <br/>
+                                <input name="displayName"/>
+                                <br/>
+                                <label>Last Name</label>
+                                <br/>
+                                <input name="lastName"/>
+                            </div>
+                        </div>
+                        <div className = "user-info">
+                            <label>Email</label>
+                            <br/>
+                            <input name="email"/>
+                            <br/>
+                            <label>Password</label>
+                            <br/>
+                            <input name="password" type="password"/>
+                            <br/>
+                            <label>Birthday</label>
+                            <br/>
+                            <input name="dateOfBirth" type="date"/>
+                            <br/>
+                            {errorMsg && <div className="error">Error: {errorMsg}</div>}
+                        </div> 
+                    </div>
                     <button className ="button" type="submit">
                         Register
                     </button>
