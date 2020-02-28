@@ -25,12 +25,15 @@ import com.soen341.instagram.dto.picture.PictureDTO;
 import com.soen341.instagram.model.Comment;
 import com.soen341.instagram.model.Picture;
 import com.soen341.instagram.service.impl.CommentService;
+import com.soen341.instagram.service.impl.FetchService;
 
 @RestController
 public class CommentController
 {
 	@Autowired
 	private CommentService commentService;
+	@Autowired
+	private FetchService fetch;
 	@Autowired
 	PictureRepository rep;
 	@Autowired
@@ -46,18 +49,6 @@ public class CommentController
 		final Comment comment = commentService.createComment(commentDTO.getComment(), pictureId);
 		final CommentResponseDTO commentResponse = convertCommentIntoDTO(comment);
 		return commentResponse;
-	}
-
-	@PostMapping(value = "/comment/like/{commentId}")
-	public int likeComment(@PathVariable final long commentId)
-	{
-		return commentService.likeComment(commentId);
-	}
-
-	@PostMapping(value = "/comment/likeRemoval/{commentId}")
-	public int unlikeComment(@PathVariable final long commentId)
-	{
-		return commentService.unlikeComment(commentId);
 	}
 
 	@DeleteMapping(value = "/comment/commentRemoval/{commentId}")
@@ -78,7 +69,7 @@ public class CommentController
 	@GetMapping(value = "/comment/commentById/{commentId}")
 	public CommentResponseDTO getCommentById(@PathVariable final long commentId)
 	{
-		final Comment comment = commentService.findComment(commentId);
+		final Comment comment = fetch.getCommentFromId(commentId);
 		return convertCommentIntoDTO(comment);
 	}
 

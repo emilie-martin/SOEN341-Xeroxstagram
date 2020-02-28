@@ -8,7 +8,7 @@ public class MultipleLikeException extends RuntimeException
 {
 	public MultipleLikeException()
 	{
-		super("The content can only be liked once by the user");
+		super("This user has already liked this content.");
 	}
 
 	public MultipleLikeException(String msg)
