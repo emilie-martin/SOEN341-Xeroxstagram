@@ -1,0 +1,52 @@
+@import "../styles/prelude.scss";
+
+input{
+    margin-bottom: 5px;
+}
+
+.register{
+    font-size: 17px;
+    display:flex;
+    justify-content: center;
+    color: white;
+}
+
+.external{
+    border-radius: 25px;
+    border: 2px solid rgba(54, 52, 52, 0.707);;
+    padding: 20px;
+    background-color: rgba(54, 52, 52, 0.707);
+}
+
+.title{
+    display: flex;
+    justify-content: center;
+}
+
+.user-names-left, .user-names-right{
+    margin-right:30px;
+}
+
+.user-names{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content:space-between;
+    float: left;
+    margin-bottom: 10px;
+}
+
+.button{
+    color: rgb(25, 136, 240);
+    background-color: rgb(40, 40, 40);
+    outline: none;
+    border: none;
+    padding: 5px 20px;
+    text-transform: uppercase;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.register-button{
+    display:flex;
+    justify-content: flex-end;
+}
