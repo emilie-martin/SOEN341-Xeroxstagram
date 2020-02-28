@@ -1,14 +1,18 @@
 package com.soen341.instagram.utils;
 
+import java.util.regex.Pattern;
 import com.soen341.instagram.dao.impl.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import com.soen341.instagram.exception.account.EmailTakenException;
 import com.soen341.instagram.exception.account.InvalidEmailFormatException;
 import com.soen341.instagram.exception.account.InvalidNameException;
 import com.soen341.instagram.exception.account.InvalidUsernameFormatException;
 import com.soen341.instagram.exception.account.UsernameTakenException;
-import java.util.regex.Pattern;
+import com.soen341.instagram.exception.account.SamePasswordException;
 
 public class AccountVerifier {
+	static PasswordEncoder passwordEncoder;
 	
 	public static void checkIfEmailTaken(final String email, AccountRepository accountRepository)
 	{
@@ -50,6 +54,14 @@ public class AccountVerifier {
 		if(Pattern.matches(regex, name))
 		{
 			throw new InvalidNameException();
+		}
+	}
+
+	public static void checkIfSamePassword(final String oldPassword, final String newPassword)
+	{
+		if(passwordEncoder.matches(newPassword, oldPassword))
+		{
+			throw new SamePasswordException();
 		}
 	}
 }
