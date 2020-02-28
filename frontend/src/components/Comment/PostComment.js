@@ -5,19 +5,19 @@ import "./SCSS/PostComment.scss";
 
 export const PostComment = (props) => {
 
-    const [textAreaText, settextAreaText] = useState("");
+    const [textAreaText, setTextAreaText] = useState("");
 
     const handleTyping = (e) => {
-        settextAreaText(e.target.value);
+        setTextAreaText(e.target.value);
     }
 
     //Post a comment
     const comment = (e) => {
         e.preventDefault();
-        postComment(e.target.comment.value, props.postId).then(
+        postComment(textAreaText, props.postId).then(
             () => {
                 props.onCommentPosted();
-                settextAreaText("");
+                setTextAreaText("");
             }
         ).catch((e) => {
             // todo: proper error feedback

@@ -52,7 +52,7 @@ class Post extends React.Component {
                     <div className="post">
                         <div className="image-wrapper">
                             <img src={`${global.config.BACKEND_URL}/picture/${this.props.id}.jpg`}
-                                alt="insert post here" />
+                                alt={`${this.props.id}`} />
                         </div>
                         <div className="text-wrapper">
                             {/* a Description component can be created to facilitate the creation of Post components */}
