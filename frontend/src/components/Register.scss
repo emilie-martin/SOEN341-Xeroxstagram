@@ -1,22 +1,24 @@
-input
-{
+@import "../styles/prelude.scss";
+
+input{
     margin-bottom: 5px;
 }
 
-.register
-{
+.register{
     font-size: 17px;
     display:flex;
     justify-content: center;
 }
 
-.user-names-left
-{
+.title{
+    display:-moz-popup;
+}
+
+.user-names-left{
     margin-right:30px;
 }
 
-.user-names
-{
+.user-names{
     display: flex;
     flex-flow: row nowrap;
     justify-content:space-between;
@@ -24,8 +26,7 @@ input
     margin-bottom: 10px;
 }
 
-.button
-{
+.button{
     color: rgb(25, 136, 240);
     background-color: rgb(40, 40, 40);
     outline: none;
@@ -36,8 +37,7 @@ input
     cursor: pointer;
 }
 
-.register-button
-{
+.register-button{
     display:flex;
     justify-content: flex-end;
 }
