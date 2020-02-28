@@ -36,13 +36,20 @@ export const Register = (props) => {
                 }
             ).catch(
                 (e) => {
-                    if (e.response && e.response.data) {
-                        if (e.response.data.errors) {
+                    if (e.response && e.response.data)
+                    {
+                        if (e.response.data.errors)
+                        {
+                            console.log(e.response.data.errors)
                             setErrorMessage("One or many fields have been filled in incorrectly");
-                        } else {
+                        } 
+                        else
+                        {
                             setErrorMessage(e.response.data.message);
                         }
-                    } else {
+                    }
+                    else
+                    {
                         setErrorMessage("An unknown error occurred.");
                     }
                 }
