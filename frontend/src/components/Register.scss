@@ -1,36 +1,27 @@
 .register
 {
-    
-    font-size: 20px;
+    font-size: 17px;
     display:flex;
     justify-content: center;
 }
 
-.registration-form
+input
 {
-    
+    margin-bottom: 5px;
 }
 
 .user-names-left
 {
-    padding: 5%;
-}
-
-.user-names-right
-{
-    padding: 5%;
+    margin-right:30px;
 }
 
 .user-names
 {
     display: flex;
     flex-flow: row nowrap;
-    justify-content:space-around;
-}
-
-.user-content
-{
-    justify-content: center;
+    justify-content:space-between;
+    float: left;
+    margin-bottom: 10px;
 }
 
 .button
@@ -43,4 +34,10 @@
     text-transform: uppercase;
     border-radius: 2px;
     cursor: pointer;
+}
+
+.register-button
+{
+    display:flex;
+    justify-content: flex-end;
 }

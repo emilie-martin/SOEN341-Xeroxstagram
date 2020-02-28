@@ -38,7 +38,7 @@ export const Register = (props) => {
                 (e) => {
                     if (e.response && e.response.data) {
                         if (e.response.data.errors) {
-                            setErrorMessage("Please fill the form correctly.");
+                            setErrorMessage("One or many fields have been filled in incorrectly");
                         } else {
                             setErrorMessage(e.response.data.message);
                         }
@@ -72,6 +72,7 @@ export const Register = (props) => {
                                 <input name="lastName" placeholder="Last name"/>
                             </div>
                         </div>
+                        <br/>
                         <div className = "user-info">
                             <label>Email</label>
                             <br/>
@@ -86,11 +87,14 @@ export const Register = (props) => {
                             <input name="dateOfBirth" type="date"/>
                             <br/>
                             {errorMsg && <div className="error">Error: {errorMsg}</div>}
-                        </div> 
+                        </div>
                     </div>
-                    <button className ="button" type="submit">
-                        Register
-                    </button>
+                    <br/>
+                    <div className = "register-button">
+                        <button className="button" type="submit">
+                            Register
+                        </button>
+                    </div>
                 </form>
             </div>
         );
