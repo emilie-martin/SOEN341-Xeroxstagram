@@ -1,16 +1,14 @@
 import React from "react";
 import axios from "axios";
+import { useState } from "react";
 import '../config';
 
-class Register extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            errorMsg: ""
-        };
-    }
+export const Register = (props) => {
 
-    submit(event) {
+    const [errorMsg, setErrorMessage] = useState("");
+
+    // Submit registration form
+    const submit = (event) => {
         event.preventDefault();
         event.persist();
         axios.post(global.config.BACKEND_URL + "/account/register",
@@ -32,27 +30,26 @@ class Register extends React.Component {
                 }
             ).then(
                 (response) => {
-                    this.props.onSuccess(response);
+                    props.onSuccess(response);
                 }
             ).catch(
                 (e) => {
                     if (e.response && e.response.data) {
                         if (e.response.data.errors) {
-                            this.setState({errorMsg: "Please fill the form correctly."});
+                            setErrorMessage("Please fill the form correctly.");
                         } else {
-                            this.setState({errorMsg: e.response.data.message});
+                            setErrorMessage(e.response.data.message);
                         }
                     } else {
-                        this.setState({errorMsg: "An unknown error occurred."});
+                        setErrorMessage("An unknown error occurred.");
                     }
                 }
             )
     }
 
-    render() {
         return (
             <div className="register">
-                <form onSubmit={this.submit.bind(this)}>
+                <form onSubmit={submit}>
                     <label>Username</label>
                     <input name="username"/>
                     <br/>
@@ -71,14 +68,13 @@ class Register extends React.Component {
                     <label>Birth date</label>
                     <input name="dateOfBirth" type="date"/>
                     <br/>
-                    {this.state.errorMsg && <div className="error">Error: {this.state.errorMsg}</div>}
+                    {errorMsg && <div className="error">Error: {errorMsg}</div>}
                     <button type="submit">
                         Register
                     </button>
                 </form>
             </div>
         );
-    }
-}
+};
 
 export default Register;
