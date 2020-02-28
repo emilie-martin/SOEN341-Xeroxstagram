@@ -52,6 +52,7 @@ public class RegistrationServiceTest {
         validAccount.setUsername("username");
         validAccount.setFirstName("first");
         validAccount.setLastName("last");
+        validAccount.setDisplayName("displayName");
         validAccount.setDateOfBirth(new Date());
         when(passwordEncoder.encode(anyString())).then(returnsFirstArg());
         registrationService.createNewAccount(validAccount);
