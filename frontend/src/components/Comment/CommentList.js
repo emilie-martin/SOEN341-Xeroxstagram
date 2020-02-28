@@ -28,4 +28,4 @@ const CommentList = (props) => {
         </div>
     );
 }
-export default CommentList
+export default CommentList;
