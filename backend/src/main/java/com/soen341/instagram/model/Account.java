@@ -33,13 +33,29 @@ public class Account {
     private Date created;
 
     private String biography;
+    
+   @NotNull
+    private String displayName;
 
     @ManyToMany
     private Set<Account> following;
+    
+    @ManyToMany
+    private Set<Account> followers;
 
     @OneToOne
     private Picture profilePicture;
 
+    public String getDisplayName()
+    {
+    	return displayName;
+    }
+    
+    public void setDisplayName(String displayName)
+    {
+    	this.displayName = displayName;
+    }
+    
     public String getUsername() {
         return username;
     }
@@ -118,6 +134,14 @@ public class Account {
             following = new HashSet<>();
         }
         return following;
+    }
+    
+    public Set<Account> getFollowers() {
+    	// Never return a null object
+    	if(followers == null) {
+    		followers = new HashSet<>();
+    	}
+    	return followers;
     }
 
     public void follow(Account otherAccount) {

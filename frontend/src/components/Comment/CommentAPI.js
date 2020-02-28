@@ -6,11 +6,13 @@ export const getCommentByPicture = async (pictureId) => {
         return response.data;
     }).catch((error) => {
         //handle error later
+        //error possible is that picture is non existent
+        //return Promise.reject(error) this makes the return Promise a reject
         console.log(error);
     });
 };
 
-export const postComment = async(comment, pictureId) => {
+export const postComment = async (comment, pictureId) => {
     return Axios.post(global.config.BACKEND_URL + `/comment/newComment/${pictureId}`, {
         comment
     });
