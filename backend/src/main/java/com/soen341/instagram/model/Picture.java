@@ -15,7 +15,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Picture implements Likable{
+public class Picture extends Likable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -74,19 +74,19 @@ public class Picture implements Likable{
     }
 
     //like c0de
-    @ManyToMany
-    Set<Account> likedBy;
-    
-    @NotNull
-    public Set<Account> getLikedBy() {
-		if (likedBy.equals(null))
-			return new HashSet<Account>();
-		else
-			return likedBy;
-	}
-	
-	public int getLikeCount() {
-		return likedBy.size();
-	}
+//    @ManyToMany
+//    Set<Account> likedBy;
+//    
+//    @NotNull
+//    public Set<Account> getLikedBy() {
+//		if (likedBy.equals(null))
+//			return new HashSet<Account>();
+//		else
+//			return likedBy;
+//	}
+//	
+//	public int getLikeCount() {
+//		return likedBy.size();
+//	}
     
 }

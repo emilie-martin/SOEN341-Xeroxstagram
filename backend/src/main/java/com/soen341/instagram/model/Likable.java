@@ -1,9 +1,29 @@
 package com.soen341.instagram.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
-public interface Likable {
-	public Set<Account> getLikedBy();
-	public int getLikeCount();
+import javax.persistence.ManyToMany;
+import javax.persistence.MappedSuperclass;
+
+@MappedSuperclass
+public abstract class Likable {
+	@ManyToMany
+	private Set<Account> likedBy;
+	
+	public Likable() {
+		likedBy = new HashSet<Account>();
+	}
+	
+	public Set<Account> getLikedBy() {
+		if (likedBy.equals(null))
+			return new HashSet<Account>();
+		else
+			return likedBy;
+	}
+	
+	public int getLikeCount() {
+		return likedBy.size();
+	}
 	
 }
