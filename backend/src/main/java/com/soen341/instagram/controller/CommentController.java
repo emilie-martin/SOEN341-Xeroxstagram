@@ -48,18 +48,6 @@ public class CommentController
 		return commentResponse;
 	}
 
-	@PostMapping(value = "/comment/like/{commentId}")
-	public int likeComment(@PathVariable final long commentId)
-	{
-		return commentService.likeComment(commentId);
-	}
-
-	@PostMapping(value = "/comment/likeRemoval/{commentId}")
-	public int unlikeComment(@PathVariable final long commentId)
-	{
-		return commentService.unlikeComment(commentId);
-	}
-
 	@DeleteMapping(value = "/comment/commentRemoval/{commentId}")
 	public void deleteComment(@PathVariable final long commentId)
 	{

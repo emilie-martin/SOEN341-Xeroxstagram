@@ -3,7 +3,6 @@ package com.soen341.instagram.service.impl;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -62,37 +61,6 @@ public class CommentService
 
 		commentRepository.save(comment);
 		return comment;
-	}
-
-	public int likeComment(final long commentId)
-	{
-		final Comment comment = findComment(commentId);
-		final Set<Account> likedBy = comment.getLikedBy();
-		final boolean addedSuccessfully = likedBy.add(getCurrentUser());
-		if (!addedSuccessfully)
-		{
-			throw new MultipleLikeException("A comment can only be liked one time by the same user");
-		}
-
-		commentRepository.save(comment);
-
-		return likedBy.size();
-	}
-
-	public int unlikeComment(final long commentId)
-	{
-		final Comment comment = findComment(commentId);
-		final Set<Account> likedBy = comment.getLikedBy();
-		final boolean removedSuccessfully = likedBy.remove(getCurrentUser());
-
-		if (!removedSuccessfully)
-		{
-			throw new MultipleLikeException("The comment has not been liked by this user");
-		}
-
-		commentRepository.save(comment);
-
-		return likedBy.size();
 	}
 
 	public void deleteComment(final long commentId)
