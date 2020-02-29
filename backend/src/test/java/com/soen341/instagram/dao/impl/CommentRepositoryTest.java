@@ -35,6 +35,7 @@ public class CommentRepositoryTest {
         account.setUsername("username");
         account.setFirstName("first");
         account.setLastName("last");
+        account.setDisplayName("displayName");
         account.setDateOfBirth(new Date());
         account.setCreated(new Date());
         account = testEntityManager.persistAndFlush(account);
