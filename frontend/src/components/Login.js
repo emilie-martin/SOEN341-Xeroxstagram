@@ -4,11 +4,11 @@ import { useState } from "react";
 import '../config'
 import './Login.scss'
 
-export const Login = (props)=> {
+export const Login = (props) => {
 
     const [errorMsg, setErrorMsg] = useState("");
 
-    const  submit = (event)=>{
+    const submit = (event) => {
         event.preventDefault();
         axios.post(global.config.BACKEND_URL + "/account/login",
             {
