@@ -104,7 +104,7 @@ export const App = () => {
 					</div>
 
 					<Link to={`/account/${username}`}>
-						<input value={username} placeholder="Search..." onChange={handleChangeUser} />
+						<input value={username} placeholder="Search..." onChange={(e) => handleChangeUser(e)} />
 					</Link>
 
 					{ currentUser ?
@@ -128,10 +128,10 @@ export const App = () => {
 					/>
 
 					<Route exact path="/register"
-						render={ (props) => currentUser ? <Redirect to='/' /> : <Register {...props} onSuccess={login()} /> }
+						render={ (props) => currentUser ? <Redirect to='/' /> : <Register {...props} onSuccess={(r) => login(r)} /> }
 					/>
 					<Route exact path="/login"
-						render={ (props) => currentUser ? <Redirect to='/' /> : <Login {...props} onSuccess={login()} /> }
+						render={ (props) => currentUser ? <Redirect to='/' /> : <Login {...props} onSuccess={(r) => login(r)} /> }
 					/>
 					<Route exact path="/logout"
 						render={() => { logout();
