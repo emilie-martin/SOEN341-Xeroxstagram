@@ -97,4 +97,16 @@ public class CommentController
 
 		return commentResponseDTO;
 	}
+	
+	@PostMapping(value = "/comment/like/{commentId}")
+	public int likeComment(@PathVariable final long commentId)
+	{
+		return commentService.likeComment(commentId);
+	}
+
+	@PostMapping(value = "/comment/likeRemoval/{commentId}")
+	public int unlikeComment(@PathVariable final long commentId)
+	{
+		return commentService.unlikeComment(commentId);
+	}
 }

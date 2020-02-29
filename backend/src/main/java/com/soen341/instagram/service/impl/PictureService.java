@@ -3,11 +3,17 @@ package com.soen341.instagram.service.impl;
 import com.soen341.instagram.dao.impl.AccountRepository;
 import com.soen341.instagram.dao.impl.PictureRepository;
 import com.soen341.instagram.dto.picture.PictureDTO;
+import com.soen341.instagram.exception.like.MultipleLikeException;
+import com.soen341.instagram.exception.like.NoLikeException;
 import com.soen341.instagram.exception.picture.*;
 import com.soen341.instagram.model.Account;
 import com.soen341.instagram.model.Picture;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,12 +28,20 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
 import java.util.Optional;
+import java.util.Set;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service("pictureService")
 public class PictureService {
 
+	@Autowired
+	private AccountRepository accountRepository;
+	@Autowired
+	@Qualifier("UserDetailsService")
+	private UserDetailsService userDetailsService;
+
+	
     private final static int MAX_RETRIES = 1000;
 
     @Autowired
@@ -101,13 +115,16 @@ public class PictureService {
         } catch (NumberFormatException e) {
             throw new InvalidIdException("Invalid picture ID.");
         }
+        return getPictureFromId(pictureId);
+    }
+    private Picture getPictureFromId(long pictureId) {
         Optional<Picture> optionalPic = pictureRepository.findById(pictureId);
         if (!optionalPic.isPresent()) {
             throw new PictureNotFoundException("The specified picture does not exist.");
         }
         return optionalPic.get();
     }
-
+    
     private File createNewFileWithUniqueName(String directory) throws IOException {
         File pictureFile;
         int retries = 0;
@@ -133,4 +150,54 @@ public class PictureService {
         compressedImage.createGraphics().drawImage(image, 0, 0, Color.WHITE, null);
         return compressedImage;
     }
+    
+    // like service
+	public int likePicture(final long pictureId) {
+		final Picture picture = getPictureFromId(pictureId);
+		final Set<Account> likedBy = picture.getLikedBy();
+		final boolean liked = likedBy.add(getCurrentUser());
+		
+		if (!liked) {
+			throw new MultipleLikeException("A picture can only be liked once by the same user.");
+		}
+		
+		pictureRepository.save(picture);
+		
+		return picture.getLikeCount();
+		
+	}
+	
+	public int unlikePicture(final long pictureId) {
+		final Picture picture = getPictureFromId(pictureId);
+		final Set<Account> likedBy = picture.getLikedBy();
+		final boolean unliked = likedBy.remove(getCurrentUser());
+		
+		if (!unliked) {
+			throw new NoLikeException("This picture has not yet been liked by the user.");
+		}
+		
+		pictureRepository.save(picture);
+		
+		return picture.getLikeCount();
+		
+	}
+	
+	private Account getCurrentUser()
+	{
+		
+		
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		if (principal instanceof UserDetails)
+		{
+			String username = userDetailsService.loadUserByUsername(((UserDetails) principal).getUsername())
+					.getUsername();
+			return accountRepository.findByUsername(username);
+		}
+		else
+		{
+			throw new IllegalStateException("No user authenticated");
+		}
+	}
+	
 }
