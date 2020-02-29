@@ -15,8 +15,6 @@ $h4-fontsize: 24px;
 $h5-fontsize: 20px;
 $h6-fontsize: 16px;
 
-$base-fontsize: $p-fontsize;
-
 /*===================
     MEDIA QUERIES
 ====================*/
@@ -33,4 +31,8 @@ $small-and-down: "only screen and (max-width : #{$small-screen})";
 /*==========
     OTHER
 ===========*/
+$primary-color: #1c1b1b;
+
 $border-color: 1px solid black;
+$link-color: cornflowerblue;
+$hover-transition: color 500ms;

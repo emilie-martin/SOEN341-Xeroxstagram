@@ -16,6 +16,10 @@
   }
 }
 
+.description {
+  margin-bottom: 50px;
+}
+
 .authors {
   display: flex;
   flex-flow: row wrap;
@@ -25,11 +29,11 @@
 
   a {
     padding: 5px 10px;
-    color: cornflowerblue;
+    color: $link-color;
     background: black;
     font-weight: 500;
     text-decoration: none;
-    transition: color 500ms;
+    transition: $hover-transition;
     min-height: 25px;
 
     &:hover {
