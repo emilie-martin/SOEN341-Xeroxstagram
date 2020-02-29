@@ -1,0 +1,30 @@
+.about {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 15px;
+  box-sizing: border-box;
+
+  h3, h4 {
+    margin-bottom: 5px;
+  }
+}
+
+.authors {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  max-width: 100%;
+
+  a {
+    padding: 5px 10px;
+    color: cornflowerblue;
+    background: black;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 500ms;
+
+    &:hover {
+      color: lightgray;
+    }
+  }
+}

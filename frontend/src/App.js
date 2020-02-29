@@ -3,16 +3,17 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route, Link, withRouter, Redirect } from "react-router-dom";
 import localStorageService from "./services/LocalStorageService";
 
+import About from "./pages/About";
 import Post from "./components/Post";
+import PostPicture from "./components/PostPicture";
 import Login from "./components/Login";
 import Register from "./components/Register"
 import User from "./components/User";
-import PostPicture from "./components/PostPicture";
 
 import "./App.scss";
 import "./config"
 
-let setTokensAndLogin = (response) => {
+const setTokensAndLogin = (response) => {
 	localStorageService.setToken(response.data);
 	localStorageService.setBearerToken();
 }
@@ -27,23 +28,20 @@ axios.interceptors.response.use(
 			delete axios.defaults.headers.common.Authorization;
 			delete request.headers.Authorization;
 
+			// try request without user logged in
 			if (!localStorageService.getRefreshToken()) {
 				localStorageService.clearAllTokens();
-				// retry request, but with no user logged in
 				return axios(request);
 			}
-			// our token is expired
-			return axios.post(global.config.BACKEND_URL + "/account/refresh",
-				{
-					"token": localStorageService.getRefreshToken()
-				})
-				.then(
-					(response) => {
+			
+			// expired token
+			return axios.post(global.config.BACKEND_URL + "/account/refresh", {"token": localStorageService.getRefreshToken()})
+				.then( (response) => {
 						setTokensAndLogin(response);
 						return axios(request);
 					},
 					() => {
-						// re-authentication has failed; retry request, but with no user logged in
+						// re-authentication  failed; retry request with no user logged in
 						localStorageService.clearAllTokens();
 						return axios(request);
 					}
@@ -125,6 +123,10 @@ export const App = () => {
 				</div>
 					<hr />
 				<Switch>
+					<Route exact path="/about"
+						render={ () => <About/>}
+					/>
+
 					<Route exact path="/register"
 						render={ (props) => currentUser ? <Redirect to='/' /> : <Register {...props} onSuccess={login()} /> }
 					/>
