@@ -8,3 +8,25 @@
 .error {
   color: red;
 }
+
+.navBar {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+}
+
+.navLinks, .registered-user-options, .unregistered-user-options {
+  display: flex;
+  
+  a {
+    padding: 0px 10px;
+  }
+}
+
+.navLinks {
+  flex-flow: row nowrap;
+}
+
+.registered-user-options, .unregistered-user-options {
+  justify-content: flex-end;
+}
