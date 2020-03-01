@@ -39,7 +39,8 @@ export const PostComment = (props) => {
         <div>
             <form onSubmit={comment}>
                 <div className="comment-form-div">
-                    <textarea value = {textAreaText} name="comment" className="comment-input" autoComplete="off" onChange={handleTyping}/><button className="btn">Post</button>
+                    <textarea value = {textAreaText} name="comment" className="comment-input" autoComplete="off" onChange={handleTyping}/>
+                    <button className="btn">Post</button>
                 </div>
             </form>
         </div>

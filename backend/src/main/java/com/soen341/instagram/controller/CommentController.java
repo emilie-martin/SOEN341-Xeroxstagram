@@ -1,6 +1,5 @@
 package com.soen341.instagram.controller;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -86,12 +85,8 @@ public class CommentController
 	public List<CommentResponseDTO> getCommentsByPicture(@PathVariable long pictureId)
 	{
 		final List<Comment> comments = commentService.getCommentsByPicture(pictureId);
-		final List<CommentResponseDTO> commentsResponseDTO = new LinkedList<CommentResponseDTO>();
+		final List<CommentResponseDTO> commentsResponseDTO = commentService.determineEditable(comments);
 
-		for (final Comment comment : comments)
-		{
-			commentsResponseDTO.add(convertCommentIntoDTO(comment));
-		}
 		return commentsResponseDTO;
 	}
 

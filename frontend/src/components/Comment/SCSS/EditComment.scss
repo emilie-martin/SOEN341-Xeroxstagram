@@ -1,0 +1,36 @@
+.editButton{
+    flex-grow: 2;
+    color: white;
+    background: black;
+    border: none;
+    height: 30px;
+    outline: none;
+    float: right;
+    padding-right: 5%;
+}
+
+.editPageButton {
+    color: white;
+    background-color: black;
+    outline: none;
+    padding: 50px 20px;
+    text-transform: uppercase;
+    cursor: pointer;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid white;
+    font-weight: bold;
+  }
+
+.editPage{
+    background: black;
+    border: none;
+}
+
+.popup-content{
+    background: black !important;
+    border: 1px solid black !important;
+    width: 600px !important;
+    height: 200px;
+    padding:0px !important;
+}
