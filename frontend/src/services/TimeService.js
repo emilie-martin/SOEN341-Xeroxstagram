@@ -5,11 +5,11 @@ export const timeElapseSincePosted = (date) => {
     timePosted = (timePosted / 1000).toFixed(0);
 
     if (timePosted < 60) {
-        timePosted = (timePosted).toFixed(0);
+        timePosted = (timePosted);
     }
     else if (timePosted < 3600) {
         //Display in minutes
-        timePosted = (timePosted / 60).toFixed(0);
+        timePosted = (timePosted / 60);
         timeFormat = "min";
     }
     else if (timePosted < 86400) {
