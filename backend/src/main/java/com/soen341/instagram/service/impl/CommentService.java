@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,7 +14,6 @@ import com.soen341.instagram.dao.impl.AccountRepository;
 import com.soen341.instagram.dao.impl.CommentRepository;
 import com.soen341.instagram.dao.impl.PictureRepository;
 import com.soen341.instagram.dto.comment.CommentResponseDTO;
-import com.soen341.instagram.dto.picture.PictureDTO;
 import com.soen341.instagram.exception.comment.CommentLengthTooLongException;
 import com.soen341.instagram.exception.comment.CommentNotFoundException;
 import com.soen341.instagram.exception.comment.UnauthorizedRightsException;
@@ -36,8 +34,7 @@ public class CommentService
 	private AccountRepository accountRepository;
 	@Autowired
 	private PictureRepository pictureRepository;
-	@Autowired
-	private ModelMapper modelMapper;
+
 	private static int maxCommentLength = 250;
 
 	public Comment createComment(final String commentContent, final long pictureId)
@@ -177,33 +174,6 @@ public class CommentService
 		{
 			commentResponseDTO.setEditable(false);
 		}
-		return commentResponseDTO;
-	}
-
-	public CommentResponseDTO convertCommentIntoDTOWithUser(final Comment comment, final String currentUser)
-	{
-		final CommentResponseDTO commentResponseDTO = modelMapper.map(comment, CommentResponseDTO.class);
-		commentResponseDTO.setNbLikes(comment.getLikedBy().size());
-		// Creating picture DTO
-		final Picture picture = comment.getPicture();
-		final PictureDTO pictureDTO = modelMapper.map(picture, PictureDTO.class);
-		pictureDTO.setAccount(picture.getAccount().getUsername());
-
-		commentResponseDTO.setPictureDTO(pictureDTO);
-		commentResponseDTO.setAccount(comment.getAccount().getUsername());
-
-		// if current user matches the comment account or the picture account -> allow
-		// editing
-		if (currentUser != null && (comment.getAccount().getUsername().equals(currentUser)
-				|| comment.getPicture().getAccount().getUsername().equals(currentUser)))
-		{
-			commentResponseDTO.setEditable(true);
-		}
-		else
-		{
-			commentResponseDTO.setEditable(false);
-		}
-
 		return commentResponseDTO;
 	}
 }

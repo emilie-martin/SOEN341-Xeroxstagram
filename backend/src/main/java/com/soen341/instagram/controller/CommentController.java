@@ -109,5 +109,4 @@ public class CommentController
 
 		return commentService.determineEditable(commentResponseDTO);
 	}
-
 }
