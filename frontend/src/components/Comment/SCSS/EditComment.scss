@@ -27,10 +27,49 @@
     border: none;
 }
 
-.popup-content{
+.edit-content{
     background: black !important;
     border: 1px solid black !important;
     width: 600px !important;
     height: 200px;
     padding:0px !important;
+}
+
+.editMenu-content{
+    background:  rgb(40, 40, 40) !important;
+    border: 1px solid white !important;
+    width: 500px !important;
+    border-radius: 25px;
+}
+
+.editMenu-arrow{
+    position: relative;
+}
+.editTextArea{
+    background-color: rgb(40, 40, 40);
+    color:white;
+    flex-grow: 2;
+    outline:none;
+    border: 1px solid rgb(40, 40, 40);
+    word-wrap: break-word;
+    resize: none;
+    overflow-y: auto;
+    font-size: 16px;
+    width: 450px;
+    align-items: center;
+    border-radius: 50px;
+    padding-left: 20px;
+    border-bottom-left-radius: 100px;
+}
+
+.updateCommentBtn{
+    color: rgb(25, 136, 240);
+    background-color: rgb(40, 40, 40);
+    outline: none;
+    border: none;
+    padding-left: 20px;
+    padding-bottom: 10px;
+    text-transform: uppercase;
+    border-radius: 20px;
+    cursor: pointer;
 }

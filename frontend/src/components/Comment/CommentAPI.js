@@ -24,7 +24,7 @@ export const deleteComment = async (commentId) => {
     return Axios.delete(global.config.BACKEND_URL + `/comment/commentRemoval/${commentId}`).then(response =>{
         return response.status;
     }).catch((error) =>{
-        console.log("in error");
+        console.log(error.response);
         return error;
     });
 }

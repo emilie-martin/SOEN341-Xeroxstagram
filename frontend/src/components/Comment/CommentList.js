@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useLayoutEffect } from 'react'
 import { getCommentByPicture } from './CommentAPI'
 import { Comment } from './Comment'
 import './SCSS/CommentList.scss'
@@ -8,29 +8,28 @@ const CommentList = (props) => {
 
     const [commentList, setCommentList] = useState([])
     const [refreshCommentList, setRefreshCommentList] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         loadComments();
     }, [props.postId, props.refreshComment, refreshCommentList]);
-
+    
     const loadComments = () => {
-        const fetchComments = async () => { 
-            const response = await Axios.get(global.config.BACKEND_URL + `/comment/commentByPicture/${props.postId}`); 
-            setCommentList(response.data);
-        };
-        fetchComments();
+        getCommentByPicture(props.postId).then(response =>{
+            setCommentList(response);
+            setLoading(false);
+        })
     }
 
     const reloadComment = () => {
-        getCommentByPicture(props.postId).then(response => {
-            setCommentList(response);
-        });
-}
+        setLoading(true);
+        setRefreshCommentList(!refreshCommentList);
+    }
+    
     return (
         <div className="comment-list-wrapper">
             <div className="comment-list">
-                {
-                    commentList.slice().reverse()
+                {loading ? 'Loading Comments' : commentList.slice().reverse()
                         .map(comment => <Comment key={comment.id} comment={comment} reloadComment={reloadComment}></Comment>)
                 }
             </div>
