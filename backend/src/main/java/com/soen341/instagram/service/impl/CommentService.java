@@ -1,13 +1,14 @@
 package com.soen341.instagram.service.impl;
 
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.soen341.instagram.dao.impl.AccountRepository;
@@ -156,37 +157,30 @@ public class CommentService
 		return commentOptional.get();
 	}
 
-	// Determine whether the current user can edit a comment
-	public List<CommentResponseDTO> determineEditable(final List<Comment> comments)
+	public CommentResponseDTO determineEditable(final CommentResponseDTO commentResponseDTO)
 	{
-		final List<CommentResponseDTO> commentsResponseDTO = new LinkedList<CommentResponseDTO>();
-
-		if (comments.isEmpty())
+		String currentUser = null;
+		if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken))
 		{
-			return commentsResponseDTO;
+			final Account currentUserRequest = UserAccessor.getCurrentAccount(accountRepository);
+			currentUser = currentUserRequest.getUsername();
 		}
 
-		final Account currentUserRequest = UserAccessor.getCurrentAccount(accountRepository);
-		final String currentUser = currentUserRequest.getUsername();
-
-		for (final Comment comment : comments)
+		// if current user matches the comment account or the picture account -> allow
+		// editing
+		if (currentUser != null && (commentResponseDTO.getAccount().equals(currentUser)
+				|| commentResponseDTO.getPictureDTO().getAccount().equals(currentUser)))
 		{
-			commentsResponseDTO.add(convertCommentIntoDTOWithUser(comment, currentUser));
+			commentResponseDTO.setEditable(true);
 		}
-
-		// If the picture belongs to the current user, he can delete any comments
-		if (comments.get(0).getPicture().getAccount().getUsername().equals(currentUser))
+		else
 		{
-			for (final CommentResponseDTO commentResponseDTO : commentsResponseDTO)
-			{
-				commentResponseDTO.setEditable(true);
-			}
+			commentResponseDTO.setEditable(false);
 		}
-
-		return commentsResponseDTO;
+		return commentResponseDTO;
 	}
 
-	private CommentResponseDTO convertCommentIntoDTOWithUser(final Comment comment, final String currentUser)
+	public CommentResponseDTO convertCommentIntoDTOWithUser(final Comment comment, final String currentUser)
 	{
 		final CommentResponseDTO commentResponseDTO = modelMapper.map(comment, CommentResponseDTO.class);
 		commentResponseDTO.setNbLikes(comment.getLikedBy().size());
@@ -198,7 +192,10 @@ public class CommentService
 		commentResponseDTO.setPictureDTO(pictureDTO);
 		commentResponseDTO.setAccount(comment.getAccount().getUsername());
 
-		if (comment.getAccount().getUsername().equals(currentUser))
+		// if current user matches the comment account or the picture account -> allow
+		// editing
+		if (currentUser != null && (comment.getAccount().getUsername().equals(currentUser)
+				|| comment.getPicture().getAccount().getUsername().equals(currentUser)))
 		{
 			commentResponseDTO.setEditable(true);
 		}
