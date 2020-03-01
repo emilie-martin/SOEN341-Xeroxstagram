@@ -1,9 +1,8 @@
 import Axios from 'axios';
 import '../../config';
 
-export const getCommentByPicture =  (pictureId) => {
+export const getCommentByPicture = (pictureId) => {
     return Axios.get(global.config.BACKEND_URL + `/comment/commentByPicture/${pictureId}`).then(response => {
-        console.log(response.data);
         return response.data;
     }).catch((error) => {
         //handle error later
@@ -13,24 +12,23 @@ export const getCommentByPicture =  (pictureId) => {
     });
 };
 
-export const postComment = async (comment, pictureId) => {
+export const postComment = (comment, pictureId) => {
     return Axios.post(global.config.BACKEND_URL + `/comment/newComment/${pictureId}`, {
         comment
     });
 };
 
-export const deleteComment = async (commentId) => {
-    console.log(commentId);
-    return Axios.delete(global.config.BACKEND_URL + `/comment/commentRemoval/${commentId}`).then(response =>{
+export const deleteComment = (commentId) => {
+    return Axios.delete(global.config.BACKEND_URL + `/comment/commentRemoval/${commentId}`).then(response => {
         return response.status;
-    }).catch((error) =>{
+    }).catch((error) => {
         console.log(error.response);
         return error;
     });
 }
 
-export const editComment =  (commentId, comment) => {
-    return Axios.put(global.config.BACKEND_URL + `/comment/commentUpdate/${commentId}`,{comment}).then(response =>{
+export const editComment = (commentId, comment) => {
+    return Axios.put(global.config.BACKEND_URL + `/comment/commentUpdate/${commentId}`, { comment }).then(response => {
         return response.data;
     }).catch(error => {
         console.log(error.response);

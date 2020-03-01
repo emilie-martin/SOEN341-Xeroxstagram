@@ -1,4 +1,4 @@
-import React, { useState }  from 'react'
+import React, { useState } from 'react'
 import "./CommentAPI";
 import { postComment } from "./CommentAPI";
 import "./SCSS/PostComment.scss";
@@ -39,7 +39,7 @@ export const PostComment = (props) => {
         <div>
             <form onSubmit={comment}>
                 <div className="comment-form-div">
-                    <textarea value = {textAreaText} name="comment" className="comment-input" autoComplete="off" onChange={handleTyping}/>
+                    <textarea value={textAreaText} name="comment" className="comment-input" autoComplete="off" onChange={handleTyping} />
                     <button className="btn">Post</button>
                 </div>
             </form>

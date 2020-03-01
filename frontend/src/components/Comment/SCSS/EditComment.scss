@@ -1,75 +1,75 @@
-.editButton{
-    flex-grow: 2;
-    color: white;
-    background: black;
-    border: none;
-    height: 30px;
-    outline: none;
-    float: right;
-    padding-right: 5%;
+.editButton {
+  flex-grow: 2;
+  color: white;
+  background: black;
+  border: none;
+  height: 30px;
+  outline: none;
+  float: right;
+  padding-right: 5%;
 }
 
 .editPageButton {
-    color: white;
-    background-color: black;
-    outline: none;
-    padding: 50px 20px;
-    text-transform: uppercase;
-    cursor: pointer;
-    width: 100%;
-    border: none;
-    border-bottom: 1px solid white;
-    font-weight: bold;
-  }
-
-.editPage{
-    background: black;
-    border: none;
+  color: white;
+  background-color: black;
+  outline: none;
+  padding: 50px 20px;
+  text-transform: uppercase;
+  cursor: pointer;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid white;
+  font-weight: bold;
 }
 
-.edit-content{
-    background: black !important;
-    border: 1px solid black !important;
-    width: 600px !important;
-    height: 200px;
-    padding:0px !important;
+.editPage {
+  background: black;
+  border: none;
 }
 
-.editMenu-content{
-    background:  rgb(40, 40, 40) !important;
-    border: 1px solid white !important;
-    width: 500px !important;
-    border-radius: 25px;
+.edit-content {
+  background: black !important;
+  border: 1px solid black !important;
+  width: 600px !important;
+  height: 200px;
+  padding: 0px !important;
 }
 
-.editMenu-arrow{
-    position: relative;
-}
-.editTextArea{
-    background-color: rgb(40, 40, 40);
-    color:white;
-    flex-grow: 2;
-    outline:none;
-    border: 1px solid rgb(40, 40, 40);
-    word-wrap: break-word;
-    resize: none;
-    overflow-y: auto;
-    font-size: 16px;
-    width: 450px;
-    align-items: center;
-    border-radius: 50px;
-    padding-left: 20px;
-    border-bottom-left-radius: 100px;
+.editMenu-content {
+  background: rgb(40, 40, 40) !important;
+  border: 1px solid white !important;
+  width: 500px !important;
+  border-radius: 25px;
 }
 
-.updateCommentBtn{
-    color: rgb(25, 136, 240);
-    background-color: rgb(40, 40, 40);
-    outline: none;
-    border: none;
-    padding-left: 20px;
-    padding-bottom: 10px;
-    text-transform: uppercase;
-    border-radius: 20px;
-    cursor: pointer;
+.editMenu-arrow {
+  position: relative;
+}
+.editTextArea {
+  background-color: rgb(40, 40, 40);
+  color: white;
+  flex-grow: 2;
+  outline: none;
+  border: 1px solid rgb(40, 40, 40);
+  word-wrap: break-word;
+  resize: none;
+  overflow-y: auto;
+  font-size: 16px;
+  width: 450px;
+  align-items: center;
+  border-radius: 50px;
+  padding-left: 20px;
+  border-bottom-left-radius: 100px;
+}
+
+.updateCommentBtn {
+  color: rgb(25, 136, 240);
+  background-color: rgb(40, 40, 40);
+  outline: none;
+  border: none;
+  padding-left: 20px;
+  padding-bottom: 10px;
+  text-transform: uppercase;
+  border-radius: 20px;
+  cursor: pointer;
 }

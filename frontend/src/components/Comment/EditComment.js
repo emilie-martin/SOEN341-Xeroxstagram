@@ -47,6 +47,4 @@ export const EditComment = (props) => {
             </Popup>
         </div>
     )
-
-
 }

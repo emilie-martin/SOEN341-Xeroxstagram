@@ -13,9 +13,9 @@ const CommentList = (props) => {
     useEffect(() => {
         loadComments();
     }, [props.postId, props.refreshComment, refreshCommentList]);
-    
+
     const loadComments = () => {
-        getCommentByPicture(props.postId).then(response =>{
+        getCommentByPicture(props.postId).then(response => {
             setCommentList(response);
             setLoading(false);
         })
@@ -25,12 +25,12 @@ const CommentList = (props) => {
         setLoading(true);
         setRefreshCommentList(!refreshCommentList);
     }
-    
+
     return (
         <div className="comment-list-wrapper">
             <div className="comment-list">
                 {loading ? 'Loading Comments' : commentList.slice().reverse()
-                        .map(comment => <Comment key={comment.id} comment={comment} reloadComment={reloadComment}></Comment>)
+                    .map(comment => <Comment key={comment.id} comment={comment} reloadComment={reloadComment}></Comment>)
                 }
             </div>
         </div>
