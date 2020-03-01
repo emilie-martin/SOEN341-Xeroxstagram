@@ -9,7 +9,7 @@ export const Comment = (props) => {
 
     useEffect(() => {
         setTimePosted(timeElapseSincePosted(new Date(props.comment.created)));
-    }, [timePosted]);
+    }, []);
     
     return (
         <div className="comment-div">
