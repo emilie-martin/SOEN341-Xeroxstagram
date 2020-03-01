@@ -149,7 +149,7 @@ public class PictureService {
     }
     
     // like service
-	public int likePicture(@PathVariable final long pictureId) {
+	public int likePicture(final long pictureId) {
 		final Picture picture = getPictureFromId(Long.toString(pictureId));
 		final Set<Account> likedBy = picture.getLikedBy();
 		final boolean liked = likedBy.add(getCurrentUser());
@@ -164,7 +164,7 @@ public class PictureService {
 		
 	}
 	
-	public int unlikePicture(@PathVariable final long pictureId) {
+	public int unlikePicture(final long pictureId) {
 		final Picture picture = getPictureFromId(Long.toString(pictureId));
 		final Set<Account> likedBy = picture.getLikedBy();
 		final boolean unliked = likedBy.remove(getCurrentUser());
