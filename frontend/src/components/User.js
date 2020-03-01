@@ -1,68 +1,53 @@
 import React from "react";
 import axios from "axios";
 import Post from "./Post";
+import { useState, useEffect} from "react";
 import '../config';
 
-class User extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            Pictures: [],
-            errorMsg: ""
-        }
-    }
+export const User = props => {
 
-    componentDidMount() {
-        this.loadUser();
-    }
+    const [errorMsg, setErrorMsg] = useState("");
+    const [Pictures, setPictures] = useState([]);
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if(prevProps.username !== this.props.username) {
-            this.loadUser();
-        }
-    }
+    useEffect(() => {
 
-    loadUser() {
-        axios.get(global.config.BACKEND_URL + "/" + this.props.username + "/pictures").then(
-            (response) => {
-                this.setState({
-                    Pictures: response.data,
-                    errorMsg: ""
-                });
-            }
-        ).catch(
-            (error) => {
-                this.setState({
-                    Pictures: []
-                });
-                if(error.response && error.response.data && error.response.data.message) {
-                    this.setState({
-                        errorMsg: error.response.data.message
-                    });
-                } else {
-                    this.setState({
-                        errorMsg: "An unknown error occurred."
-                    });
+        const loadUser = () => {
+            axios.get(global.config.BACKEND_URL + "/" + props.username + "/pictures").then(
+                (response) => {
+                    setErrorMsg("");
+                    setPictures(response.data);
                 }
-            }
-        )
-    }
-
-    render() {
-        return (
-            <div>
-                {this.state.errorMsg && <div className="error">Error: {this.state.errorMsg}</div>}
-                {
-                    this.state.Pictures.map((id) => (
-                        <div key={id}>
-                            <Post id={id}/>
-                            <br/>
-                        </div>
-                    ))
+            ).catch(
+                (error) => {
+                    setPictures([]);
+                    if(error.response && error.response.data && error.response.data.message)
+                    {
+                        setErrorMsg(error.response.data.message);
+                    } 
+                    else
+                    {
+                        setErrorMsg("An unknown error occurred.");
+                    }
                 }
-            </div>
-        );
-    }
-}
+            )
+        }
+
+        loadUser();
+      }, [props.username])
+
+    return (
+        <div>
+            {errorMsg && <div className="error">{errorMsg}</div>}
+            {
+                Pictures.map((id) => (
+                    <div key={id}>
+                        <Post id={id}/>
+                        <br/>
+                    </div>
+                ))
+            }
+        </div>
+    );
+};
 
 export default User;
