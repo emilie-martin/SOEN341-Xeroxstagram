@@ -20,6 +20,10 @@
   }
 }
 
+.bi {
+  padding-right: 3px;
+}
+
 .bi-search {
   color: silver;
   padding-right: 5px;
@@ -31,8 +35,7 @@
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
-  max-width: 800px;
-  margin: 0px auto;
+  margin: 20px auto;
 
   padding: 5px;
 
@@ -42,6 +45,10 @@
     a {
       align-items: center;
     }
+  }
+
+  #login {
+    display: flex;
   }
   
   a {
@@ -56,9 +63,14 @@
     &:hover {
       color: silver;
     }
+
+    @media #{$medium-and-down} {
+      font-size: $h6-fontsize;
+    }
   }
 
   input[type="text"] {
+    max-height: 20px;
     padding: 3px;
   }
   
