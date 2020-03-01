@@ -137,11 +137,11 @@ public class CommentService
 		final boolean addedSuccessfully = likedBy.add(getCurrentUser());
 		if (!addedSuccessfully)
 		{
-			throw new MultipleLikeException("A comment can only be liked once by the same user.");
+			throw new MultipleLikeException("You can only like this comment once.");
 		}
 
 		commentRepository.save(comment);
-		System.out.println("\nYou have liked a comment. "+comment.getLikeCount());
+		
 		return comment.getLikeCount();
 	}
 
@@ -153,7 +153,7 @@ public class CommentService
 
 		if (!removedSuccessfully)
 		{
-			throw new NoLikeException("The comment has not been liked by the user");
+			throw new NoLikeException("You have not liked this comment yet.");
 		}
 
 		commentRepository.save(comment);

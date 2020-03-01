@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
@@ -40,7 +41,6 @@ public class PictureService {
 	@Autowired
 	@Qualifier("UserDetailsService")
 	private UserDetailsService userDetailsService;
-
 	
     private final static int MAX_RETRIES = 1000;
 
@@ -115,9 +115,6 @@ public class PictureService {
         } catch (NumberFormatException e) {
             throw new InvalidIdException("Invalid picture ID.");
         }
-        return getPictureFromId(pictureId);
-    }
-    private Picture getPictureFromId(long pictureId) {
         Optional<Picture> optionalPic = pictureRepository.findById(pictureId);
         if (!optionalPic.isPresent()) {
             throw new PictureNotFoundException("The specified picture does not exist.");
@@ -152,13 +149,13 @@ public class PictureService {
     }
     
     // like service
-	public int likePicture(final long pictureId) {
+	public int likePicture(@PathVariable String pictureId) {
 		final Picture picture = getPictureFromId(pictureId);
 		final Set<Account> likedBy = picture.getLikedBy();
 		final boolean liked = likedBy.add(getCurrentUser());
 		
 		if (!liked) {
-			throw new MultipleLikeException("A picture can only be liked once by the same user.");
+			throw new MultipleLikeException("You can only like this picture once.");
 		}
 		
 		pictureRepository.save(picture);
@@ -167,13 +164,13 @@ public class PictureService {
 		
 	}
 	
-	public int unlikePicture(final long pictureId) {
+	public int unlikePicture(@PathVariable String pictureId) {
 		final Picture picture = getPictureFromId(pictureId);
 		final Set<Account> likedBy = picture.getLikedBy();
 		final boolean unliked = likedBy.remove(getCurrentUser());
 		
 		if (!unliked) {
-			throw new NoLikeException("This picture has not yet been liked by the user.");
+			throw new NoLikeException("You have not liked this picture yet.");
 		}
 		
 		pictureRepository.save(picture);

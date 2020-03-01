@@ -3,7 +3,7 @@ package com.soen341.instagram.exception.like;
 public class NoLikeException extends RuntimeException{
 
 	public NoLikeException() {
-		super("There is no like associated with this account on this post.");
+		super("No like registered for this user.");
 		// TODO Auto-generated constructor stub
 	}
 

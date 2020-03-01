@@ -16,14 +16,13 @@ public abstract class Likable {
 	}
 	
 	public Set<Account> getLikedBy() {
-		if (likedBy.equals(null))
-			return new HashSet<Account>();
-		else
-			return likedBy;
+		if (likedBy == null)
+			likedBy = new HashSet<Account>();
+		return likedBy;
 	}
 	
 	public int getLikeCount() {
-		return likedBy.size();
+		return getLikedBy().size();
 	}
 	
 }

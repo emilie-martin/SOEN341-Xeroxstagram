@@ -1,14 +1,11 @@
 package com.soen341.instagram.model;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -75,20 +72,4 @@ public class Comment extends Likable{
         this.account = account;
     }
 
-    //like c0de
-//    @ManyToMany
-//    Set<Account> likedBy;
-//    
-//    @NotNull
-//    public Set<Account> getLikedBy() {
-//		if (likedBy.equals(null))
-//			return new HashSet<Account>();
-//		else
-//			return likedBy;
-//	}
-//	
-//	public int getLikeCount() {
-//		return likedBy.size();
-//	}
-    
 }
