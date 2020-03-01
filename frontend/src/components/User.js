@@ -3,6 +3,7 @@ import axios from "axios";
 import Post from "./Post";
 import { useState, useEffect} from "react";
 import '../config';
+import './User.scss';
 
 export const User = props => {
 
@@ -36,11 +37,11 @@ export const User = props => {
       }, [props.username])
 
     return (
-        <div>
+        <div className="user-component">
             {errorMsg && <div className="error">{errorMsg}</div>}
             {
                 Pictures.map((id) => (
-                    <div key={id}>
+                    <div className="single-post" key={id}>
                         <Post id={id}/>
                         <br/>
                     </div>
