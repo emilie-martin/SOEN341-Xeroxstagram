@@ -129,7 +129,6 @@ public class CommentService
 	}
 
 	// like service
-
 	public int likeComment(final long commentId)
 	{
 		final Comment comment = findComment(commentId);

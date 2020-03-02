@@ -115,6 +115,10 @@ public class PictureService {
         } catch (NumberFormatException e) {
             throw new InvalidIdException("Invalid picture ID.");
         }
+        return getPictureFromId(pictureId);
+    }
+    
+    private Picture getPictureFromId(Long pictureId) {
         Optional<Picture> optionalPic = pictureRepository.findById(pictureId);
         if (!optionalPic.isPresent()) {
             throw new PictureNotFoundException("The specified picture does not exist.");
@@ -150,7 +154,7 @@ public class PictureService {
     
     // like service
 	public int likePicture(final long pictureId) {
-		final Picture picture = getPictureFromId(Long.toString(pictureId));
+		final Picture picture = getPictureFromId(pictureId);
 		final Set<Account> likedBy = picture.getLikedBy();
 		final boolean liked = likedBy.add(getCurrentUser());
 		
@@ -165,7 +169,7 @@ public class PictureService {
 	}
 	
 	public int unlikePicture(final long pictureId) {
-		final Picture picture = getPictureFromId(Long.toString(pictureId));
+		final Picture picture = getPictureFromId(pictureId);
 		final Set<Account> likedBy = picture.getLikedBy();
 		final boolean unliked = likedBy.remove(getCurrentUser());
 		
