@@ -43,9 +43,12 @@ const Post = (props) => {
                     <div className="text-wrapper">
                         {/* a Description component can be created to facilitate the creation of Post components */}
                         <div className="post-description">
-                            <Link to={`/account/${Picture.account}`}>
-                                {Picture.account}
-                            </Link>: {Picture.caption}
+                            <div className="accountName">
+                                <Link to={`/account/${Picture.account}`}>
+                                    {Picture.account}
+                                </Link>: {Picture.caption}
+                            </div>
+
                         </div>
                         <div className="comments">
                             <CommentList refreshComment={refreshComment} postId={props.id} />
