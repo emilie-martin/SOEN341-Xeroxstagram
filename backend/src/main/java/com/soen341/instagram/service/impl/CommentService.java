@@ -24,6 +24,7 @@ import com.soen341.instagram.exception.picture.PictureNotFoundException;
 import com.soen341.instagram.model.Account;
 import com.soen341.instagram.model.Comment;
 import com.soen341.instagram.model.Picture;
+import com.soen341.instagram.utils.UserAccessor;
 
 @Service("commentService")
 public class CommentService
@@ -47,7 +48,7 @@ public class CommentService
 			throw new CommentLengthTooLongException("Comment length exceeds " + maxCommentLength + " characters");
 		}
 
-		final Account account = getCurrentUser();
+		final Account account = UserAccessor.getCurrentAccount(accountRepository);
 		final Optional<Picture> picture = pictureRepository.findById(pictureId);
 
 		if (!picture.isPresent())
@@ -110,30 +111,12 @@ public class CommentService
 		return commentOptional.get();
 	}
 
-	// Get current user authenticated, maybe create a new class that handle this
-	// since it will be used by multiple service
-	private Account getCurrentUser()
-	{
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-		if (principal instanceof UserDetails)
-		{
-			String username = userDetailsService.loadUserByUsername(((UserDetails) principal).getUsername())
-					.getUsername();
-			return accountRepository.findByUsername(username);
-		}
-		else
-		{
-			throw new IllegalStateException("No user authenticated");
-		}
-	}
-
 	// like service
 	public int likeComment(final long commentId)
 	{
 		final Comment comment = findComment(commentId);
 		final Set<Account> likedBy = comment.getLikedBy();
-		final boolean addedSuccessfully = likedBy.add(getCurrentUser());
+		final boolean addedSuccessfully = likedBy.add(UserAccessor.getCurrentAccount(accountRepository));
 		if (!addedSuccessfully)
 		{
 			throw new MultipleLikeException("You can only like this comment once.");
@@ -148,7 +131,7 @@ public class CommentService
 	{
 		final Comment comment = findComment(commentId);
 		final Set<Account> likedBy = comment.getLikedBy();
-		final boolean removedSuccessfully = likedBy.remove(getCurrentUser());
+		final boolean removedSuccessfully = likedBy.remove(UserAccessor.getCurrentAccount(accountRepository));
 
 		if (!removedSuccessfully)
 		{

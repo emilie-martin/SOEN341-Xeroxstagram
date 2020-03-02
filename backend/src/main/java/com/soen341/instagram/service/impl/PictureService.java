@@ -8,14 +8,13 @@ import com.soen341.instagram.exception.like.NoLikeException;
 import com.soen341.instagram.exception.picture.*;
 import com.soen341.instagram.model.Account;
 import com.soen341.instagram.model.Picture;
+import com.soen341.instagram.utils.UserAccessor;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
@@ -156,7 +155,7 @@ public class PictureService {
 	public int likePicture(final long pictureId) {
 		final Picture picture = getPictureFromId(pictureId);
 		final Set<Account> likedBy = picture.getLikedBy();
-		final boolean liked = likedBy.add(getCurrentUser());
+		final boolean liked = likedBy.add(UserAccessor.getCurrentAccount(accountRepository));
 		
 		if (!liked) {
 			throw new MultipleLikeException("You can only like this picture once.");
@@ -171,7 +170,7 @@ public class PictureService {
 	public int unlikePicture(final long pictureId) {
 		final Picture picture = getPictureFromId(pictureId);
 		final Set<Account> likedBy = picture.getLikedBy();
-		final boolean unliked = likedBy.remove(getCurrentUser());
+		final boolean unliked = likedBy.remove(UserAccessor.getCurrentAccount(accountRepository));
 		
 		if (!unliked) {
 			throw new NoLikeException("You have not liked this picture yet.");
@@ -181,24 +180,6 @@ public class PictureService {
 		
 		return picture.getLikeCount();
 		
-	}
-	
-	private Account getCurrentUser()
-	{
-		
-		
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-		if (principal instanceof UserDetails)
-		{
-			String username = userDetailsService.loadUserByUsername(((UserDetails) principal).getUsername())
-					.getUsername();
-			return accountRepository.findByUsername(username);
-		}
-		else
-		{
-			throw new IllegalStateException("No user authenticated");
-		}
 	}
 	
 }
