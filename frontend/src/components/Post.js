@@ -1,79 +1,64 @@
-import React from "react";
+import React, { useState, useEffect } from 'react'
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { PostComment } from "./Comment/PostComment";
 import "./Post.scss";
 import '../config';
 import CommentList from "./Comment/CommentList";
+const Post = (props) => {
 
-class Post extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            Picture: undefined
-        }
-    }
+    const [Picture, setPicture] = useState(undefined);
+    const [refreshComment, setRefreshComment] = useState(false);
 
-    componentDidMount() {
-        this.loadPicture();
-    }
+    useEffect(() => {
+        loadPicture();
+    }, [props.id])
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.id !== this.props.id) {
-            this.loadPicture();
-        }
-    }
-
-    loadPicture() {
-        axios.get(global.config.BACKEND_URL + "/picture/" + this.props.id).then(
+    const loadPicture = () => {
+        axios.get(global.config.BACKEND_URL + "/picture/" + props.id).then(
             (response) => {
-                this.setState({ Picture: response.data });
+                setPicture(response.data);
             }
         ).catch(
             () => {
-                this.setState({
-                    Picture: null
-                });
+                setPicture(null);
             }
         )
     }
 
-    onCommentPosted() {
+    const onCommentPosted = () => {
         //Whenver a comment is posted, inverse the boolean associated to refreshComment
         //This state will be passed into a commentList in order to make the component rerender
-        this.setState({ refreshComment: !this.state.refreshComment })
+        setRefreshComment(!refreshComment);
     }
 
-    render() {
-        return (
-            <div>
-                {this.state.Picture ?
-                    <div className="post">
-                        <div className="image-wrapper">
-                            <img src={`${global.config.BACKEND_URL}/picture/${this.props.id}.jpg`}
-                                alt={`${this.props.id}`} />
+    return (
+        <div>
+            {Picture ?
+                <div className="post">
+                    <div className="image-wrapper">
+                        <img src={`${global.config.BACKEND_URL}/picture/${props.id}.jpg`}
+                            alt={`${props.id}`} />
+                    </div>
+                    <div className="text-wrapper">
+                        {/* a Description component can be created to facilitate the creation of Post components */}
+                        <div className="post-description">
+                            <Link to={`/account/${Picture.account}`}>
+                                {Picture.account}
+                            </Link>: {Picture.caption}
                         </div>
-                        <div className="text-wrapper">
-                            {/* a Description component can be created to facilitate the creation of Post components */}
-                            <div className="post-description">
-                                <Link to={`/account/${this.state.Picture.account}`}>
-                                    {this.state.Picture.account}
-                                </Link>: {this.state.Picture.caption}
-                            </div>
-                            <div className="comments">
-                                <CommentList refreshComment={this.state.refreshComment} postId={this.props.id} />
-                            </div>
-                            <div className="postsComment">
-                                <PostComment postId={this.props.id} onCommentPosted={this.onCommentPosted.bind(this)} />
-                            </div>
+                        <div className="comments">
+                            <CommentList refreshComment={refreshComment} postId={props.id} />
+                        </div>
+                        <div className="postsComment">
+                            <PostComment postId={props.id} onCommentPosted={onCommentPosted} />
                         </div>
                     </div>
-                    :
-                    this.state.Picture === undefined ? null : <div className="error">The picture could not be found.</div>
-                }
-            </div>
-        );
-    }
+                </div>
+                :
+                Picture === undefined ? null : <div className="error">The picture could not be found.</div>
+            }
+        </div>
+    )
 }
-
 export default Post;
