@@ -6,10 +6,6 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import com.soen341.instagram.dao.impl.AccountRepository;
@@ -35,9 +31,6 @@ public class CommentService
 	private AccountRepository accountRepository;
 	@Autowired
 	private PictureRepository pictureRepository;
-	@Autowired
-	@Qualifier("UserDetailsService")
-	private UserDetailsService userDetailsService;
 
 	private static int maxCommentLength = 250;
 
@@ -66,13 +59,13 @@ public class CommentService
 		return comment;
 	}
 
-	public void deleteComment(final long commentId)
+	public void deleteComment(final String commentId)
 	{
 		final Comment comment = findComment(commentId);
 		commentRepository.delete(comment);
 	}
 
-	public Comment editComment(final long commentId, final String newComment)
+	public Comment editComment(final String commentId, final String newComment)
 	{
 		if (newComment.length() > maxCommentLength)
 		{
@@ -101,8 +94,14 @@ public class CommentService
 		return pictureOptional.get();
 	}
 
-	public Comment findComment(final long commentId)
+	public Comment findComment(final String id)
 	{
+		long commentId;
+        try {
+            commentId = Long.valueOf(id);
+        } catch (NumberFormatException e) {
+            throw new InvalidIdException("Invalid comment ID.");
+        }
 		Optional<Comment> commentOptional = commentRepository.findById(commentId);
 		if (!commentOptional.isPresent())
 		{
@@ -112,7 +111,7 @@ public class CommentService
 	}
 
 	// like service
-	public int likeComment(final long commentId)
+	public int likeComment(final String commentId)
 	{
 		final Comment comment = findComment(commentId);
 		final Set<Account> likedBy = comment.getLikedBy();
@@ -121,25 +120,20 @@ public class CommentService
 		{
 			throw new MultipleLikeException("You can only like this comment once.");
 		}
-
 		commentRepository.save(comment);
-		
 		return comment.getLikeCount();
 	}
 
-	public int unlikeComment(final long commentId)
+	public int unlikeComment(final String commentId)
 	{
 		final Comment comment = findComment(commentId);
 		final Set<Account> likedBy = comment.getLikedBy();
 		final boolean removedSuccessfully = likedBy.remove(UserAccessor.getCurrentAccount(accountRepository));
-
 		if (!removedSuccessfully)
 		{
 			throw new NoLikeException("You have not liked this comment yet.");
 		}
-
 		commentRepository.save(comment);
-
 		return comment.getLikeCount();
 	}
 	

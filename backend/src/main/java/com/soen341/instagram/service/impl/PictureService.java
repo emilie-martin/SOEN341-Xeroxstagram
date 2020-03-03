@@ -12,8 +12,6 @@ import com.soen341.instagram.utils.UserAccessor;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,9 +35,6 @@ public class PictureService {
 
 	@Autowired
 	private AccountRepository accountRepository;
-	@Autowired
-	@Qualifier("UserDetailsService")
-	private UserDetailsService userDetailsService;
 	
     private final static int MAX_RETRIES = 1000;
 
@@ -47,7 +42,6 @@ public class PictureService {
     private PictureRepository pictureRepository;
     @Autowired
     private ModelMapper modelMapper;
-
 
     public Picture uploadPicture(String caption, MultipartFile picture, Account user) {
         Picture newPicture = new Picture();
@@ -114,10 +108,6 @@ public class PictureService {
         } catch (NumberFormatException e) {
             throw new InvalidIdException("Invalid picture ID.");
         }
-        return getPictureFromId(pictureId);
-    }
-    
-    private Picture getPictureFromId(Long pictureId) {
         Optional<Picture> optionalPic = pictureRepository.findById(pictureId);
         if (!optionalPic.isPresent()) {
             throw new PictureNotFoundException("The specified picture does not exist.");
@@ -152,7 +142,7 @@ public class PictureService {
     }
     
     // like service
-	public int likePicture(final long pictureId) {
+	public int likePicture(final String pictureId) {
 		final Picture picture = getPictureFromId(pictureId);
 		final Set<Account> likedBy = picture.getLikedBy();
 		final boolean liked = likedBy.add(UserAccessor.getCurrentAccount(accountRepository));
@@ -167,7 +157,7 @@ public class PictureService {
 		
 	}
 	
-	public int unlikePicture(final long pictureId) {
+	public int unlikePicture(final String pictureId) {
 		final Picture picture = getPictureFromId(pictureId);
 		final Set<Account> likedBy = picture.getLikedBy();
 		final boolean unliked = likedBy.remove(UserAccessor.getCurrentAccount(accountRepository));
