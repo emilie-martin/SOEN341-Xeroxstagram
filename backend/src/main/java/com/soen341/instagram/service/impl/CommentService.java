@@ -163,8 +163,7 @@ public class CommentService
 			currentUser = currentUserRequest.getUsername();
 		}
 
-		// if current user matches the comment account or the picture account -> allow
-		// editing
+		// if current user matches the comment account or the picture account -> allow editing
 		final boolean isCurrentUserTheOwnerOfComment = (currentUser != null
 				&& (commentResponseDTO.getAccount().equals(currentUser)
 						|| commentResponseDTO.getPictureDTO().getAccount().equals(currentUser)));
