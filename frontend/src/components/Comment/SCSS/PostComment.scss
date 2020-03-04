@@ -1,8 +1,10 @@
+@import '../../../styles/prelude.scss';
+
 .comment-form-div {
   display: flex;
   background-color: rgb(40, 40, 40);
   height: 50px;
-  border-bottom: solid 1px black;
+  border-bottom: $border-color;
 }
 
 .comment-input {

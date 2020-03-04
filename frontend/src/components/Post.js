@@ -58,7 +58,7 @@ const Post = (props) => {
                     </div>
                 </div>
                 :
-                Picture === undefined ? null : <div className="error">The picture could not be found.</div>
+                Picture && <div className="error">The picture could not be found.</div>
             }
         </div>
     )
