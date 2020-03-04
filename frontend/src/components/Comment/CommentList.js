@@ -10,15 +10,13 @@ const CommentList = (props) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        const loadComments = () => {
+            getCommentByPicture(props.postId).then((response) => {
+                setCommentList(response);
+            });
+        }
         loadComments();
     }, [props.postId, props.refreshComment, refreshCommentList]);
-
-    const loadComments = () => {
-        getCommentByPicture(props.postId).then(response => {
-            setCommentList(response);
-            setLoading(false);
-        })
-    }
 
     const reloadComment = () => {
         setLoading(true);
