@@ -8,14 +8,13 @@ const CommentList = (props) => {
     const [commentList, setCommentList] = useState([])
 
     useEffect(() => {
+        const loadComments = () => {
+            getCommentByPicture(props.postId).then((response) => {
+                setCommentList(response);
+            });
+        }
         loadComments();
     }, [props.postId, props.refreshComment]);
-
-    const loadComments = () => {
-        getCommentByPicture(props.postId).then((response) => {
-            setCommentList(response);
-        });
-    }
 
     return (
         <div className="comment-list-wrapper">
