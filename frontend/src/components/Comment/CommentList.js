@@ -13,6 +13,7 @@ const CommentList = (props) => {
         const loadComments = () => {
             getCommentByPicture(props.postId).then((response) => {
                 setCommentList(response);
+                setLoading(false);
             });
         }
         loadComments();
