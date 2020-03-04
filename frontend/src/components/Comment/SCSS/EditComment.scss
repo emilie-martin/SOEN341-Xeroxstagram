@@ -1,4 +1,4 @@
-.editButton {
+.edit-button {
   flex-grow: 2;
   color: white;
   background: black;
@@ -9,7 +9,7 @@
   padding-right: 5%;
 }
 
-.editPageButton {
+.edit-page-button {
   color: white;
   background-color: black;
   outline: none;
@@ -22,7 +22,7 @@
   font-weight: bold;
 }
 
-.editPage {
+.edit-page {
   background: black;
   border: none;
 }
@@ -35,17 +35,17 @@
   padding: 0px !important;
 }
 
-.editMenu-content {
+.edit-menu-content {
   background: rgb(40, 40, 40) !important;
   border: 1px solid white !important;
   width: 500px !important;
   border-radius: 25px;
 }
 
-.editMenu-arrow {
+.edit-menu-arrow {
   position: relative;
 }
-.editTextArea {
+.edit-text-area {
   background-color: rgb(40, 40, 40);
   color: white;
   flex-grow: 2;
@@ -62,7 +62,7 @@
   border-bottom-left-radius: 100px;
 }
 
-.updateCommentBtn {
+.update-comment-btn {
   color: rgb(25, 136, 240);
   background-color: rgb(40, 40, 40);
   outline: none;

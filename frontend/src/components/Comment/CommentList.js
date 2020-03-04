@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react'
+import React, { useState, useEffect} from 'react'
 import { getCommentByPicture } from './CommentAPI'
 import { Comment } from './Comment'
 import './SCSS/CommentList.scss'
-import Axios from 'axios'
 
 const CommentList = (props) => {
 

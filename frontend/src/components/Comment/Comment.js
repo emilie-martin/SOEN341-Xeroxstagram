@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { Link } from "react-router-dom"
 import './SCSS/Comment.scss'
 import { timeElapseSincePosted } from '../../services/TimeService'
-import Popup from "reactjs-popup"
 import { EditComment } from './EditComment'
 export const Comment = (props) => {
     const [timePosted, setTimePosted] = useState("");
@@ -10,7 +9,7 @@ export const Comment = (props) => {
     useEffect(() => {
         setTimePosted(timeElapseSincePosted(new Date(props.comment.created)));
     }, []);
-    
+
     return (
         <div className="comment-div">
             <br />

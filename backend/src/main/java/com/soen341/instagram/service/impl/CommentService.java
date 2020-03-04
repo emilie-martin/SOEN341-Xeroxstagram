@@ -165,15 +165,12 @@ public class CommentService
 
 		// if current user matches the comment account or the picture account -> allow
 		// editing
-		if (currentUser != null && (commentResponseDTO.getAccount().equals(currentUser)
-				|| commentResponseDTO.getPictureDTO().getAccount().equals(currentUser)))
-		{
-			commentResponseDTO.setEditable(true);
-		}
-		else
-		{
-			commentResponseDTO.setEditable(false);
-		}
+		final boolean isCurrentUserTheOwnerOfComment = (currentUser != null
+				&& (commentResponseDTO.getAccount().equals(currentUser)
+						|| commentResponseDTO.getPictureDTO().getAccount().equals(currentUser)));
+
+		commentResponseDTO.setEditable(isCurrentUserTheOwnerOfComment);
+
 		return commentResponseDTO;
 	}
 }
