@@ -9,7 +9,7 @@ export const timeElapseSincePosted = (date) => {
     }
     else if (timePosted < 3600) {
         //Display in minutes
-        timePosted = (timePosted / 60).toFixed(0);
+        timePosted = (timePosted / 60);
         timeFormat = "min";
     }
     else if (timePosted < 86400) {
