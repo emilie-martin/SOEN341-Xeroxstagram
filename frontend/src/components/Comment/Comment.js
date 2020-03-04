@@ -7,6 +7,7 @@ export const Comment = (props) => {
 
     useEffect(() => {
         setTimePosted(timeElapseSincePosted(new Date(props.comment.created)));
+        //eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

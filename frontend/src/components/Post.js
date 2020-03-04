@@ -11,20 +11,19 @@ const Post = (props) => {
     const [refreshComment, setRefreshComment] = useState(false);
 
     useEffect(() => {
+        const loadPicture = () => {
+            axios.get(global.config.BACKEND_URL + "/picture/" + props.id).then(
+                (response) => {
+                    setPicture(response.data);
+                }
+            ).catch(
+                () => {
+                    setPicture(null);
+                }
+            )
+        }
         loadPicture();
     }, [props.id])
-
-    const loadPicture = () => {
-        axios.get(global.config.BACKEND_URL + "/picture/" + props.id).then(
-            (response) => {
-                setPicture(response.data);
-            }
-        ).catch(
-            () => {
-                setPicture(null);
-            }
-        )
-    }
 
     const onCommentPosted = () => {
         //Whenver a comment is posted, inverse the boolean associated to refreshComment
@@ -43,7 +42,7 @@ const Post = (props) => {
                     <div className="text-wrapper">
                         {/* a Description component can be created to facilitate the creation of Post components */}
                         <div className="post-description">
-                            <div className="accountName">
+                            <div className="account-name">
                                 <Link to={`/account/${Picture.account}`}>
                                     {Picture.account}
                                 </Link>: {Picture.caption}
@@ -53,7 +52,7 @@ const Post = (props) => {
                         <div className="comments">
                             <CommentList refreshComment={refreshComment} postId={props.id} />
                         </div>
-                        <div className="postsComment">
+                        <div className="posts-Comment">
                             <PostComment postId={props.id} onCommentPosted={onCommentPosted} />
                         </div>
                     </div>
