@@ -86,9 +86,9 @@ public class CommentController
 	public List<CommentResponseDTO> getCommentsByPicture(@PathVariable long pictureId)
 	{
 		final List<Comment> comments = commentService.getCommentsByPicture(pictureId);
-		final List<CommentResponseDTO> commentsResponseDTO = new LinkedList<CommentResponseDTO>();
+		List<CommentResponseDTO> commentsResponseDTO = new LinkedList<CommentResponseDTO>();
 
-		for (final Comment comment : comments)
+		for (Comment comment : comments)
 		{
 			commentsResponseDTO.add(convertCommentIntoDTO(comment));
 		}
@@ -107,6 +107,6 @@ public class CommentController
 		commentResponseDTO.setPictureDTO(pictureDTO);
 		commentResponseDTO.setAccount(comment.getAccount().getUsername());
 
-		return commentResponseDTO;
+		return commentService.determineEditable(commentResponseDTO);
 	}
 }
