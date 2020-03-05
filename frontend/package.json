@@ -15,7 +15,7 @@
     "reactjs-popup": "^1.5.0"
   },
   "scripts": {
-    "start": "set PORT = 8080 && react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --passWithNoTests",
     "eject": "react-scripts eject"
