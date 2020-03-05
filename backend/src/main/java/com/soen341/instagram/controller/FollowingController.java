@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.soen341.instagram.dao.impl.AccountRepository;
 //Project
 import com.soen341.instagram.service.impl.FollowingService;
+import com.soen341.instagram.utils.UserAccessor;
 
 @RestController
 public class FollowingController {
@@ -20,7 +21,12 @@ public class FollowingController {
 	FollowingService followingService;
 	
 	@Autowired
-	AccountRepository a;
+	AccountRepository accountRepository;
+	
+	@GetMapping(value = "/account/following/{username}")
+	public boolean isFollowing(@PathVariable final String username) {
+		return followingService.isFollowing(username);
+	}
 	
 	@PostMapping(value = "/account/following/newFollower/{username}")
 	public void follow(@PathVariable final String username)
@@ -34,8 +40,8 @@ public class FollowingController {
 		followingService.unfollow(username);
 	}
 	
-	@GetMapping(value = "/hello/{test}")
-	public boolean test(@PathVariable final String test) {
-		return a.doesUserFollow("daniela27", test);
+	@GetMapping(value = "/account/following/{username}")
+	public boolean test(@PathVariable final String username) {
+		return (accountRepository.doesUserFollow(UserAccessor.getCurrentAccount(accountRepository).getUsername(), username)==1);
 	}
 }

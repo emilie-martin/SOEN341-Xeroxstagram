@@ -10,10 +10,10 @@ public interface AccountRepository extends PagingAndSortingRepository<Account, S
     Account findByUsername(String username);
     Account findByEmail(String email);
     
-    @Query(value =  "SELECT COUNT(follow)>0 FROM account_following AS follow "
+    @Query(value =  "SELECT EXISTS(SELECT * FROM account_following AS follow "
     		+ "WHERE follow.account_username = :account AND follow.following_username = :account2 "
-    		+ "LIMIT 1;", nativeQuery = true)
-    boolean doesUserFollow(@Param("account") String account, @Param("account2") String account2);
+    		+ "LIMIT 1);", nativeQuery = true)
+    int doesUserFollow(@Param("account") String account, @Param("account2") String account2);
     
     
 }
