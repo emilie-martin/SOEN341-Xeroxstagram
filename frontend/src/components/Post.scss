@@ -4,8 +4,8 @@
   display: flex;
   margin: 0 auto;
   border: $border-color;
-  height: 720px;
-  width: 1476px;
+  height: 620px;
+  width: 970px;
   background-color: whitesmoke;
 }
 
@@ -14,9 +14,10 @@ h1 {
 }
 
 .image-wrapper {
-  width: 1080px;
+  width: 620px;
   height: 100%;
   border: $border-color;
+  padding: none;
 }
 
 .image-wrapper img {
@@ -40,10 +41,24 @@ h1 {
 }
 
 .post-description {
-  border-bottom: 3px solid black;
-  padding: 20px;
-  min-height: 100px;
+  border-bottom: solid 1px #a9a9a9;
+  height: 100px;
   width: 350px;
+  background: black;
+  color: white;
+  min-height: 100px;
+}
+
+.post-description a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.account-name {
+  padding-left: 17px;
+  padding-top: 20px;
 }
 
 //Scrollbar styling
