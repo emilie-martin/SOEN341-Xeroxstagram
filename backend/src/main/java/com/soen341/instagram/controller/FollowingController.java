@@ -24,8 +24,8 @@ public class FollowingController {
 	AccountRepository accountRepository;
 	
 	@GetMapping(value = "/account/following/{username}")
-	public boolean isFollowing(@PathVariable final String username) {
-		return followingService.isFollowing(username);
+	public Boolean isFollowing(@PathVariable final String username) {
+		return new Boolean(followingService.isFollowing(username)); // Casting to Boolean object to keep frontend happy
 	}
 	
 	@PostMapping(value = "/account/following/newFollower/{username}")
@@ -38,10 +38,5 @@ public class FollowingController {
 	public void unfollow(@PathVariable final String username)
 	{
 		followingService.unfollow(username);
-	}
-	
-	@GetMapping(value = "/account/following/{username}")
-	public boolean test(@PathVariable final String username) {
-		return (accountRepository.doesUserFollow(UserAccessor.getCurrentAccount(accountRepository).getUsername(), username)==1);
 	}
 }

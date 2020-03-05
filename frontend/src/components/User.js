@@ -9,19 +9,19 @@ export const User = props => {
 
     const [errorMsg, setErrorMsg] = useState("");
     const [Pictures, setPictures] = useState([]);
-    const [isFollowing, setFollowMsg] = useState(false);
+    const [isFollowing, setFollowing] = useState(false);
 
     const follow = (event) => {
         event.preventDefault();
         axios.post(global.config.BACKEND_URL + "/account/following/newFollower/" + props.username)
             .then(
                 (response) => {
-                    console.log("aaaaaaaaa");
+                    setFollowing(true);
                 },
                 (error) => {
                     if (error.response)
                     {
-                        setErrorMsg("No");
+                        setErrorMsg(error.response.data.message);
                     } 
                     else
                     {
@@ -33,15 +33,15 @@ export const User = props => {
 
     const unfollow = (event) => {
         event.preventDefault();
-        axios.delete(global.config.BACKEND_URL + "/account/following/newFollower/"+ props.username)
+        axios.delete(global.config.BACKEND_URL + "/account/following/followerRemoval/"+ props.username)
             .then(
                 (response) => {
-                    props.onSuccess(response);
+                    setFollowing(false);
                 },
                 (error) => {
                     if (error.response)
                     {
-                        setErrorMsg("No");
+                        setErrorMsg(error.response.data.message);
                     } 
                     else
                     {
@@ -53,14 +53,22 @@ export const User = props => {
 
     useEffect(() => {
 
-        const getFollowers = () => {
-            axios.get(global.config.BACKEND_URL + "/account/profile/profile").then(
+        const isUserFollowing = () => {
+            axios.get(global.config.BACKEND_URL + "/account/following/" +props.username).then(
                 (response) => {
+                    setFollowing(response.data);
                     console.log(response.data);
                 }
             ).catch(
                 (error) => {
-                    setErrorMsg("Error getting followers");
+                    if(error.response && error.response.data && error.response.data.message)
+                    {
+                        setErrorMsg(error.response.data.message);
+                    } 
+                    else
+                    {
+                        setErrorMsg("An unknown error occurred.");
+                    }
                 }
             )
         }
@@ -86,9 +94,9 @@ export const User = props => {
             )
         }
 
-        getFollowers();
+        isUserFollowing();
         loadUser();
-      }, [props.username])
+      }, [props.username, isFollowing])
 
     return (
         <div className="user-component">
