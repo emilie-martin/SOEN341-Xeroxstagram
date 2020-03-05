@@ -8,6 +8,7 @@ import com.soen341.instagram.exception.account.InvalidUsernameFormatException;
 import com.soen341.instagram.exception.account.UsernameTakenException;
 import com.soen341.instagram.model.Account;
 import com.soen341.instagram.service.impl.RegistrationService;
+
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
