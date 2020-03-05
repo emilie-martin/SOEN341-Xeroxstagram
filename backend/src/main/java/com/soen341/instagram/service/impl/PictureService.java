@@ -146,30 +146,22 @@ public class PictureService {
 		final Picture picture = getPictureFromId(pictureId);
 		final Set<Account> likedBy = picture.getLikedBy();
 		final boolean liked = likedBy.add(UserAccessor.getCurrentAccount(accountRepository));
-		
 		if (!liked) {
 			throw new MultipleLikeException("You can only like this picture once.");
 		}
-		
 		pictureRepository.save(picture);
-		
 		return picture.getLikeCount();
-		
 	}
 	
 	public int unlikePicture(final String pictureId) {
 		final Picture picture = getPictureFromId(pictureId);
 		final Set<Account> likedBy = picture.getLikedBy();
 		final boolean unliked = likedBy.remove(UserAccessor.getCurrentAccount(accountRepository));
-		
 		if (!unliked) {
 			throw new NoLikeException("You have not liked this picture yet.");
 		}
-		
 		pictureRepository.save(picture);
-		
 		return picture.getLikeCount();
-		
 	}
 	
 }
