@@ -12,6 +12,7 @@ public class CommentResponseDTO
 	private String account;
 	private PictureDTO pictureDTO;
 	private int nbLikes;
+	private boolean editable;
 
 	public int getNbLikes()
 	{
@@ -71,6 +72,16 @@ public class CommentResponseDTO
 	public void setCreated(Date created)
 	{
 		this.created = created;
+	}
+
+	public boolean isEditable()
+	{
+		return editable;
+	}
+
+	public void setEditable(boolean editable)
+	{
+		this.editable = editable;
 	}
 
 }
