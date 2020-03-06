@@ -4,8 +4,10 @@ import com.soen341.instagram.model.Account;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.stereotype.Repository;
 import org.springframework.data.repository.query.Param;
 
+@Repository
 public interface AccountRepository extends PagingAndSortingRepository<Account, String> {
     Account findByUsername(String username);
     Account findByEmail(String email);
