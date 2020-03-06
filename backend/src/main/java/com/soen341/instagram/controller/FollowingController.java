@@ -9,19 +9,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.soen341.instagram.dao.impl.AccountRepository;
 //Project
 import com.soen341.instagram.service.impl.FollowingService;
-import com.soen341.instagram.utils.UserAccessor;
 
 @RestController
 public class FollowingController {
 
 	@Autowired
 	FollowingService followingService;
-	
-	@Autowired
-	AccountRepository accountRepository;
 	
 	@GetMapping(value = "/account/following/{username}")
 	public Boolean isFollowing(@PathVariable final String username) {
