@@ -1,0 +1,12 @@
+@import "../styles/prelude.scss";
+
+.follow-button{
+    color: rgb(25, 136, 240);
+    background-color: rgb(40, 40, 40);
+    outline: none;
+    border: none;
+    padding: 5px 20px;
+    text-transform: uppercase;
+    border-radius: 2px;
+    cursor: pointer;
+}

@@ -1,15 +1,23 @@
-import React from "react";
+import React, { useState } from 'react'
 import "./CommentAPI";
 import { postComment } from "./CommentAPI";
-import "./PostComment.scss";
+import "./SCSS/PostComment.scss";
 
-class PostComment extends React.Component {
+export const PostComment = (props) => {
 
-    comment(e) {
+    const [textAreaText, setTextAreaText] = useState("");
+
+    const handleTyping = (e) => {
+        setTextAreaText(e.target.value);
+    }
+
+    //Post a comment
+    const comment = (e) => {
         e.preventDefault();
-        postComment(e.target.comment.value, this.props.postId).then(
+        postComment(textAreaText, props.postId).then(
             () => {
-                this.props.onCommentPosted();
+                props.onCommentPosted();
+                setTextAreaText("");
             }
         ).catch((e) => {
             // todo: proper error feedback
@@ -27,15 +35,14 @@ class PostComment extends React.Component {
         });
     }
 
-    render() {
-        return (
-            <form onSubmit={this.comment.bind(this)}>
+    return (
+        <div>
+            <form onSubmit={comment}>
                 <div className="comment-form-div">
-                    <input name="comment" className="comment-input"/><button>Comment</button>
+                    <textarea value={textAreaText} name="comment" className="comment-input" autoComplete="off" onChange={handleTyping} />
+                    <button className="btn">Post</button>
                 </div>
             </form>
-        );
-    }
+        </div>
+    )
 }
-
-export default PostComment;

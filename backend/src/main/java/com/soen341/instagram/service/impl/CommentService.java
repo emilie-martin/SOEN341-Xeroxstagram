@@ -6,13 +6,17 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.soen341.instagram.dao.impl.AccountRepository;
 import com.soen341.instagram.dao.impl.CommentRepository;
 import com.soen341.instagram.dao.impl.PictureRepository;
+import com.soen341.instagram.dto.comment.CommentResponseDTO;
 import com.soen341.instagram.exception.comment.CommentLengthTooLongException;
 import com.soen341.instagram.exception.comment.CommentNotFoundException;
+import com.soen341.instagram.exception.comment.UnauthorizedRightsException;
 import com.soen341.instagram.exception.like.MultipleLikeException;
 import com.soen341.instagram.exception.picture.InvalidIdException;
 import com.soen341.instagram.exception.picture.PictureNotFoundException;
@@ -92,7 +96,14 @@ public class CommentService
 	public void deleteComment(final long commentId)
 	{
 		final Comment comment = findComment(commentId);
-		commentRepository.delete(comment);
+		if (comment.getAccount().getUsername().equals(UserAccessor.getCurrentAccount(accountRepository).getUsername()))
+		{
+			commentRepository.delete(comment);
+		}
+		else
+		{
+			throw new UnauthorizedRightsException();
+		}
 	}
 
 	public Comment editComment(final long commentId, final String newComment)
@@ -103,8 +114,17 @@ public class CommentService
 		}
 
 		final Comment comment = findComment(commentId);
-		comment.setComment(newComment);
-		commentRepository.save(comment);
+
+		if (comment.getAccount().getUsername().equals(UserAccessor.getCurrentAccount(accountRepository).getUsername()))
+		{
+			comment.setComment(newComment);
+			commentRepository.save(comment);
+		}
+		else
+		{
+			throw new UnauthorizedRightsException();
+		}
+
 		return comment;
 	}
 
@@ -132,5 +152,22 @@ public class CommentService
 			throw new CommentNotFoundException();
 		}
 		return commentOptional.get();
+	}
+
+	public CommentResponseDTO determineEditable(final CommentResponseDTO commentResponseDTO)
+	{
+		String currentUser = null;
+		if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken))
+		{
+			final Account currentUserRequest = UserAccessor.getCurrentAccount(accountRepository);
+			currentUser = currentUserRequest.getUsername();
+		}
+
+		// if current user matches the comment account or the picture account -> allow editing
+		final boolean isCurrentUserTheOwnerOfComment = (currentUser != null && (commentResponseDTO.getAccount().equals(currentUser) || commentResponseDTO.getPictureDTO().getAccount().equals(currentUser)));
+
+		commentResponseDTO.setEditable(isCurrentUserTheOwnerOfComment);
+
+		return commentResponseDTO;
 	}
 }
