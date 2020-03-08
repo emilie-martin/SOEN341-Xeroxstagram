@@ -4,9 +4,9 @@ import { BrowserRouter as Router, Switch, Route, Link, withRouter, Redirect } fr
 import localStorageService from "./services/LocalStorageService";
 
 import About from "./pages/About";
+import Login from "./components/Login";
 import Post from "./components/Post";
 import PostPicture from "./components/PostPicture";
-import Login from "./components/Login";
 import Register from "./components/Register"
 import User from "./components/User";
 
@@ -88,9 +88,9 @@ export const App = () => {
 	return (
 		<div className="App">
 			<Router>
-				<div className="navBar">
+				<div className="nav-bar">
 					
-					<Link to="/" id="appName">
+					<Link to="/" id="app-name">
 						<div className="icon">
 							<svg class="bi bi-camera" width="1.5em" height="1.5em" viewBox="0 0 20 20" fill="currentColor">
 								<path d="M11 7c-1.657 0-4 1.343-4 3a4 4 0 014-4v1z"/>
@@ -101,7 +101,7 @@ export const App = () => {
 						Instagram++
 					</Link>
 
-					<div className="navLinks">
+					<div className="nav-links">
 						<div className="icon">
 							<svg class="bi bi-search" width="1.2em" height="1.2em" viewBox="0 0 20 20" fill="currentColor">
 								<path fill-rule="evenodd" d="M12.442 12.442a1 1 0 011.415 0l3.85 3.85a1 1 0 01-1.414 1.415l-3.85-3.85a1 1 0 010-1.415z" clip-rule="evenodd"/>

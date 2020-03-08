@@ -29,7 +29,7 @@
   padding-right: 5px;
 }
 
-.navBar {
+.nav-bar {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
@@ -38,14 +38,6 @@
   margin: 20px auto;
 
   padding: 5px;
-
-  h1 {
-    margin: 0;
-
-    a {
-      align-items: center;
-    }
-  }
 
   #login {
     display: flex;
@@ -76,15 +68,11 @@
   
 }
 
-.navLinks, .registered-user-options, .unregistered-user-options {
+.nav-links, .registered-user-options, .unregistered-user-options {
   display: flex;
-  
-  a {
-    padding: 0px 10px;
-  }
 }
 
-.navLinks {
+.nav-links {
   flex-flow: row nowrap;
 }
 
