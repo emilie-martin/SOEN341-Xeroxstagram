@@ -1,10 +1,81 @@
-.App {
-  padding: 20px;
-  min-height: 100vh;
-  background-color: lightgray;
-  box-sizing: border-box;
-}
+@import "./styles/prelude.scss";
 
 .error {
   color: red;
+}
+
+.App {
+  color: silver;
+  padding: 20px;
+  min-height: 100vh;
+  background-color: $primary-color;
+  box-sizing: border-box;
+
+  h1, h3, h4 {
+    color: whitesmoke;
+  }
+
+  hr {
+    margin: 10px 0px 50px;
+  }
+}
+
+.bi {
+  padding-right: 3px;
+}
+
+.bi-search {
+  color: silver;
+  padding-right: 5px;
+}
+
+.nav-bar {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  margin: 20px auto;
+
+  padding: 5px;
+
+  #login {
+    display: flex;
+  }
+  
+  a {
+    display: flex;
+    color: $link-color;
+    padding: 0px 10px;
+    text-decoration: none;
+    font-size: $p-fontsize;
+    font-weight: 500;
+    transition: $hover-transition;
+
+    &:hover {
+      color: silver;
+    }
+
+    @media #{$medium-and-down} {
+      font-size: $h6-fontsize;
+    }
+  }
+
+  input[type="text"] {
+    max-height: 20px;
+    padding: 3px;
+  }
+  
+}
+
+.nav-links, .registered-user-options, .unregistered-user-options {
+  display: flex;
+}
+
+.nav-links {
+  flex-flow: row nowrap;
+}
+
+.registered-user-options, .unregistered-user-options {
+  justify-content: flex-end;
 }
