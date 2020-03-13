@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import '../config';
+import '../../config';
 
 class PostPicture extends React.Component {
     constructor(props) {

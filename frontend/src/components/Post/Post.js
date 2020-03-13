@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { PostComment } from "./Comment/PostComment";
+import { PostComment } from "../Comment/PostComment";
 import "./Post.scss";
-import '../config';
-import CommentList from "./Comment/CommentList";
+import '../../config';
+import CommentList from "../Comment/CommentList";
 const Post = (props) => {
 
     const [Picture, setPicture] = useState(undefined);

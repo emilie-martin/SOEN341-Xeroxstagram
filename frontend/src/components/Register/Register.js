@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { useState } from "react";
-import '../config';
+import '../../config';
 import './Register.scss'
 
 export const Register = (props) => {
