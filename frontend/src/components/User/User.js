@@ -1,8 +1,8 @@
 import React from "react";
 import axios from "axios";
-import Post from "./Post";
+import Post from "../Post/Post";
 import { useState, useEffect} from "react";
-import '../config';
+import '../../config';
 import './User.scss';
 
 export const User = props => {

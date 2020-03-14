@@ -4,11 +4,11 @@ import { BrowserRouter as Router, Switch, Route, Link, withRouter, Redirect } fr
 import localStorageService from "./services/LocalStorageService";
 
 import About from "./pages/About";
-import Login from "./components/Login";
-import Post from "./components/Post";
-import PostPicture from "./components/PostPicture";
-import Register from "./components/Register"
-import User from "./components/User";
+import Login from "./components/Login/Login";
+import Post from "./components/Post/Post";
+import PostPicture from "./components/Post/PostPicture";
+import Register from "./components/Register/Register"
+import User from "./components/User/User";
 
 import "./App.scss";
 import "./config"
