@@ -1,0 +1,63 @@
+.edit-profile-form label {
+  display: inline-block;
+  margin: 0 50px;
+  clear: left;
+  text-align: right;
+  width: 100px;
+}
+
+.edit-profile-form {
+  width: 1000px;
+}
+
+.edit-profile-button{
+    width: 100px;
+    padding-left: 200px;
+    margin-top: 10px;
+}
+.btn {
+  color: rgb(25, 136, 240);
+  background-color: rgb(40, 40, 40);
+  outline: none;
+  border: none;
+  padding-left: 20px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  text-transform: uppercase;
+  border-radius: 20px;
+  cursor: pointer;
+  display: inline-block;
+  text-align: right;
+}
+.edit-profile {
+  margin: auto;
+  margin-top: 100px;
+  width: 500px;
+  height: 500px;
+}
+
+.edit-profile input {
+  color: white;
+  width: 300px;
+  background-color: rgb(18, 18, 18);
+  border: solid 1px rgb(164, 154, 154);
+}
+.edit-profile-textarea {
+  background-color: rgb(18, 18, 18);
+  border: solid 1px rgb(164, 154, 154);
+  color: white;
+  outline: none;
+  resize: none;
+  word-wrap: break-word;
+  align-items: center;
+  overflow-y: auto;
+  width: 300px;
+  height: 50px;
+}
+
+.edit-profile-page{
+    width: 1500px;
+    height: 100%;
+    margin-top: 0px;
+}
+
