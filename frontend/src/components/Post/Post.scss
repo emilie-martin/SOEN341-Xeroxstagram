@@ -16,29 +16,33 @@ h1 {
 }
 
 .image-wrapper {
-  border: $border-color;
   padding: none;
-
   img {
     width: 620px;
     height: 100%;
-    object-fit: contain;  // automatically crop the picture instead of stretching it
+    object-fit: contain; // fit picture instead of stretching it
   }
 }
 
 .text-wrapper {
-  flex: 1;
   display: flex;
   flex-flow: column nowrap;
-  border: $border-color;
-  width: 350px;
   word-wrap: break-word;
+  
+  background: black;
+  height: 100%;
+  width: 350px;
+
+  position: relative;
+  .comment-form-div {
+    position: absolute;
+    width: 100%;
+    bottom: 0px;
+  }
 }
 
 .comments {
   overflow-y: auto;
-  flex-grow: 1;
-  background: black;
 }
 
 .post-description {
@@ -61,11 +65,11 @@ h1 {
     color: white;
     text-decoration: none;
     font-weight: bold;
-    font-size: 14px;
+    font-size: $h6-fontsize;
   }
 }
 
-//Scrollbar styling
+//Scrollbar
 div.comments {
   &::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
