@@ -1,4 +1,4 @@
-export const timeElapseSincePosted = (date) => {
+export default function timeElapsedSincePosted(date) {
     let currentDate = new Date();
     let timeFormat = "sec";
     let timePosted = currentDate.getTime() - date.getTime();
@@ -17,14 +17,20 @@ export const timeElapseSincePosted = (date) => {
         timePosted = (timePosted / (60 * 60)).toFixed(0);
         timeFormat = "h";
     }
-    else if (timePosted < 1036800) {
+    else if (timePosted < 604800) {
         //Display in days
         timePosted = (timePosted / (60 * 60 * 24)).toFixed(0);
         timeFormat = "days";
     }
-    else if (timePosted >= 1036800) {
-        timePosted = (timePosted / (60 * 60 * 24 * 12)).toFixed(0);
-        timeFormat = "years";
+    else if (timePosted <31449600) {
+        //Display in weeks
+        timePosted = (timePosted / (60 * 60 * 24 * 7)).toFixed(0);
+        timeFormat = "w";
+    }
+    else {
+        //Display in years
+        timePosted = (timePosted / (60 * 60 * 24 * 7 * 52)).toFixed(0);
+        timeFormat = "y";
     }
 
     return timePosted + " " + timeFormat;

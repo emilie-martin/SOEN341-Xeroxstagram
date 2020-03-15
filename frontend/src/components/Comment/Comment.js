@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react'
 import { Link } from "react-router-dom"
+import React, { useState, useEffect } from 'react'
+
+import EditComment from './EditComment'
+import timeElapsedSincePosted from '../../services/TimeService'
+
 import './SCSS/Comment.scss'
-import { timeElapseSincePosted } from '../../services/TimeService'
-import { EditComment } from './EditComment'
-export const Comment = (props) => {
+
+export default function Comment(props) {
     const [timePosted, setTimePosted] = useState("");
 
     useEffect(() => {
-        setTimePosted(timeElapseSincePosted(new Date(props.comment.created)));
-        //eslint-disable-next-line react-hooks/exhaustive-deps
+        setTimePosted(timeElapsedSincePosted(new Date(props.comment.created)));
     }, []);
 
     return (
@@ -19,7 +21,7 @@ export const Comment = (props) => {
             <div className="commentContent">
                 {props.comment.comment}
             </div>
-            <div className="date-created">{timePosted} ago</div>
+            <div className="date-created">{timePosted}</div>
             <br />
         </div>
     );

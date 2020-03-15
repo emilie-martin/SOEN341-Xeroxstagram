@@ -1,10 +1,11 @@
 import React, { useState, useEffect} from 'react'
+
+import Comment from './Comment'
 import { getCommentByPicture } from './CommentAPI'
-import { Comment } from './Comment'
+
 import './SCSS/CommentList.scss'
 
-const CommentList = (props) => {
-
+export default function CommentList(props) {
     const [commentList, setCommentList] = useState([])
     const [refreshCommentList, setRefreshCommentList] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -34,4 +35,3 @@ const CommentList = (props) => {
         </div>
     );
 }
-export default CommentList;
