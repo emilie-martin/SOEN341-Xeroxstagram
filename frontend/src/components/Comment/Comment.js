@@ -11,7 +11,7 @@ export default function Comment(props) {
 
     useEffect(() => {
         setTimePosted(timeElapsedSincePosted(new Date(props.comment.created)));
-    }, []);
+    }, [props]);
 
     return (
         <div className="comment-div">
