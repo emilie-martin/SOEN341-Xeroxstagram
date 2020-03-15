@@ -22,7 +22,7 @@ h1 {
   img {
     width: 620px;
     height: 100%;
-    object-fit: cover;  // automatically crop the picture instead of stretching it
+    object-fit: contain;  // automatically crop the picture instead of stretching it
   }
 }
 
