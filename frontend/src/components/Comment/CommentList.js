@@ -28,7 +28,7 @@ export default function CommentList(props) {
     return (
         <div className="comment-list-wrapper">
             <div className="comment-list">
-                {loading ? 'Loading Comments' : commentList.slice().reverse()
+                {loading ? 'Loading Comments' : commentList.slice()
                     .map(comment => <Comment key={comment.id} comment={comment} reloadComment={reloadComment}></Comment>)
                 }
             </div>
