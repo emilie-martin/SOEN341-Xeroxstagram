@@ -12,6 +12,7 @@ import User from "./components/User/User";
 
 import "./App.scss";
 import "./config"
+import EditProfile from "./components/EditProfile/EditProfile";
 
 const setTokensAndLogin = (response) => {
 	localStorageService.setToken(response.data);
@@ -62,11 +63,11 @@ export const App = () => {
 			localStorageService.setBearerToken();
 		}
 		setLoggedInState();
-	}, [])
+	}, [currentUser])
 
 	const setLoggedInState = () => {
 		axios.get(global.config.BACKEND_URL + "/account")
-		.then ((response) => { console.log(response); setCurrentUser(response.data.username) })
+		.then ((response) => { console.log(response.data); setCurrentUser(response.data.username) })
 		.catch(() => { setCurrentUser(null) })
 	}
 
@@ -85,6 +86,10 @@ export const App = () => {
 		setUsername(e.target.value);
 	}
 
+	const handlePageChange = async (e)=>{
+		await setLoggedInState();
+		return currentUser;
+	}
 	return (
 		<div className="App">
 			<Router>
@@ -192,10 +197,11 @@ export const App = () => {
 						return <Redirect to='/' />;
 					}} />
 					<Route exact path="/post"
-						render={(props) => { return currentUser ? <PostPicture {...props} /> : <Redirect to='/' />; }}
+						render={(props) => { return handlePageChange ? <PostPicture {...props} /> : <Redirect to='/' />; }}
 					/>
 					<Route path="/post/:id" render={({ match }) => (<Post id={match.params.id} />)} />
 					<Route path="/account/:username" render={({ match }) => (<User username={match.params.username} />)} />
+					<Route exact path="/accounts/edit" render={()=> handlePageChange ? <EditProfile></EditProfile> : <Redirect to='/'/>}/>
 				</Switch>
 			</Router>
 		</div>
