@@ -26,8 +26,8 @@ export const EditComment = (props) => {
 
     return (
         <div>
-            <Popup modal className="edit" trigger={<a href="#" className="edit-button"><span>&#8942;</span></a>} closeOnDocumentClick
-                style="background:black;">
+            <Popup modal className="edit" trigger={<a href="#!" className="edit-button"><span>&#8942;</span></a>} closeOnDocumentClick
+                style={{background:'black'}}>
                 {close => (
                     <div className="edit-page">
                         <button className="edit-page-button" style={{ color: "red" }} onClick={(e) => { removeComment(e); close(); }}>Delete</button>

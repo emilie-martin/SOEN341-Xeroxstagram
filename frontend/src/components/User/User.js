@@ -4,6 +4,7 @@ import Post from "../Post/Post";
 import { useState, useEffect} from "react";
 import '../../config';
 import './User.scss';
+import Profile from "../Profile/Profile";
 
 export const User = props => {
 
@@ -100,6 +101,9 @@ export const User = props => {
 
     return (
         <div className="user-component">
+            <div className="profile-wrapper">
+                <Profile username = {props.username}></Profile>
+            </div>
             <form onSubmit={isFollowing ? unfollow : follow}>
                 <div className="follow">
                     <button className="follow-button" type="submit">{isFollowing ? "Unfollow" : "Follow"}</button>
