@@ -19,9 +19,14 @@ public class RegistrationService
 {
 	@Autowired
 	private AccountRepository accountRepository;
-
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
+	@Autowired
+	public RegistrationService(AccountRepository accountRepository, PasswordEncoder passwordEncoder){
+		this.accountRepository = accountRepository;
+		this.passwordEncoder = passwordEncoder;
+	}
 
 	public void createNewAccount(final Account account)
 	{

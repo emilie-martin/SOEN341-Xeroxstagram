@@ -1,0 +1,52 @@
+@import "../styles/prelude.scss";
+
+.about {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 15px;
+  box-sizing: border-box;
+
+  h3, h4 {
+    margin-bottom: 5px;
+  }
+
+  // Tablet
+  @media #{$medium-and-down} {
+    text-align: center;
+  }
+}
+
+.description {
+  margin-bottom: 50px;
+}
+
+.authors {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  box-sizing: border-box;
+  max-width: 100%;
+
+  a {
+    padding: 5px 10px;
+    color: $link-color;
+    background: black;
+    font-weight: 500;
+    text-decoration: none;
+    transition: $hover-transition;
+    min-height: 25px;
+
+    &:hover {
+      color: lightgray;
+    }
+  }
+
+    // Tablet
+    @media #{$medium-and-down} {
+      justify-content: center;
+
+      a {
+        margin: 5px 5px;
+      }
+    }
+}

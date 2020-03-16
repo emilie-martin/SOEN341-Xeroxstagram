@@ -37,7 +37,7 @@ public class Account {
    @NotNull
     private String displayName;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)   
     private Set<Account> following;
     
     @ManyToMany
