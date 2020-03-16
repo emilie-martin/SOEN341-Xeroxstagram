@@ -1,8 +1,11 @@
-import React, { useState } from 'react'
-import { deleteComment, editComment } from './CommentAPI'
 import Popup from 'reactjs-popup'
+import React, { useState } from 'react'
+
+import { deleteComment, editComment } from './CommentAPI'
+
 import './SCSS/EditComment.scss'
-export const EditComment = (props) => {
+
+export default function EditComment(props) {
     const [textAreaText, setTextAreaText] = useState(props.comment.comment);
 
     const updateComment = (event) => {
@@ -42,8 +45,7 @@ export const EditComment = (props) => {
                         <br />
                         <button className="edit-page-button" onClick={() => close()}>Cancel</button>
                     </div>
-                )
-                }
+                )}
             </Popup>
         </div>
     )

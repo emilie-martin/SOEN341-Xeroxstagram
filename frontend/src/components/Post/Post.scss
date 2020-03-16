@@ -3,10 +3,12 @@
 .post {
   display: flex;
   margin: 0 auto;
+
+  background-color: whitesmoke;
   border: $border-color;
+
   height: 620px;
   width: 970px;
-  background-color: whitesmoke;
 }
 
 h1 {
@@ -14,64 +16,72 @@ h1 {
 }
 
 .image-wrapper {
-  width: 620px;
-  height: 100%;
-  border: $border-color;
   padding: none;
-}
-
-.image-wrapper img {
-  width: 100%;
-  height: 100%;
+  img {
+    width: 620px;
+    height: 100%;
+    object-fit: contain; // fit picture instead of stretching it
+  }
 }
 
 .text-wrapper {
-  flex: 1;
   display: flex;
   flex-flow: column nowrap;
-  border: $border-color;
-  width: 350px;
   word-wrap: break-word;
+  
+  background: black;
+  height: 100%;
+  width: 350px;
+
+  position: relative;
+  .comment-form-div {
+    position: absolute;
+    width: 100%;
+    bottom: 0px;
+  }
 }
 
 .comments {
   overflow-y: auto;
-  flex-grow: 1;
-  background: black;
 }
 
 .post-description {
-  border-bottom: solid 1px #a9a9a9;
-  height: 100px;
-  width: 350px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  box-sizing: border-box;
+
   background: black;
   color: white;
+  border-bottom: solid 1px #a9a9a9;
+
   min-height: 100px;
+  height: 100px;
+  width: 350px;
+
+  padding: 20px;
+
+  a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: $h6-fontsize;
+  }
 }
 
-.post-description a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 14px;
-}
-
-.account-name {
-  padding-left: 17px;
-  padding-top: 20px;
-}
-
-//Scrollbar styling
-div.comments::-webkit-scrollbar-track {
+//Scrollbar
+div.comments {
+  &::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: #f5f5f5;
-}
+  }
 
-div.comments::-webkit-scrollbar {
-  width: 6px;
-  background-color: #f5f5f5;
-}
+  &::-webkit-scrollbar {
+    width: 6px;
+    background-color: #f5f5f5;
+  }
 
-div.comments::-webkit-scrollbar-thumb {
-  background-color: rgb(187, 167, 167);
+  &::-webkit-scrollbar-thumb {
+    background-color: rgb(187, 167, 167);
+  }
 }
