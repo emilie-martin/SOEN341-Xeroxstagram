@@ -15,15 +15,6 @@ h1 {
   text-align: center;
 }
 
-.image-wrapper {
-  padding: none;
-  img {
-    width: 620px;
-    height: 100%;
-    object-fit: contain; // fit picture instead of stretching it
-  }
-}
-
 .text-wrapper {
   display: flex;
   flex-flow: column nowrap;
