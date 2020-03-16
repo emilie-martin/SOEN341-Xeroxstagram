@@ -18,64 +18,81 @@
   hr {
     margin: 10px 0px 50px;
   }
-}
 
-.bi {
-  padding-right: 3px;
-}
+  .bi {
+    padding-right: 3px;
+  }
+  
+  .bi-search {
+    color: silver;
+    padding-right: 5px;
+  }
+  
+  .nav-bar {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    margin: 20px auto;
+  
+    padding: 5px;
+  
+    #login {
+      display: flex;
+    }
+    
+    a {
+      display: flex;
+      color: $link-color;
+      padding: 0px 10px;
+      text-decoration: none;
+      font-size: $p-fontsize;
+      font-weight: 500;
+      transition: $hover-transition;
+  
+      &:hover {
+        color: silver;
+      }
+  
+      @media #{$medium-and-down} {
+        font-size: $h6-fontsize;
+      }
+    }
+  
+    input[type="text"] {
+      max-height: 20px;
+      padding: 3px;
+    }
 
-.bi-search {
-  color: silver;
-  padding-right: 5px;
-}
+    // MOBILE
+    @media #{$small-and-down} {
+      justify-content: center;
 
-.nav-bar {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  align-items: center;
-  box-sizing: border-box;
-  margin: 20px auto;
+      .app-name a {
+        padding: 0px 5px 5px;
+      }
 
-  padding: 5px;
-
-  #login {
+      .nav-links {
+        justify-content: center;
+        
+        a {
+          padding: 5px;
+        }
+      }
+    }
+    
+  }
+  
+  .nav-links, .registered-user-options, .unregistered-user-options {
     display: flex;
   }
   
-  a {
-    display: flex;
-    color: $link-color;
-    padding: 0px 10px;
-    text-decoration: none;
-    font-size: $p-fontsize;
-    font-weight: 500;
-    transition: $hover-transition;
-
-    &:hover {
-      color: silver;
-    }
-
-    @media #{$medium-and-down} {
-      font-size: $h6-fontsize;
-    }
-  }
-
-  input[type="text"] {
-    max-height: 20px;
-    padding: 3px;
+  .nav-links {
+    flex-flow: row wrap;
   }
   
-}
-
-.nav-links, .registered-user-options, .unregistered-user-options {
-  display: flex;
-}
-
-.nav-links {
-  flex-flow: row nowrap;
-}
-
-.registered-user-options, .unregistered-user-options {
-  justify-content: flex-end;
+  .registered-user-options, .unregistered-user-options {
+    justify-content: flex-end;
+  }  
 }
