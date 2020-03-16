@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Axios from 'axios';
 import '../../config';
 import './Profile.scss'
+import { Link } from "react-router-dom";
 const Profile = (props) => {
     const [username, setUsername] = useState("");
     const [biography, setBiography] = useState("");
@@ -14,7 +15,6 @@ const Profile = (props) => {
         const loadProfile = () => {
             Axios.get(global.config.BACKEND_URL + `/account/profile/${props.username}`).then(
                 (response) => {
-                    console.log(response.data);
                     setUsername(response.data.username);
                     setBiography(response.data.biography);
                     setDisplayName(response.data.displayName);
@@ -38,8 +38,12 @@ const Profile = (props) => {
                             <div className="display-name">
                                 <h2>({displayName})</h2>
                             </div>
-
                         </div>
+                        <Link to={"/accounts/edit"}>
+                            <div className="edit">
+                                <button className="edit-btn">Edit Profile</button>
+                            </div>
+                        </Link>
                     </td>
                 </tr>
                 <div className="profile-stats">
@@ -58,7 +62,6 @@ const Profile = (props) => {
                                 {numFollowings} followings
                             </td>
                         </div>
-
                     </tr>
                 </div>
                 <div className="profile-bio">
@@ -67,14 +70,9 @@ const Profile = (props) => {
                             <span>{biography}
                             </span>
                         </div>
-                    </  tr>
+                    </ tr>
                 </div>
-
-
             </table>
-
-
-
         </div>
     )
 }

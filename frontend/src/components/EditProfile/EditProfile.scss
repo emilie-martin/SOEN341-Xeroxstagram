@@ -10,10 +10,10 @@
   width: 1000px;
 }
 
-.edit-profile-button{
-    width: 100px;
-    padding-left: 200px;
-    margin-top: 10px;
+.edit-profile-button {
+  width: 100px;
+  padding-left: 200px;
+  margin-top: 10px;
 }
 .btn {
   color: rgb(25, 136, 240);
@@ -32,7 +32,7 @@
 .edit-profile {
   margin: auto;
   margin-top: 100px;
-  width: 500px;
+  width: 50%;
   height: 500px;
 }
 
@@ -55,9 +55,70 @@
   height: 50px;
 }
 
-.edit-profile-page{
-    width: 1500px;
-    height: 100%;
-    margin-top: 0px;
+.edit-profile-page {
+  width: 100%;
+  height: 50%;
+  margin-top: 0px;
 }
 
+.edit-profile h1 {
+  width: 300px;
+  padding-left: 200px;
+}
+.sidebar {
+  position: fixed;
+  width: 25%;
+  height: 100vh;
+  background: rgb(28, 27, 27);
+  padding-bottom: 10px;
+}
+
+.nav {
+  position: relative;
+  margin: 0 15%;
+  text-align: right;
+  top: 100px;
+  transform: translateY(-50%);
+  font-weight: bold;
+}
+
+.nav ul {
+  list-style: none;
+
+  li {
+    position: relative;
+    margin: 3.2em 0;
+
+    a {
+      line-height: 5em;
+      text-decoration: none;
+      color: rgba(#fff, 0.35);
+      display: inline-block;
+      transition: all ease-out 300ms;
+      white-space: nowrap;
+    }
+
+    &.active a {
+      color: white;
+    }
+
+    &:not(.active)::after {
+      opacity: 0.2;
+    }
+
+    &:not(.active):hover a {
+      color: rgba(#fff, 0.75);
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 0.2em;
+      background: black;
+      left: 0;
+      bottom: 0;
+      background-image: linear-gradient(to right, #114dad, #2eb8e6);
+    }
+  }
+}

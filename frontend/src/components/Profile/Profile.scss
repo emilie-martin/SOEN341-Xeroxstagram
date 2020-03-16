@@ -2,7 +2,9 @@
   margin: 20 20;
   padding-bottom: 10px;
 }
-
+.profile-stats {
+  margin-top: 10px;
+}
 .profile-stats td {
   padding-right: 20px;
   padding-left: 20px;
@@ -44,4 +46,22 @@
 .profile-bio {
   width: 950px;
   word-wrap: break-word;
+  margin-top: 5px;
+}
+.edit {
+  display: inline;
+  margin-left: 70px;
+}
+.edit-btn {
+  color: rgb(25, 136, 240);
+  background-color: rgb(40, 40, 40);
+  outline: none;
+  border: none;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  text-transform: uppercase;
+  border-radius: 20px;
+  cursor: pointer;
+  display: inline-block;
+  text-align: right;
 }
