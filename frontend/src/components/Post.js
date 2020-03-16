@@ -5,6 +5,8 @@ import { PostComment } from "./Comment/PostComment";
 import "./Post.scss";
 import '../config';
 import CommentList from "./Comment/CommentList";
+import { FollowingButton } from "./FollowingButton.js";
+
 const Post = (props) => {
 
     const [Picture, setPicture] = useState(undefined);
@@ -22,8 +24,9 @@ const Post = (props) => {
                 }
             )
         }
+
         loadPicture();
-    }, [props.id])
+    }, [props.id]) // when logged in state changes
 
     const onCommentPosted = () => {
         //Whenver a comment is posted, inverse the boolean associated to refreshComment
@@ -46,8 +49,8 @@ const Post = (props) => {
                                 <Link to={`/account/${Picture.account}`}>
                                     {Picture.account}
                                 </Link>: {Picture.caption}
+                               <FollowingButton {... props} username={Picture.account}  ></FollowingButton>
                             </div>
-
                         </div>
                         <div className="comments">
                             <CommentList refreshComment={refreshComment} postId={props.id} />
