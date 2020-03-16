@@ -33,7 +33,6 @@ export const User = props => {
             )
         }
 
-        //isUserFollowing();
         loadUser();
       }, [props.username])
 

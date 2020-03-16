@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import { useGlobal } from 'reactn';
 import axios from "axios";
 import '../config';
 
 export const FollowingButton = (props) =>
 {
-    const[isLoggedIn, setLoggedIn] = useState(false);
+    const [isLoggedIn, setLoggedIn] = useState(false);
     const [isFollowing, setFollowing] = useState(false);
     const [errorMsg, setErrorMsg] = useState("");
 
@@ -47,11 +48,8 @@ export const FollowingButton = (props) =>
 
         const isUserLoggedIn = () => {
             axios.get(global.config.BACKEND_URL + "/account").then(
-                (response) => {
-                    //console.log(response.data);
-                    setLoggedIn(true);
-                    isUserFollowing();
-                }
+                    setLoggedIn(true),
+                    isUserFollowing()
             ).catch(() => { setLoggedIn(false)})
         };
 
