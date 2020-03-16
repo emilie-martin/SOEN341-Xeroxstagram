@@ -56,18 +56,18 @@ axios.interceptors.response.use(
 
 export const App = () => {
 	const [username, setUsername] = useState();
-	const [currentUser, setCurrentUser] = useState();
-
+	const [currentUser, setCurrentUser] = useState(undefined);
+	const [loading, setLoading] = useState(true);
 	useEffect(() => {
 		if (localStorageService.getAccessToken()) {
 			localStorageService.setBearerToken();
 		}
 		setLoggedInState();
-	}, [currentUser])
+	}, [loading])
 
 	const setLoggedInState = () => {
 		axios.get(global.config.BACKEND_URL + "/account")
-		.then ((response) => { console.log(response.data); setCurrentUser(response.data.username) })
+		.then ((response) => { console.log(response.data); setCurrentUser(response.data.username); setLoading(false)})
 		.catch(() => { setCurrentUser(null) })
 	}
 
@@ -84,11 +84,6 @@ export const App = () => {
 
 	const handleChangeUser = (e) => {
 		setUsername(e.target.value);
-	}
-
-	const handlePageChange = async (e)=>{
-		await setLoggedInState();
-		return currentUser;
 	}
 	return (
 		<div className="App">
@@ -197,11 +192,15 @@ export const App = () => {
 						return <Redirect to='/' />;
 					}} />
 					<Route exact path="/post"
-						render={(props) => { return handlePageChange ? <PostPicture {...props} /> : <Redirect to='/' />; }}
+						render={(props) => { return currentUser ? <PostPicture {...props} /> : <Redirect to='/' />; }}
 					/>
 					<Route path="/post/:id" render={({ match }) => (<Post id={match.params.id} />)} />
 					<Route path="/account/:username" render={({ match }) => (<User username={match.params.username} />)} />
-					<Route exact path="/accounts/edit" render={()=> handlePageChange ? <EditProfile></EditProfile> : <Redirect to='/'/>}/>
+					<Route exact path="/accounts/edit" 		
+					render={() => {
+						return loading ? 'loading': (currentUser ? <EditProfile></EditProfile> : <Redirect to='/'/>)}
+					}
+					/>
 				</Switch>
 			</Router>
 		</div>
