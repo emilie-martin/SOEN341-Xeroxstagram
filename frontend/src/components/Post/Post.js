@@ -14,7 +14,6 @@ export default function Post(props) {
     const [Picture, setPicture] = useState(undefined);
     const [refreshComment, setRefreshComment] = useState(false);
 
-    console.log(Picture);
     useEffect(() => {
         const loadPicture = () => {
             axios.get(global.config.BACKEND_URL + "/picture/" + props.id).then(
