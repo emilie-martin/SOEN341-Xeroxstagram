@@ -67,7 +67,7 @@ export const App = () => {
 
 	const setLoggedInState = () => {
 		axios.get(global.config.BACKEND_URL + "/account")
-		.then ((response) => { setCurrentUser(response.data.username);setLoading(false)})
+		.then ((response) => { setCurrentUser(response.data.username); setLoading(false) })
 		.catch(() => { setCurrentUser(null) })
 	}
 

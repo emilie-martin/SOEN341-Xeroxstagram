@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import './EditProfile.scss'
 import Axios from 'axios'
+import React, { useState, useEffect } from 'react'
 import { Redirect } from 'react-router-dom';
 import '../../config';
-const EditProfile = () => {
+import './EditProfile.scss'
+
+export default function EditProfile() {
     const [loading, setLoading] = useState(true);
     const [displayName, setDisplayName] = useState("");
     const [biography, setBiography] = useState("");
@@ -108,7 +109,6 @@ const EditProfile = () => {
                                             <label>Bio</label>
                                             <textarea name="biography" className="edit-profile-textarea" value={biography} onChange={(e) => handleTyping(e, setBiography)}></textarea>
                                         </div>
-
                                         <br />
                                         <div>
                                             <label>Email</label>
@@ -145,4 +145,3 @@ const EditProfile = () => {
         </div>
     )
 }
-export default EditProfile

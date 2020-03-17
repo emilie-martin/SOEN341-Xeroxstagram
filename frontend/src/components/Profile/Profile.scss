@@ -50,8 +50,9 @@
 }
 .edit {
   display: inline;
-  margin-left: 70px;
+  margin-left: 30px;
 }
+
 .edit-btn {
   color: rgb(25, 136, 240);
   background-color: rgb(40, 40, 40);
@@ -64,4 +65,29 @@
   cursor: pointer;
   display: inline-block;
   text-align: right;
+}
+
+.gear-icon {
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+  font-weight: bold;
+  color: rgb(25, 136, 240);
+}
+
+.edit-btn-text {
+  display: inline-flex;
+  margin-right: 5px;
+  font-size: 15px;
+}
+
+.txxt {
+  text-align: center;
+  margin: 2px 10px;
+  margin-bottom: 5px;
+}
+
+.txxt2 {
+  display: inline-block;
+  height: 20px;
 }
