@@ -1,18 +1,21 @@
+@import "../../../styles/prelude.scss";
+
 .comment-div {
-  border-bottom: 1px solid #a9a9a9;
-  padding-left: 5%;
-  margin-left: auto;
-  margin-right: auto;
   font-size: 14px;
+  margin: 0 auto;
+  padding-left: 20px;
+
   background: black;
   color: white;
-}
+  border-bottom: 1px solid #a9a9a9;
 
-.comment-div a {
-  color: white;
-  font-size: 18px;
-  text-decoration: none;
-  font-weight: bold;
+  a {
+    color: white;
+    text-decoration: none;
+
+    font-size: $h6-fontsize;
+    font-weight: bold;
+  }
 }
 
 .date-created {
