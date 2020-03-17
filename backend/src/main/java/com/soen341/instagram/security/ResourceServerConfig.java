@@ -24,9 +24,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter
 				.antMatchers("/comment/**").authenticated().antMatchers("/account/profile/{username}").permitAll()
 				.antMatchers("/account/profile/**").authenticated().antMatchers("/account/following/**")
 				.authenticated();
-
-		// I'm letting all the request as permitAll for now. It will be easier to
-		// develop API. We can configure the authentication later
 	}
 
 }
