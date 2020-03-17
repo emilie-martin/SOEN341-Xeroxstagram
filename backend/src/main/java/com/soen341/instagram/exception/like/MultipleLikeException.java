@@ -6,11 +6,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
 public class MultipleLikeException extends RuntimeException
 {
-	public MultipleLikeException()
-	{
-		super("User can only like once.");
-	}
-
 	public MultipleLikeException(String msg)
 	{
 		super(msg);

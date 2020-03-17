@@ -32,9 +32,8 @@ import java.util.stream.Collectors;
 
 @Service("pictureService")
 public class PictureService {
-
-	@Autowired
-	private AccountRepository accountRepository;
+    @Autowired
+    private AccountRepository accountRepository;
 	
     private final static int MAX_RETRIES = 1000;
 
@@ -142,7 +141,7 @@ public class PictureService {
     }
     
     // like service
-	public int likePicture(final String pictureId) {
+    public int likePicture(final String pictureId) {
 		final Picture picture = getPictureFromId(pictureId);
 		final Set<Account> likedBy = picture.getLikedBy();
 		final boolean liked = likedBy.add(UserAccessor.getCurrentAccount(accountRepository));
@@ -153,7 +152,7 @@ public class PictureService {
 		return picture.getLikeCount();
 	}
 	
-	public int unlikePicture(final String pictureId) {
+    public int unlikePicture(final String pictureId) {
 		final Picture picture = getPictureFromId(pictureId);
 		final Set<Account> likedBy = picture.getLikedBy();
 		final boolean unliked = likedBy.remove(UserAccessor.getCurrentAccount(accountRepository));

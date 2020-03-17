@@ -96,7 +96,7 @@ public class CommentService
 
 	public Comment findComment(final String id)
 	{
-		long commentId;
+	    long commentId;
         try {
             commentId = Long.valueOf(id);
         } catch (NumberFormatException e) {

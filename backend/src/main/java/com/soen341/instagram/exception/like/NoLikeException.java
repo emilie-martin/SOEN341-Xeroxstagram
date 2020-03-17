@@ -1,12 +1,11 @@
 package com.soen341.instagram.exception.like;
 
-public class NoLikeException extends RuntimeException{
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-	public NoLikeException() {
-		super("No like registered for this user.");
-		// TODO Auto-generated constructor stub
-	}
-
+@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+public class NoLikeException extends RuntimeException
+{
 	public NoLikeException(String message) {
 		super(message);
 		// TODO Auto-generated constructor stub
