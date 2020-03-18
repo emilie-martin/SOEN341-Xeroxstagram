@@ -42,7 +42,7 @@ public class CommentServiceTest
 	private final static long pictureId = 1;
 	private final static String validComment = "This is a valid comment";
 	private final static Account account = Mockito.mock(Account.class);
-	private final static Optional<Picture> Emptypicture = Optional.empty();
+	private final static Optional<Picture> emptyPicture = Optional.empty();
 	private final static Optional<Picture> picture = Optional.of(new Picture());
 	private static Comment comment;
 	private static long commentId = 1;
@@ -64,7 +64,6 @@ public class CommentServiceTest
 	@Test(expected = CommentLengthTooLongException.class)
 	public void createCommentLengthTooLong_ExpectCommentLengthTooLongException()
 	{
-		// final CommentService commentService = Mockito.mock(CommentService.class);
 		final String commentLength273 = "sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
 				+ "ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
 				+ "sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
@@ -75,9 +74,8 @@ public class CommentServiceTest
 	@Test(expected = PictureNotFoundException.class)
 	public void createCommentWithInvalidPictureID_ExpectPictureNotFoundException()
 	{
-		Mockito.when(pictureRepository.findById(pictureId)).thenReturn(Emptypicture);
+		Mockito.when(pictureRepository.findById(pictureId)).thenReturn(emptyPicture);
 		commentService.createComment(validComment, pictureId);
-
 	}
 
 	@Test
