@@ -32,116 +32,117 @@ import java.util.stream.Collectors;
 
 @Service("pictureService")
 public class PictureService {
-    @Autowired
-    private AccountRepository accountRepository;
-	
-    private final static int MAX_RETRIES = 1000;
+	@Autowired
+	private AccountRepository accountRepository;
 
-    @Autowired
-    private PictureRepository pictureRepository;
-    @Autowired
-    private ModelMapper modelMapper;
+	private final static int MAX_RETRIES = 1000;
 
-    public Picture uploadPicture(String caption, MultipartFile picture, Account user) {
-        Picture newPicture = new Picture();
-        newPicture.setAccount(user);
-        newPicture.setCaption(caption);
-        newPicture.setCreated(new Date());
+	@Autowired
+	private PictureRepository pictureRepository;
+	@Autowired
+	private ModelMapper modelMapper;
 
-        File pictureFile;
-        try {
-            BufferedImage image = ImageIO.read(new ByteArrayInputStream(picture.getBytes()));
+	public Picture uploadPicture(String caption, MultipartFile picture, Account user) {
+		Picture newPicture = new Picture();
+		newPicture.setAccount(user);
+		newPicture.setCaption(caption);
+		newPicture.setCreated(new Date());
 
-            if (image == null) {
-                throw new NotAPictureException("Please upload a valid picture file.");
-            }
+		File pictureFile;
+		try {
+			BufferedImage image = ImageIO.read(new ByteArrayInputStream(picture.getBytes()));
 
-            // create a file for the picture with a unique file name
-            pictureFile = createNewFileWithUniqueName("./pictures/" + user.getUsername());
-            BufferedImage compressedImage = compressImage(image);
+			if (image == null) {
+				throw new NotAPictureException("Please upload a valid picture file.");
+			}
 
-            // save compressed image to file
-            ImageIO.write(compressedImage, "jpg", pictureFile);
-        } catch (IOException e) {
-            throw new UnknownIOException("An unknown error occurred while trying to upload the picture.", e);
-        }
+			// create a file for the picture with a unique file name
+			pictureFile = createNewFileWithUniqueName("./pictures/" + user.getUsername());
+			BufferedImage compressedImage = compressImage(image);
 
-        newPicture.setFilePath(pictureFile.getPath());
-        pictureRepository.save(newPicture);
-        return newPicture;
-    }
+			// save compressed image to file
+			ImageIO.write(compressedImage, "jpg", pictureFile);
+		} catch (IOException e) {
+			throw new UnknownIOException("An unknown error occurred while trying to upload the picture.", e);
+		}
 
-    public PictureDTO getPictureDTOFromId(String id) {
-        Picture pic = getPictureFromId(id);
-        return toPictureDTO(pic);
-    }
+		newPicture.setFilePath(pictureFile.getPath());
+		pictureRepository.save(newPicture);
+		return newPicture;
+	}
 
-    public byte[] loadPicture(String id) {
-        Picture pic = getPictureFromId(id);
-        Path picPath = Paths.get(pic.getFilePath());
-        if (!Files.exists(picPath)) {
-            throw new FileNotFoundException("The image file could not be found.");
-        }
-        try {
-            byte[] pictureBytes = Files.readAllBytes(Paths.get(pic.getFilePath()));
-            return pictureBytes;
-        } catch (IOException e) {
-            throw new UnknownIOException("An unknown error occurred while trying to access the picture.", e);
-        }
-    }
+	public PictureDTO getPictureDTOFromId(String id) {
+		Picture pic = getPictureFromId(id);
+		return toPictureDTO(pic);
+	}
 
-    public List<Long> getAccountPictures(Account account) {
-        return pictureRepository.findByAccount(account).stream().map(pic -> pic.getId()).collect(Collectors.toList());
-    }
+	public byte[] loadPicture(String id) {
+		Picture pic = getPictureFromId(id);
+		Path picPath = Paths.get(pic.getFilePath());
+		if (!Files.exists(picPath)) {
+			throw new FileNotFoundException("The image file could not be found.");
+		}
+		try {
+			byte[] pictureBytes = Files.readAllBytes(Paths.get(pic.getFilePath()));
+			return pictureBytes;
+		} catch (IOException e) {
+			throw new UnknownIOException("An unknown error occurred while trying to access the picture.", e);
+		}
+	}
 
-    public PictureDTO toPictureDTO(Picture pic) {
-        PictureDTO picDTO = modelMapper.map(pic, PictureDTO.class);
-        picDTO.setAccount(pic.getAccount().getUsername());
-        return picDTO;
-    }
+	public List<Long> getAccountPictures(Account account) {
+		return pictureRepository.findByAccount(account).stream().map(pic -> pic.getId()).collect(Collectors.toList());
+	}
 
-    private Picture getPictureFromId(String id) {
-        long pictureId;
-        try {
-            pictureId = Long.valueOf(id);
-        } catch (NumberFormatException e) {
-            throw new InvalidIdException("Invalid picture ID.");
-        }
-        Optional<Picture> optionalPic = pictureRepository.findById(pictureId);
-        if (!optionalPic.isPresent()) {
-            throw new PictureNotFoundException("The specified picture does not exist.");
-        }
-        return optionalPic.get();
-    }
-    
-    private File createNewFileWithUniqueName(String directory) throws IOException {
-        File pictureFile;
-        int retries = 0;
-        while (true) {
-            if (retries >= MAX_RETRIES) {
-                throw new UnknownIOException("Failed to upload picture.");
-            }
-            String currentDateString = String.valueOf(new Date().getTime());
-            pictureFile = new File(directory + "/" + currentDateString + ".jpg");
-            pictureFile.getParentFile().mkdirs(); // create parent directories if they don't exist
-            if (pictureFile.createNewFile()) {
-                // if we successfully create the file (i.e. file did not exist previously), then exit loop
-                return pictureFile;
-            }
-            retries++;
-        }
-    }
+	public PictureDTO toPictureDTO(Picture pic) {
+		PictureDTO picDTO = modelMapper.map(pic, PictureDTO.class);
+		picDTO.setAccount(pic.getAccount().getUsername());
+		return picDTO;
+	}
 
-    private BufferedImage compressImage(BufferedImage image) {
-        BufferedImage compressedImage = new BufferedImage(image.getWidth(),
-                image.getHeight(), BufferedImage.TYPE_INT_RGB);
-        // change invisible pixels to white pixels (png to img)
-        compressedImage.createGraphics().drawImage(image, 0, 0, Color.WHITE, null);
-        return compressedImage;
-    }
-    
-    // like service
-    public int likePicture(final String pictureId) {
+	private Picture getPictureFromId(String id) {
+		long pictureId;
+		try {
+			pictureId = Long.valueOf(id);
+		} catch (NumberFormatException e) {
+			throw new InvalidIdException("Invalid picture ID.");
+		}
+		Optional<Picture> optionalPic = pictureRepository.findById(pictureId);
+		if (!optionalPic.isPresent()) {
+			throw new PictureNotFoundException("The specified picture does not exist.");
+		}
+		return optionalPic.get();
+	}
+
+	private File createNewFileWithUniqueName(String directory) throws IOException {
+		File pictureFile;
+		int retries = 0;
+		while (true) {
+			if (retries >= MAX_RETRIES) {
+				throw new UnknownIOException("Failed to upload picture.");
+			}
+			String currentDateString = String.valueOf(new Date().getTime());
+			pictureFile = new File(directory + "/" + currentDateString + ".jpg");
+			pictureFile.getParentFile().mkdirs(); // create parent directories if they don't exist
+			if (pictureFile.createNewFile()) {
+				// if we successfully create the file (i.e. file did not exist previously), then
+				// exit loop
+				return pictureFile;
+			}
+			retries++;
+		}
+	}
+
+	private BufferedImage compressImage(BufferedImage image) {
+		BufferedImage compressedImage = new BufferedImage(image.getWidth(), image.getHeight(),
+				BufferedImage.TYPE_INT_RGB);
+		// change invisible pixels to white pixels (png to img)
+		compressedImage.createGraphics().drawImage(image, 0, 0, Color.WHITE, null);
+		return compressedImage;
+	}
+
+	// like service
+	public int likePicture(final String pictureId) {
 		final Picture picture = getPictureFromId(pictureId);
 		final Set<Account> likedBy = picture.getLikedBy();
 		final boolean liked = likedBy.add(UserAccessor.getCurrentAccount(accountRepository));
@@ -151,8 +152,8 @@ public class PictureService {
 		pictureRepository.save(picture);
 		return picture.getLikeCount();
 	}
-	
-    public int unlikePicture(final String pictureId) {
+
+	public int unlikePicture(final String pictureId) {
 		final Picture picture = getPictureFromId(pictureId);
 		final Set<Account> likedBy = picture.getLikedBy();
 		final boolean unliked = likedBy.remove(UserAccessor.getCurrentAccount(accountRepository));
@@ -162,5 +163,5 @@ public class PictureService {
 		pictureRepository.save(picture);
 		return picture.getLikeCount();
 	}
-	
+
 }
