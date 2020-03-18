@@ -1,17 +1,19 @@
 package com.soen341.instagram.service.impl;
 
-import com.soen341.instagram.dao.impl.AccountRepository;
 import com.soen341.instagram.dao.impl.PictureRepository;
 import com.soen341.instagram.dto.picture.PictureDTO;
 import com.soen341.instagram.exception.picture.*;
 import com.soen341.instagram.model.Account;
 import com.soen341.instagram.model.Picture;
+import com.soen341.instagram.utils.UserAccessor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -34,7 +36,8 @@ public class PictureService {
     private PictureRepository pictureRepository;
     @Autowired
     private ModelMapper modelMapper;
-
+    @Autowired
+    private EntityManager session;
 
     public Picture uploadPicture(String caption, MultipartFile picture, Account user) {
         Picture newPicture = new Picture();
@@ -92,6 +95,18 @@ public class PictureService {
         PictureDTO picDTO = modelMapper.map(pic, PictureDTO.class);
         picDTO.setAccount(pic.getAccount().getUsername());
         return picDTO;
+    }
+
+    public List<Long> getFeed(int count, long after, Account currentUser) {
+        Query query = session.createQuery("Select p from Picture p " +
+                "where p.account IN (:following) " +
+                "AND p.id > :after " +
+                "ORDER BY p.created ASC")
+                .setParameter("following", currentUser.getFollowing())
+                .setParameter("after", after);
+        query.setMaxResults(count);
+        List<Picture> result = query.getResultList();
+        return result.stream().map(p -> p.getId()).collect(Collectors.toList());
     }
 
     private Picture getPictureFromId(String id) {
