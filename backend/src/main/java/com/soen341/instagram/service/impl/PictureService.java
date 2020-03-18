@@ -105,15 +105,16 @@ public class PictureService {
 	}
 
 	public List<Long> getFeed(int count, long after, Account currentUser) {
-		Query query = session.createQuery("Select p from Picture p " +
+		final String feedQuery = "Select p.id from Picture p " +
 				"where p.account IN (:following) " +
 				"AND p.id > :after " +
-				"ORDER BY p.created ASC")
+				"ORDER BY p.created ASC";
+
+		Query query = session.createQuery(feedQuery)
 				.setParameter("following", currentUser.getFollowing())
 				.setParameter("after", after);
 		query.setMaxResults(count);
-		List<Picture> result = query.getResultList();
-		return result.stream().map(p -> p.getId()).collect(Collectors.toList());
+		return query.getResultList();
 	}
 
 	private Picture getPictureFromId(String id) {
