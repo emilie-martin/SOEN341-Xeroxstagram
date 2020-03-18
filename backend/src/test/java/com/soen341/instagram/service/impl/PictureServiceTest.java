@@ -17,7 +17,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.modelmapper.ModelMapper;
 import org.springframework.mock.web.MockMultipartFile;
 
-import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.Collections;
@@ -26,9 +25,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PictureServiceTest {
