@@ -14,7 +14,6 @@ import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import com.soen341.instagram.dao.impl.AccountRepository;
 import com.soen341.instagram.dao.impl.CommentRepository;
@@ -27,7 +26,6 @@ import com.soen341.instagram.model.Picture;
 import com.soen341.instagram.service.impl.CommentService;
 import com.soen341.instagram.utils.UserAccessor;
 
-@DataJpaTest
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(UserAccessor.class)
 public class CommentServiceTest
