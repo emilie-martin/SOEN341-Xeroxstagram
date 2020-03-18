@@ -1,10 +1,11 @@
-import React from "react";
-import axios from "axios";
-import Post from "../Post/Post";
-import { useState, useEffect} from "react";
 import '../../config';
 import './User.scss';
+
+import axios from "axios";
+import Post from "../Post/Post";
 import Profile from "../Profile/Profile";
+import React from "react";
+import { useState, useEffect} from "react";
 
 export const User = props => {
 

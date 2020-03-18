@@ -1,7 +1,8 @@
-import Axios from 'axios'
+import '../../config';
+
+import axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import { Redirect } from 'react-router-dom';
-import '../../config';
 import './EditProfile.scss'
 
 export default function EditProfile() {
@@ -14,7 +15,7 @@ export default function EditProfile() {
 
     useEffect(() => {
         const fetchCurrentUser = () => {
-            Axios.get(global.config.BACKEND_URL + "/account").then(
+            axios.get(global.config.BACKEND_URL + "/account").then(
                 (response) => {
                     setDisplayName(response.data.displayName);
                     setBiography(response.data.biography);
