@@ -21,6 +21,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter
 	{
 		http.cors().and().headers().frameOptions().disable().and().authorizeRequests()
 				.antMatchers("/picture").authenticated()
+				.antMatchers("/picture/feed").authenticated()
 				.antMatchers("/comment/commentByPicture/**", "/comment/commentById/**").permitAll()
 				.antMatchers("/comment/**").authenticated()
 				.antMatchers("/account/profile/**").authenticated()
