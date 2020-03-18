@@ -19,41 +19,40 @@ const setTokensAndLogin = (response) => {
 }
 
 const initAxios = () => {
+	axios.interceptors.response.use(
+		(response) => {
+			return response; // no need to refresh token if successful
+		},
+		(error) => {
+			if (error.response && error.response.data && error.response.data.error === "invalid_token") {
+				const request = error.config;
+				delete axios.defaults.headers.common.Authorization;
+				delete request.headers.Authorization;
 
-axios.interceptors.response.use(
-	(response) => {
-		return response; // no need to refresh token if successful
-	},
-	(error) => {
-		if (error.response && error.response.data && error.response.data.error === "invalid_token") {
-			const request = error.config;
-			delete axios.defaults.headers.common.Authorization;
-			delete request.headers.Authorization;
-
-			// try request without user logged in
-			if (!localStorageService.getRefreshToken()) {
-				localStorageService.clearAllTokens();
-				return axios(request);
+				// try request without user logged in
+				if (!localStorageService.getRefreshToken()) {
+					localStorageService.clearAllTokens();
+					return axios(request);
+				}
+				
+				// expired token
+				return axios.post(global.config.BACKEND_URL + "/account/refresh", {"token": localStorageService.getRefreshToken()})
+					.then( (response) => {
+							setTokensAndLogin(response);
+							return axios(request);
+						},
+						() => {
+							// re-authentication  failed; retry request with no user logged in
+							localStorageService.clearAllTokens();
+							return axios(request);
+						}
+					)
+			} else {
+				// error from backend, but not because of invalid token
+				return Promise.reject(error);
 			}
-			
-			// expired token
-			return axios.post(global.config.BACKEND_URL + "/account/refresh", {"token": localStorageService.getRefreshToken()})
-				.then( (response) => {
-						setTokensAndLogin(response);
-						return axios(request);
-					},
-					() => {
-						// re-authentication  failed; retry request with no user logged in
-						localStorageService.clearAllTokens();
-						return axios(request);
-					}
-				)
-		} else {
-			// error from backend, but not because of invalid token
-			return Promise.reject(error);
 		}
-	}
-);
+	);
 };
 
 export const App = () => {
