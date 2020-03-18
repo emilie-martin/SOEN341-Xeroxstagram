@@ -108,5 +108,4 @@ public class CommentServiceTest
 		final Comment comment = this.commentService.editComment(commentId, newComment);
 		assertEquals(comment.getComment(), newComment);
 	}
-
 }
