@@ -13,9 +13,8 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.modelmapper.ModelMapper;
+import org.powermock.modules.junit4.PowerMockRunner;
 import org.springframework.mock.web.MockMultipartFile;
 
 import java.io.File;
@@ -26,7 +25,7 @@ import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(PowerMockRunner.class)
 public class PictureServiceTest
 {
     @InjectMocks
@@ -47,8 +46,6 @@ public class PictureServiceTest
     @Before
     public void setup()
     {
-        //MockitoAnnotations.initMocks(this);
-
         Mockito.when(account.getUsername()).thenReturn("test account");
 
         pic = new Picture();
