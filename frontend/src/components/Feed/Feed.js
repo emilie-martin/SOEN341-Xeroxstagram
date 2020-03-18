@@ -35,7 +35,8 @@ export default function Feed(props) {
     }
 
     useEffect(() => {
-        if(props.currentUser) {
+        if (props.currentUser) {
+            setPosts([]);
             loadMorePosts();
         }
     }, [props.currentUser]);
