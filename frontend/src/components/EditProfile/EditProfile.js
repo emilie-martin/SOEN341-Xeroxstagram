@@ -44,19 +44,19 @@ export default function EditProfile() {
 
     const updateProfile = (event) => {
         event.preventDefault();
-        Axios.put(global.config.BACKEND_URL + `/account/profile/biographyUpdate`,
+        axios.put(global.config.BACKEND_URL + `/account/profile/biographyUpdate`,
             {
                 "biography": event.target.biography.value
             });
 
-        Axios.put(global.config.BACKEND_URL + `/account/profile/emailUpdate`,
+        axios.put(global.config.BACKEND_URL + `/account/profile/emailUpdate`,
             {
                 "email": event.target.email.value
             }).catch((error) => {
                 alert(error.response.data.message);
             })
 
-        Axios.put(global.config.BACKEND_URL + `/account/profile/displayNameUpdate`,
+        axios.put(global.config.BACKEND_URL + `/account/profile/displayNameUpdate`,
             {
                 "displayName": event.target.displayName.value
             }).catch((error) => {
@@ -65,14 +65,14 @@ export default function EditProfile() {
     }
     const updateAccount = (event) => {
         event.preventDefault();
-        Axios.put(global.config.BACKEND_URL + `/account/passwordModification`,
+        axios.put(global.config.BACKEND_URL + `/account/passwordModification`,
             {
                 "password": event.target.password.value
             }).catch((error) => {
                 alert(error.response.data.message);
             });
 
-        Axios.put(global.config.BACKEND_URL + `/account/birthdayModification`,
+        axios.put(global.config.BACKEND_URL + `/account/birthdayModification`,
             {
                 "birthday": event.target.birthday.value
             }).catch((error) => {
