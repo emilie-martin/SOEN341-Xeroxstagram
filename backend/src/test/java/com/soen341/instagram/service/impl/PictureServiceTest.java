@@ -28,7 +28,8 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.mockito.Mockito.doReturn;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PictureServiceTest {
+public class PictureServiceTest
+{
     @InjectMocks
     private PictureService pictureService;
 
@@ -45,7 +46,8 @@ public class PictureServiceTest {
     private PictureDTO picDTO;
 
     @BeforeEach
-    public void beforeEach() {
+    public void beforeEach()
+    {
         MockitoAnnotations.initMocks(this);
 
         doReturn("test account").when(account).getUsername();
@@ -63,7 +65,8 @@ public class PictureServiceTest {
     }
 
     @Test
-    public void testUploadPicture() {
+    public void testUploadPicture()
+    {
         final String caption = "caption";
         final MockMultipartFile file = getTestFile("src/test/resources/1pixel.jpg");
         Picture uploadedPicture = pictureService.uploadPicture(caption, file, account);
@@ -72,7 +75,8 @@ public class PictureServiceTest {
     }
 
     @Test
-    public void testUploadPictureNotValidFile() {
+    public void testUploadPictureNotValidFile()
+    {
         final String caption = "caption";
         final MockMultipartFile file = getTestFile("src/test/resources/invalidPicture.txt");
         assertThatCode(() -> pictureService.uploadPicture(caption, file, account))
@@ -80,26 +84,30 @@ public class PictureServiceTest {
     }
 
     @Test
-    public void testGetPictureDTOFromId() {
+    public void testGetPictureDTOFromId()
+    {
         PictureDTO pic = pictureService.getPictureDTOFromId("1");
         assertThat(pic.getAccount()).isEqualTo("test account");
         assertThat(pic.getId()).isEqualTo(1L);
     }
 
     @Test
-    public void testGetPictureDTOFromId_NotFound() {
+    public void testGetPictureDTOFromId_NotFound()
+    {
         assertThatCode(() -> pictureService.getPictureDTOFromId("2"))
                 .isInstanceOf(PictureNotFoundException.class);
     }
 
     @Test
-    public void testGetPictureDTOFromId_InvalidId() {
+    public void testGetPictureDTOFromId_InvalidId()
+    {
         assertThatCode(() -> pictureService.getPictureDTOFromId("invalid"))
                 .isInstanceOf(InvalidIdException.class);
     }
 
     @Test
-    public void testGetAccountPictures() {
+    public void testGetAccountPictures()
+    {
         doReturn(Collections.singletonList(pic)).when(pictureRepository).findByAccount(account);
         List<Long> pictures = pictureService.getAccountPictures(account);
         assertThat(pictures.size()).isEqualTo(1);
@@ -107,7 +115,8 @@ public class PictureServiceTest {
     }
 
     @Test
-    public void testToPictureDTO() {
+    public void testToPictureDTO()
+    {
         assertThat(pictureService.toPictureDTO(pic)).isEqualTo(picDTO);
     }
 
