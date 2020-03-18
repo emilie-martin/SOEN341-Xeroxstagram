@@ -31,11 +31,6 @@ public class CommentRepositoryTest {
 
     private Comment comment;
 
-    @BeforeEach
-    public void beforeEach(){
-        commentRepository.deleteAll();
-    }
-
     @Test
     public void findByPicture(){
         EasyRandomParameters parameters = new EasyRandomParameters().excludeField(

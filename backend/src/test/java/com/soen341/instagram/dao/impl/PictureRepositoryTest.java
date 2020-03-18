@@ -28,11 +28,6 @@ public class PictureRepositoryTest {
 
     private Picture picture;
 
-    @BeforeEach
-    public void beforeEach(){
-        pictureRepository.deleteAll();
-    }
-
     @Test
     public void findByAccount(){
         EasyRandomParameters parameters = new EasyRandomParameters().excludeField(
