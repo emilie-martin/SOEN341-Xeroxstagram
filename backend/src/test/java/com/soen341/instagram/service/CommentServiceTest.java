@@ -93,7 +93,7 @@ public class CommentServiceTest
 				+ "ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
 				+ "sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
 				+ "sssssssssssssssssssssssssssssssssssss";
-		commentService.editComment(commentId, commentLength273);
+		commentService.editComment(String.valueOf(commentId), commentLength273);
 	}
 
 	@Test
@@ -103,7 +103,7 @@ public class CommentServiceTest
 		Mockito.when(commentRepository.findById(commentId)).thenReturn(Optional.of(comment));
 		Mockito.when(account.getUsername()).thenReturn("username");
 		commentRepository.save(comment);
-		final Comment comment = this.commentService.editComment(commentId, newComment);
+		final Comment comment = this.commentService.editComment(String.valueOf(commentId), newComment);
 		assertEquals(comment.getComment(), newComment);
 	}
 }
