@@ -66,4 +66,17 @@ public class PictureController {
             throw new AccountNotFoundException("The specified user could not be found");
         return pictureService.getAccountPictures(user);
     }
+    
+    @PostMapping(value = "/picture/like/{pictureId}")
+	public int likePicture(@PathVariable final String pictureId)
+	{
+		return pictureService.likePicture(pictureId);
+	}
+	
+	@PostMapping(value = "/picture/likeRemoval/{pictureId}")
+	public int unlikePicture(@PathVariable final String pictureId)
+	{
+		return pictureService.unlikePicture(pictureId);
+	}
+    
 }
