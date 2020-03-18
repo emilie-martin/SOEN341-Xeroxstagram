@@ -12,6 +12,7 @@ import User from "./components/User/User";
 
 import "./App.scss";
 import "./config"
+import Feed from "./components/Feed/Feed";
 
 const setTokensAndLogin = (response) => {
 	localStorageService.setToken(response.data);
@@ -78,7 +79,7 @@ export const App = () => {
 	const logout = () => {
 		localStorageService.clearAllTokens();
 		delete axios.defaults.headers.common.Authorization;
-		setLoggedInState();
+		setCurrentUser(null);
 	}
 
 	const handleChangeUser = (e) => {
@@ -177,6 +178,10 @@ export const App = () => {
 				</div>
 					<hr />
 				<Switch>
+					<Route exact path="/"
+						   render={ () => <Feed currentUser={currentUser}/>}
+					/>
+
 					<Route exact path="/about"
 						render={ () => <About/>}
 					/>
