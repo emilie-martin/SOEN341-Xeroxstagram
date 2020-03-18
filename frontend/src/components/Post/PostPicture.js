@@ -13,7 +13,7 @@ export const PostPicture = props => {
     data.append("caption", event.target.caption.value);
     axios.post(global.config.BACKEND_URL + "/picture", data).then(
       response => {
-        this.props.history.push(`/post/${response.data.id}`);
+        props.history.push(`/post/${response.data.id}`);
       },
       e => {
         if (e.response) {
