@@ -43,7 +43,7 @@ export const User = props => {
     return (
         <div className="user-component">
             { !(props.currentUser === props.username) &&
-            <FollowingButton {... props} currentUser={props.currentUser} username={props.username} class='following-user'></FollowingButton>
+            <FollowingButton {... props} class='following-user'></FollowingButton>
             }
             {errorMsg && <div className="error">{errorMsg}</div>}
             {

@@ -12,7 +12,7 @@ import timeElapsedSincePosted from "../../services/TimeService";
 // Stylesheets
 import "./Post.scss";
 
-export default function Post(props){
+export default function Post(props) {
     const [Picture, setPicture] = useState(undefined);
     const [refreshComment, setRefreshComment] = useState(false);
 

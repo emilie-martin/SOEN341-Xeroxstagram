@@ -1,20 +1,19 @@
 import '../../config';
-import React, { useState, useEffect } from 'react';
 import axios from "axios";
+import React, { useState, useEffect } from 'react';
 
-// Stylesheet
+// Stylesheets
 import './FollowingButton.scss'
 
-export default function FollowingButton(props)
-{
-    const [isFollowing, setFollowing] = useState(false);
+export default function FollowingButton(props) {
+    const [isFollowing, setIsFollowing] = useState(false);
     const [errorMsg, setErrorMsg] = useState("");
 
     const follow = (event) => {
         event.preventDefault();
         axios.post(global.config.BACKEND_URL + "/account/following/newFollower/" + props.username)
             .then(
-                setFollowing(true)
+                setIsFollowing(true)
                 ).catch(
                 (error) => {
                     (error.response && error.response.data && error.response.data.message) ?  setErrorMsg(error.response.data.message): setErrorMsg("An unknown error occured"); 
@@ -27,7 +26,7 @@ export default function FollowingButton(props)
         event.preventDefault();
         axios.delete(global.config.BACKEND_URL + "/account/following/followerRemoval/"+ props.username)
             .then(
-                setFollowing(false)
+                setIsFollowing(false)
             ).catch(
                 (error) => {
                     error.response ?  setErrorMsg(error.response.data.message): setErrorMsg("An unknown error occured");
@@ -42,7 +41,7 @@ export default function FollowingButton(props)
         const isUserFollowing = () => {
             axios.get(global.config.BACKEND_URL + "/account/following/" +props.username).then(
                 (response) => {
-                    setFollowing(response.data);
+                    setIsFollowing(response.data);
                 }
             ).catch(
                 (error) => {
@@ -55,7 +54,7 @@ export default function FollowingButton(props)
         {
             isUserFollowing();
         }
-      }, [props.currentUser, isFollowing, props.username])
+      }, [props.currentUser, props.username])
 
     return (
             <div className = "follow-button-component">
