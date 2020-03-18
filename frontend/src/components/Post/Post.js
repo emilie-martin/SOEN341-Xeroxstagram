@@ -6,7 +6,7 @@ import React, { useState, useEffect } from 'react';
 // Project
 import CommentList from "../Comment/CommentList";
 import { PostComment } from "../Comment/PostComment";
-import { FollowingButton } from "../Following/FollowingButton.js";
+import FollowingButton from "../Following/FollowingButton.js";
 import timeElapsedSincePosted from "../../services/TimeService";
 
 // Stylesheets
@@ -23,6 +23,7 @@ export default function Post(props){
             ).catch( () => {setPicture(null);}
             )
         }
+
 
         loadPicture();
     }, [props.id]) // when logged in state changes
@@ -44,10 +45,12 @@ export default function Post(props){
                     <div className="text-wrapper">
                         <div className="post-description">
                             <div className="account-name">
-                                <Link to={`/account/${Picture.account}`}>
-                                    {Picture.account}
-                                </Link>: {Picture.caption}
-                               <FollowingButton {... props} username={Picture.account}  ></FollowingButton>
+                                <div className="account-top">
+                                    <div> <Link to={`/account/${Picture.account}`}>{Picture.account}</Link></div>
+                                    {!(props.currentUser === Picture.account) && <div> &nbsp; • &nbsp;</div>}
+                                    {!(props.currentUser === Picture.account) && <FollowingButton {... props} username={Picture.account} class='following-post'></FollowingButton>}
+                                </div>
+                               {Picture.caption}
                             </div>
                             <div className="date-created">{timeElapsedSincePosted(new Date(Picture.created))}</div>
                         </div>

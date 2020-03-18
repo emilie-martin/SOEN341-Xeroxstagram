@@ -1,10 +1,14 @@
+import '../../config';
 import React from "react";
 import axios from "axios";
-import Post from "../Post/Post";
 import { useState, useEffect} from "react";
-import '../../config';
+
+// Project
+import Post from "../Post/Post";
+import FollowingButton from "../Following/FollowingButton";
+
+// Stylesheets
 import './User.scss';
-import FollowingButton from "./FollowingButton";
 
 export const User = props => {
 
@@ -38,12 +42,14 @@ export const User = props => {
 
     return (
         <div className="user-component">
-            <FollowingButton {... props} username={props.username}></FollowingButton>
+            { !(props.currentUser === props.username) &&
+            <FollowingButton {... props} currentUser={props.currentUser} username={props.username} class='following-user'></FollowingButton>
+            }
             {errorMsg && <div className="error">{errorMsg}</div>}
             {
                 Pictures.map((id) => (
                     <div className="single-post" key={id}>
-                        <Post id={id}/>
+                        <Post currentUser={props.currentUser} id={id}/>
                         <br/>
                     </div>
                 ))

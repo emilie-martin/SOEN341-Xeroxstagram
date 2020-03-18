@@ -18,6 +18,8 @@ const setTokensAndLogin = (response) => {
 	localStorageService.setBearerToken();
 }
 
+const initAxios = () => {
+
 axios.interceptors.response.use(
 	(response) => {
 		return response; // no need to refresh token if successful
@@ -52,6 +54,7 @@ axios.interceptors.response.use(
 		}
 	}
 );
+};
 
 export const App = () => {
 	const [username, setUsername] = useState();
@@ -61,6 +64,7 @@ export const App = () => {
 		if (localStorageService.getAccessToken()) {
 			localStorageService.setBearerToken();
 		}
+		initAxios();
 		setLoggedInState();
 	}, [])
 
@@ -194,8 +198,8 @@ export const App = () => {
 					<Route exact path="/post"
 						render={(props) => { return currentUser ? <PostPicture {...props} /> : <Redirect to='/' />; }}
 					/>
-					<Route path="/post/:id" render={({ match }) => (<Post id={match.params.id} />)} />
-					<Route path="/account/:username" render={({ match }) => (<User username={match.params.username} />)} />
+					<Route path="/post/:id" render={({ match }) => (<Post currentUser={currentUser} id={match.params.id} />)} />
+					<Route path="/account/:username" render={({ match }) => (<User currentUser={currentUser} username={match.params.username} />)} />
 				</Switch>
 			</Router>
 		</div>
