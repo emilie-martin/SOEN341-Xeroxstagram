@@ -6,8 +6,8 @@ import React, { useState, useEffect } from 'react'
 import timeElapsedSincePosted from "../../services/TimeService";
 
 import CommentList from "../Comment/CommentList";
+import PostComment from "../Comment/PostComment";
 import PostImage from "./PostImage";
-import { PostComment } from "../Comment/PostComment";
 
 import "./Post.scss";
 

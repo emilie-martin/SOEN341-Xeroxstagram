@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
+
 import "./CommentAPI";
 import { postComment } from "./CommentAPI";
+
 import "./SCSS/PostComment.scss";
 
-export const PostComment = (props) => {
+export default function PostComment(props) {
 
     const [textAreaText, setTextAreaText] = useState("");
 
