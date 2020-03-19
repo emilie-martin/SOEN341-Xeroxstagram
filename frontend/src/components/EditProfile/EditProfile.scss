@@ -1,3 +1,40 @@
+.edit-profile {
+  margin: auto;
+  margin-top: 100px;
+  width: 50%;
+  height: 500px;
+
+  input {
+    color: white;
+    width: 300px;
+    background-color: rgb(18, 18, 18);
+    border: solid 1px rgb(164, 154, 154);
+  }
+
+  textarea {
+    background-color: rgb(18, 18, 18);
+    border: solid 1px rgb(164, 154, 154);
+    color: white;
+    outline: none;
+    resize: none;
+    word-wrap: break-word;
+    align-items: center;
+    overflow-y: auto;
+    width: 300px;
+    height: 50px;
+    vertical-align: top;
+  }
+
+  h1 {
+    width: 300px;
+    padding-left: 200px;
+  }
+
+  label {
+    vertical-align: middle;
+  }
+}
+
 .edit-profile-form label {
   display: inline-block;
   margin: 0 50px;
@@ -15,6 +52,7 @@
   padding-left: 420px;
   margin-top: 10px;
 }
+
 .btn {
   color: rgb(25, 136, 240);
   background-color: rgb(40, 40, 40);
@@ -29,32 +67,6 @@
   display: inline-block;
   text-align: right;
 }
-.edit-profile {
-  margin: auto;
-  margin-top: 100px;
-  width: 50%;
-  height: 500px;
-}
-
-.edit-profile input {
-  color: white;
-  width: 300px;
-  background-color: rgb(18, 18, 18);
-  border: solid 1px rgb(164, 154, 154);
-}
-.edit-profile-textarea {
-  background-color: rgb(18, 18, 18);
-  border: solid 1px rgb(164, 154, 154);
-  color: white;
-  outline: none;
-  resize: none;
-  word-wrap: break-word;
-  align-items: center;
-  overflow-y: auto;
-  width: 300px;
-  height: 50px;
-  vertical-align: top;
-}
 
 .edit-profile-page {
   width: 100%;
@@ -62,10 +74,6 @@
   margin-top: 0px;
 }
 
-.edit-profile h1 {
-  width: 300px;
-  padding-left: 200px;
-}
 .sidebar {
   position: fixed;
   width: 25%;

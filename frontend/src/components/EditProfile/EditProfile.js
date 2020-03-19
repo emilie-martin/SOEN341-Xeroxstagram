@@ -47,7 +47,10 @@ export default function EditProfile() {
         axios.put(global.config.BACKEND_URL + `/account/profile/biographyUpdate`,
             {
                 "biography": event.target.biography.value
+            }).catch((error) => {
+                console.log(error.response.data);
             });
+
 
         axios.put(global.config.BACKEND_URL + `/account/profile/emailUpdate`,
             {
@@ -55,6 +58,7 @@ export default function EditProfile() {
             }).catch((error) => {
                 alert(error.response.data.message);
             })
+
 
         axios.put(global.config.BACKEND_URL + `/account/profile/displayNameUpdate`,
             {
