@@ -12,6 +12,7 @@ export default function EditProfile() {
     const [email, setEmail] = useState("");
     const [birthday, setBirthday] = useState(new Date());
     const [editStatus, setEditStatus] = useState("profile");
+    const [originalEmail, setOriginalEmail] = useState("");
 
     useEffect(() => {
         const fetchCurrentUser = () => {
@@ -21,6 +22,7 @@ export default function EditProfile() {
                     setBiography(response.data.biography);
                     setEmail(response.data.email);
                     setBirthday(response.data.dateOfBirth);
+                    setOriginalEmail(response.data.email);
                     setLoading(false);
                 }).catch(() => {
                     return <Redirect to="/register"></Redirect>
@@ -51,14 +53,14 @@ export default function EditProfile() {
                 console.log(error.response.data);
             });
 
-
-        axios.put(global.config.BACKEND_URL + `/account/profile/emailUpdate`,
-            {
-                "email": event.target.email.value
-            }).catch((error) => {
-                alert(error.response.data.message);
-            })
-
+        if (event.target.email.value !== originalEmail) {
+            axios.put(global.config.BACKEND_URL + `/account/profile/emailUpdate`,
+                {
+                    "email": event.target.email.value
+                }).catch((error) => {
+                    alert(error.response.data.message);
+                })
+        }
 
         axios.put(global.config.BACKEND_URL + `/account/profile/displayNameUpdate`,
             {
