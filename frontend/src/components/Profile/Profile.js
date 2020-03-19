@@ -32,7 +32,6 @@ export default function Profile(props) {
 
     return (
         <div className="profile-container">
-
             <div>
                 <div className="username">
                     <h2>{username} </h2>
@@ -65,7 +64,6 @@ export default function Profile(props) {
                     {numFollowings} followings
                 </div>
             </div>
-
             <div className="profile-bio">
                 <div className="profile-bio">
                     <span>{biography}</span>
