@@ -20,6 +20,7 @@ export default function EditProfile() {
     const [editDisplayNameSuccess, setEditDisplayNameSuccess] = useState(false);
     const [editPasswordSuccess, setEditPasswordSuccess] = useState(false);
     const [editBirthdaySuccess, setEditBirthdaySuccess] = useState(false);
+    
     useEffect(() => {
         const fetchCurrentUser = () => {
             axios.get(global.config.BACKEND_URL + "/account")
@@ -127,19 +128,19 @@ export default function EditProfile() {
                                         <div>
                                             <label>Display Name</label>
                                             <input type="text" name="displayName" value={displayName} onChange={(e) => handleTyping(e, setDisplayName)}></input>
-                                            {editDisplayNameSuccess ? <div className="success">success</div> : ''}
+                                            {editDisplayNameSuccess ? <div className="success">Success</div> : ''}
                                         </div>
                                         <br />
                                         <div>
                                             <label>Bio</label>
                                             <textarea name="biography" className="edit-profile-textarea" value={biography} onChange={(e) => handleTyping(e, setBiography)}></textarea>
-                                            {editBioSuccess ? <div className="success">success</div> : ''}
+                                            {editBioSuccess ? <div className="success">Success</div> : ''}
                                         </div>
                                         <br />
                                         <div>
                                             <label>Email</label>
                                             <input type="text" name="email" value={email} onChange={(e) => handleTyping(e, setEmail)}></input>
-                                            {editEmailSuccess ? <div className="success">success</div> : ''}
+                                            {editEmailSuccess ? <div className="success">Success</div> : ''}
                                         </div>
                                         <div className="edit-profile-button">
                                             <button className="btn">Submit</button>
@@ -154,13 +155,13 @@ export default function EditProfile() {
                                         <div>
                                             <label>Password Modification</label>
                                             <input type="password" name="password"></input>
-                                            {editPasswordSuccess ? <div className="success">success</div> : ''}
+                                            {editPasswordSuccess ? <div className="success">Success</div> : ''}
                                         </div>
                                         <br />
                                         <div>
                                             <label>Birthday</label>
                                             <input type="date" name="birthday" value={birthday} onChange={(e) => handleTyping(e, setBirthday)}></input>
-                                            {editBirthdaySuccess ? <div className="success">success</div> : ''}
+                                            {editBirthdaySuccess ? <div className="success">Success</div> : ''}
                                         </div>
                                         <div className="edit-profile-button">
                                             <button className="btn">Submit</button>
