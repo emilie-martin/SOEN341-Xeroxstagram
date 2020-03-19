@@ -1,3 +1,4 @@
+import "./config"
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route, Link, withRouter, Redirect } from "react-router-dom";
@@ -11,47 +12,48 @@ import Register from "./components/Register/Register"
 import User from "./components/User/User";
 
 import "./App.scss";
-import "./config"
 
 const setTokensAndLogin = (response) => {
 	localStorageService.setToken(response.data);
 	localStorageService.setBearerToken();
 }
 
-axios.interceptors.response.use(
-	(response) => {
-		return response; // no need to refresh token if successful
-	},
-	(error) => {
-		if (error.response && error.response.data && error.response.data.error === "invalid_token") {
-			const request = error.config;
-			delete axios.defaults.headers.common.Authorization;
-			delete request.headers.Authorization;
+const initAxios = () => {
+	axios.interceptors.response.use(
+		(response) => {
+			return response; // no need to refresh token if successful
+		},
+		(error) => {
+			if (error.response && error.response.data && error.response.data.error === "invalid_token") {
+				const request = error.config;
+				delete axios.defaults.headers.common.Authorization;
+				delete request.headers.Authorization;
 
-			// try request without user logged in
-			if (!localStorageService.getRefreshToken()) {
-				localStorageService.clearAllTokens();
-				return axios(request);
+				// try request without user logged in
+				if (!localStorageService.getRefreshToken()) {
+					localStorageService.clearAllTokens();
+					return axios(request);
+				}
+				
+				// expired token
+				return axios.post(global.config.BACKEND_URL + "/account/refresh", {"token": localStorageService.getRefreshToken()})
+					.then( (response) => {
+							setTokensAndLogin(response);
+							return axios(request);
+						},
+						() => {
+							// re-authentication  failed; retry request with no user logged in
+							localStorageService.clearAllTokens();
+							return axios(request);
+						}
+					)
+			} else {
+				// error from backend, but not because of invalid token
+				return Promise.reject(error);
 			}
-			
-			// expired token
-			return axios.post(global.config.BACKEND_URL + "/account/refresh", {"token": localStorageService.getRefreshToken()})
-				.then( (response) => {
-						setTokensAndLogin(response);
-						return axios(request);
-					},
-					() => {
-						// re-authentication  failed; retry request with no user logged in
-						localStorageService.clearAllTokens();
-						return axios(request);
-					}
-				)
-		} else {
-			// error from backend, but not because of invalid token
-			return Promise.reject(error);
 		}
-	}
-);
+	);
+};
 
 export const App = () => {
 	const [username, setUsername] = useState();
@@ -61,6 +63,7 @@ export const App = () => {
 		if (localStorageService.getAccessToken()) {
 			localStorageService.setBearerToken();
 		}
+		initAxios();
 		setLoggedInState();
 	}, [])
 
@@ -194,8 +197,8 @@ export const App = () => {
 					<Route exact path="/post"
 						render={(props) => { return currentUser ? <PostPicture {...props} /> : <Redirect to='/' />; }}
 					/>
-					<Route path="/post/:id" render={({ match }) => (<Post id={match.params.id} />)} />
-					<Route path="/account/:username" render={({ match }) => (<User username={match.params.username} />)} />
+					<Route path="/post/:id" render={({ match }) => (<Post currentUser={currentUser} id={match.params.id} />)} />
+					<Route path="/account/:username" render={({ match }) => (<User currentUser={currentUser} username={match.params.username} />)} />
 				</Switch>
 			</Router>
 		</div>
