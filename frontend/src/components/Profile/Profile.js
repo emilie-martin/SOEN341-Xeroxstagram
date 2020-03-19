@@ -1,9 +1,9 @@
 import '../../config';
-import './Profile.scss'
-
 import axios from 'axios';
 import { Link } from "react-router-dom";
 import React, { useState, useEffect } from 'react'
+
+import './Profile.scss'
 
 export default function Profile(props) {
     const [username, setUsername] = useState("");
