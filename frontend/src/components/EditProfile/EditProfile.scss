@@ -1,70 +1,66 @@
 .edit-profile {
-  margin: auto;
-  margin-top: 100px;
+  margin: 100px auto auto;
   width: 50%;
-  height: 500px;
-
-  input {
-    color: white;
-    width: 300px;
-    background-color: rgb(18, 18, 18);
-    border: solid 1px rgb(164, 154, 154);
-  }
-
-  textarea {
-    background-color: rgb(18, 18, 18);
-    border: solid 1px rgb(164, 154, 154);
-    color: white;
-    outline: none;
-    resize: none;
-    word-wrap: break-word;
-    overflow-y: auto;
-    width: 300px;
-    height: 50px;
-    vertical-align: top;
-  }
-
-  h1 {
-    width: 300px;
-    padding-left: 200px;
-  }
-
-  label {
-    vertical-align: middle;
-  }
+  max-height: 500px;
+}
+input,
+textarea {
+  color: white;
+  width: 300px;
+  background-color: rgb(18, 18, 18);
+  border: solid 1px rgb(164, 154, 154);
 }
 
-.edit-profile-form label {
-  display: inline-block;
-  margin: 0 50px;
-  clear: left;
-  text-align: right;
-  width: 100px;
+textarea,
+.btn {
+  outline: none;
+  resize: none;
+}
+
+textarea {
+  overflow-y: auto;
+  height: 50px;
+  vertical-align: top;
+  word-wrap: break-word;
+}
+
+h1 {
+  max-width: 300px;
+  padding-left: 200px;
+}
+
+label {
+  vertical-align: middle;
 }
 
 .edit-profile-form {
   width: 1000px;
+
+  label {
+    display: inline-block;
+    clear: left;
+    text-align: right;
+    margin: 0 50px;
+    width: 100px;
+  }
 }
 
 .edit-profile-button {
-  width: 100px;
-  padding-left: 420px;
+  padding-left: 410px;
   margin-top: 10px;
+  width: 100px;
 }
 
 .btn {
+  display: inline-block;
   color: rgb(25, 136, 240);
   background-color: rgb(40, 40, 40);
-  outline: none;
-  border: none;
-  padding-left: 20px;
-  padding-bottom: 10px;
-  padding-top: 10px;
-  text-transform: uppercase;
   border-radius: 20px;
+  padding: 10px 0px 10px 0px;
+  text-align: center;
+  text-transform: uppercase;
   cursor: pointer;
-  display: inline-block;
-  text-align: right;
+  width: 100px;
 }
 
 .edit-profile-page {
@@ -82,51 +78,51 @@
 }
 
 .nav {
-  position: relative;
-  margin: 0 15%;
-  text-align: right;
   top: 100px;
-  transform: translateY(-50%);
+  position: relative;
+  text-align: right;
   font-weight: bold;
-}
+  margin: 0 15%;
+  transform: translateY(-50%);
 
-.nav ul {
-  list-style: none;
+  ul {
+    list-style: none;
 
-  li {
-    position: relative;
-    margin: 3.2em 0;
+    li {
+      position: relative;
+      margin: 3.2em 0;
 
-    a {
-      line-height: 5em;
-      text-decoration: none;
-      color: rgba(#fff, 0.35);
-      display: inline-block;
-      transition: all ease-out 300ms;
-      white-space: nowrap;
-    }
+      a {
+        display: inline-block;
+        color: rgba(#fff, 0.35);
+        line-height: 5em;
+        text-decoration: none;
+        transition: all ease-out 300ms;
+        white-space: nowrap;
+      }
 
-    &.active a {
-      color: white;
-    }
+      &.active a {
+        color: white;
+      }
 
-    &:not(.active)::after {
-      opacity: 0.2;
-    }
+      &:not(.active)::after {
+        opacity: 0.2;
+      }
 
-    &:not(.active):hover a {
-      color: rgba(#fff, 0.75);
-    }
+      &:not(.active):hover a {
+        color: rgba(#fff, 0.75);
+      }
 
-    &::after {
-      content: "";
-      position: absolute;
-      width: 100%;
-      height: 0.2em;
-      background: black;
-      left: 0;
-      bottom: 0;
-      background-image: linear-gradient(to right, #114dad, #2eb8e6);
+      &::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 0.2em;
+        background: black;
+        left: 0;
+        bottom: 0;
+        background-image: linear-gradient(to right, #114dad, #2eb8e6);
+      }
     }
   }
 }
