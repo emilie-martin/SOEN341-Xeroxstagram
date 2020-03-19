@@ -3,13 +3,11 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
 
-// Project
 import CommentList from "../Comment/CommentList";
 import { PostComment } from "../Comment/PostComment";
 import FollowingButton from "../Following/FollowingButton.js";
 import timeElapsedSincePosted from "../../services/TimeService";
 
-// Stylesheets
 import "./Post.scss";
 
 export default function Post(props) {

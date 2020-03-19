@@ -1,3 +1,4 @@
+import "./config"
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route, Link, withRouter, Redirect } from "react-router-dom";
@@ -11,7 +12,6 @@ import Register from "./components/Register/Register"
 import User from "./components/User/User";
 
 import "./App.scss";
-import "./config"
 
 const setTokensAndLogin = (response) => {
 	localStorageService.setToken(response.data);

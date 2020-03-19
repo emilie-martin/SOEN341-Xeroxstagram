@@ -2,7 +2,6 @@ import '../../config';
 import axios from "axios";
 import React, { useState, useEffect } from 'react';
 
-// Stylesheets
 import './FollowingButton.scss'
 
 export default function FollowingButton(props) {

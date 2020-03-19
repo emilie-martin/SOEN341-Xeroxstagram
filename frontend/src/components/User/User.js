@@ -1,13 +1,10 @@
 import '../../config';
-import React from "react";
 import axios from "axios";
-import { useState, useEffect} from "react";
+import React, { useState, useEffect} from "react";
 
-// Project
 import Post from "../Post/Post";
 import FollowingButton from "../Following/FollowingButton";
 
-// Stylesheets
 import './User.scss';
 
 export const User = props => {
