@@ -1,5 +1,6 @@
 import "../../config";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 
 import PostImage from "../Post/PostImage";
@@ -90,7 +91,9 @@ export default function User(props) {
                 {
                     Pictures.map((id) => (
                         <div className="single-post" key={id}>
-                            <PostImage pictureId={id} />
+                            <Link to={`/post/${id}`}>
+                                <PostImage pictureId={id} />
+                            </Link>
                         </div>
                     ))
                 }
