@@ -1,52 +1,59 @@
 @import "../../styles/prelude.scss";
 
-input{
-    margin-bottom: 5px;
-}
-
-.register{
-    font-size: 17px;
-    display:flex;
-    justify-content: center;
+.register {
     color: white;
-}
+    font-size: $p-fontsize;
+    box-sizing: border-box;
 
-.external{
-    border-radius: 25px;
-    border: 2px solid rgba(54, 52, 52, 0.707);;
-    padding: 20px;
-    background-color: rgba(54, 52, 52, 0.707);
-}
+    input {
+        margin-bottom: 5px;
 
-.title{
-    display: flex;
-    justify-content: center;
-}
+        // MOBILE
+        @media #{$small-and-down} {
+            margin-bottom: 10px;
+        }
+    }
 
-.user-names-left, .user-names-right{
-    margin-right:30px;
-}
+    .external {
+        margin: 0 auto;
+        max-width: 400px;
+        padding: 20px;
+        border-radius: 25px;
+        border: 2px solid rgba(54, 52, 52, 0.707);
+        background-color: rgba(54, 52, 52, 0.707);
+    }
+    
+    .title {
+        text-align: center;
+    }
 
-.user-names{
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content:space-between;
-    float: left;
-    margin-bottom: 10px;
-}
+    .registration-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-sizing: border-box;
+    }
+    
+    .user-names {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-around;
+        margin: 0px 0px 10px;
 
-.button{
-    color: rgb(25, 136, 240);
-    background-color: rgb(40, 40, 40);
-    outline: none;
-    border: none;
-    padding: 5px 20px;
-    text-transform: uppercase;
-    border-radius: 2px;
-    cursor: pointer;
-}
-
-.register-button{
-    display:flex;
-    justify-content: flex-end;
+        .user-names-left {
+            margin-right: 20px;
+        }
+        
+        // MOBILE
+        @media #{$small-and-down} {
+            .user-names-left, .user-names-right {
+                margin: 0 auto;
+            }
+        }
+    }
+    
+    .register-button .button {
+        margin: 0;
+        padding: 10px 20px;
+    }
 }
