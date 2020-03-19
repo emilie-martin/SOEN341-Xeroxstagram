@@ -1,12 +1,12 @@
 import '../../config';
 import axios from "axios";
 import { Link } from "react-router-dom";
-import React, { useState, useEffect } from 'react'
-
-import timeElapsedSincePosted from "../../services/TimeService";
+import React, { useState, useEffect } from 'react';
 
 import CommentList from "../Comment/CommentList";
 import { PostComment } from "../Comment/PostComment";
+import FollowingButton from "../Following/FollowingButton.js";
+import timeElapsedSincePosted from "../../services/TimeService";
 
 import "./Post.scss";
 
@@ -22,9 +22,9 @@ export default function Post(props) {
             )
         }
 
-        loadPicture();
 
-    }, [props.id])
+        loadPicture();
+    }, [props.id]) // when logged in state changes
 
     const onCommentPosted = () => {
         // Whenever a comment is posted, inverse the boolean associated to refreshComment
@@ -43,9 +43,12 @@ export default function Post(props) {
                     <div className="text-wrapper">
                         <div className="post-description">
                             <div className="account-name">
-                                <Link to={`/account/${Picture.account}`}>
-                                    {Picture.account}
-                                </Link>: {Picture.caption}
+                                <div className="account-top">
+                                    <div> <Link to={`/account/${Picture.account}`}>{Picture.account}</Link></div>
+                                    {!(props.currentUser === Picture.account) && <div> &nbsp; • &nbsp;</div>}
+                                    {!(props.currentUser === Picture.account) && <FollowingButton {... props} username={Picture.account} class='following-post'></FollowingButton>}
+                                </div>
+                               {Picture.caption}
                             </div>
                             <div className="date-created">{timeElapsedSincePosted(new Date(Picture.created))}</div>
                         </div>

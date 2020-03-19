@@ -1,3 +1,4 @@
+import "./config"
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route, Link, withRouter, Redirect } from "react-router-dom";

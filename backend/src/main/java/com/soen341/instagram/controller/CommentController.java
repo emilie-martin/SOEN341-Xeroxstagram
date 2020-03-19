@@ -48,20 +48,8 @@ public class CommentController
 		return commentResponse;
 	}
 
-	@PostMapping(value = "/comment/like/{commentId}")
-	public int likeComment(@PathVariable final long commentId)
-	{
-		return commentService.likeComment(commentId);
-	}
-
-	@PostMapping(value = "/comment/likeRemoval/{commentId}")
-	public int unlikeComment(@PathVariable final long commentId)
-	{
-		return commentService.unlikeComment(commentId);
-	}
-
 	@DeleteMapping(value = "/comment/commentRemoval/{commentId}")
-	public void deleteComment(@PathVariable final long commentId)
+	public void deleteComment(@PathVariable final String commentId)
 	{
 		commentService.deleteComment(commentId);
 	}
@@ -69,14 +57,14 @@ public class CommentController
 	// Discuss what we should return
 	@PutMapping(value = "/comment/commentUpdate/{commentId}")
 	public CommentResponseDTO updateComment(@Valid @RequestBody final CommentDTO commentDTO,
-			@PathVariable long commentId)
+			@PathVariable String commentId)
 	{
 		final Comment comment = commentService.editComment(commentId, commentDTO.getComment());
 		return convertCommentIntoDTO(comment);
 	}
 
 	@GetMapping(value = "/comment/commentById/{commentId}")
-	public CommentResponseDTO getCommentById(@PathVariable final long commentId)
+	public CommentResponseDTO getCommentById(@PathVariable final String commentId)
 	{
 		final Comment comment = commentService.findComment(commentId);
 		return convertCommentIntoDTO(comment);
@@ -108,5 +96,17 @@ public class CommentController
 		commentResponseDTO.setAccount(comment.getAccount().getUsername());
 
 		return commentService.determineEditable(commentResponseDTO);
+	}
+	
+	@PostMapping(value = "/comment/like/{commentId}")
+	public int likeComment(@PathVariable final String commentId)
+	{
+		return commentService.likeComment(commentId);
+	}
+
+	@PostMapping(value = "/comment/likeRemoval/{commentId}")
+	public int unlikeComment(@PathVariable final String commentId)
+	{
+		return commentService.unlikeComment(commentId);
 	}
 }

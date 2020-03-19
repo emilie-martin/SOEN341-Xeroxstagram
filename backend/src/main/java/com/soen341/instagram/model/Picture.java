@@ -1,21 +1,17 @@
 package com.soen341.instagram.model;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Picture {
+public class Picture extends Likable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -32,9 +28,6 @@ public class Picture {
     private String filePath;
 
     private String caption;
-
-    @ManyToMany
-    private Set<Account> likedBy;
 
     public long getId() {
         return id;
@@ -75,12 +68,5 @@ public class Picture {
     public void setFilePath(String filePath) {
         this.filePath = filePath;
     }
-
-    public Set<Account> getLikedBy() {
-        // Never return a null object
-        if (likedBy == null) {
-            likedBy = new HashSet<>();
-        }
-        return likedBy;
-    }
+    
 }
