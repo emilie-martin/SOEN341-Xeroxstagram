@@ -43,10 +43,7 @@ class PostPicture extends React.Component {
                     <label>Caption</label>
                     <input name="caption"/>
                     <br/>
-                    {
-                        this.state.errorMsg && 
-                        <div className="error">Error: The image you are trying to upload exceeds the 1MB limit</div>
-                    }
+                    { this.state.errorMsg && <div className="error">Error: {this.state.errorMsg}}</div>}
                     <button type="submit">
                         Post
                     </button>
