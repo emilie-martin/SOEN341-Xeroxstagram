@@ -1,6 +1,6 @@
 import '../../config';
 import axios from "axios";
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Post from "../Post/Post";
 import Profile from "../Profile/Profile";
 import FollowingButton from "../Following/FollowingButton";
@@ -32,22 +32,22 @@ export default function User(props) {
             )
         }
         loadUser();
-      }, [props.username])
+    }, [props.username])
 
     return (
         <div className="user-component">
             <div className="profile-wrapper">
                 <Profile username={props.username}></Profile>
             </div>
-            { !(props.currentUser === props.username) &&
-            <FollowingButton {... props} class='following-user'></FollowingButton>
+            {!(props.currentUser === props.username) &&
+                <FollowingButton {...props} class='following-user'></FollowingButton>
             }
             {errorMsg && <div className="error">{errorMsg}</div>}
             {
                 Pictures.map((id) => (
                     <div className="single-post" key={id}>
-                        <Post currentUser={props.currentUser} id={id}/>
-                        <br/>
+                        <Post currentUser={props.currentUser} id={id} />
+                        <br />
                     </div>
                 ))
             }
