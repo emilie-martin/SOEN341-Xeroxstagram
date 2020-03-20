@@ -8,7 +8,7 @@ export default function Register(props) {
 
     const [errorMsg, setErrorMessage] = useState("");
     
-    const submit = (event) => {
+    const submitRegistrationForm = (event) => {
         event.preventDefault();
         event.persist();
         axios.post(global.config.BACKEND_URL + "/account/register",
@@ -53,7 +53,7 @@ export default function Register(props) {
         <div className="register">
             <div className="external">
                 <div className="title"><h3>Register</h3></div>
-                <form className="register-form" onSubmit={submit}>
+                <form className="register-form" onSubmit={submitRegistrationForm}>
                     <div className="registration-form">
                         <div className = "user-names">
                             <div className="user-names-left">
