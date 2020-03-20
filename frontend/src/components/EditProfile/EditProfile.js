@@ -5,7 +5,6 @@ import { Redirect } from 'react-router-dom';
 
 import './EditProfile.scss'
 
-
 export default function EditProfile() {
     const [loading, setLoading] = useState(true);
     const [displayName, setDisplayName] = useState("");

@@ -2,71 +2,72 @@
   margin: 100px auto auto;
   width: 50%;
   max-height: 500px;
-}
-input,
-textarea {
-  color: white;
-  width: 300px;
-  background-color: rgb(18, 18, 18);
-  border: solid 1px rgb(164, 154, 154);
-}
 
-textarea,
-.btn {
-  outline: none;
-  resize: none;
-}
+  input,
+  textarea {
+    color: white;
+    width: 300px;
+    background-color: rgb(18, 18, 18);
+    border: solid 1px rgb(164, 154, 154);
+  }
 
-textarea {
-  overflow-y: auto;
-  height: 50px;
-  vertical-align: top;
-  word-wrap: break-word;
-}
+  textarea,
+  .btn {
+    outline: none;
+    resize: none;
+  }
 
-h1 {
-  max-width: 300px;
-  padding-left: 200px;
-}
+  textarea {
+    overflow-y: auto;
+    height: 50px;
+    vertical-align: top;
+    word-wrap: break-word;
+  }
 
-label {
-  vertical-align: middle;
-}
-
-.edit-profile-form {
-  width: 1000px;
+  h1 {
+    max-width: 300px;
+    padding-left: 200px;
+  }
 
   label {
-    display: inline-block;
-    clear: left;
-    text-align: right;
-    margin: 0 50px;
+    vertical-align: middle;
+  }
+
+  .edit-profile-form {
+    width: 1000px;
+
+    label {
+      display: inline-block;
+      clear: left;
+      text-align: right;
+      margin: 0 50px;
+      width: 100px;
+    }
+  }
+
+  .edit-profile-button {
+    padding-left: 410px;
+    margin-top: 10px;
     width: 100px;
   }
-}
 
-.edit-profile-button {
-  padding-left: 410px;
-  margin-top: 10px;
-  width: 100px;
-}
+  .btn {
+    display: inline-block;
+    color: rgb(25, 136, 240);
+    background-color: rgb(40, 40, 40);
+    border-radius: 20px;
+    padding: 10px 0px 10px 0px;
+    text-align: center;
+    text-transform: uppercase;
+    cursor: pointer;
+    width: 100px;
+  }
 
-.btn {
-  display: inline-block;
-  color: rgb(25, 136, 240);
-  background-color: rgb(40, 40, 40);
-  border-radius: 20px;
-  padding: 10px 0px 10px 0px;
-  text-align: center;
-  text-transform: uppercase;
-  cursor: pointer;
-  width: 100px;
-}
-
-.edit-profile-page {
-  width: 100%;
-  height: 50%;
-  margin-top: 0px;
+  .edit-profile-page {
+    width: 100%;
+    height: 50%;
+    margin-top: 0px;
+  }
 }
 
 .sidebar {
