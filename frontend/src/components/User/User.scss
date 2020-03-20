@@ -1,6 +1,13 @@
 @import "../../styles/prelude.scss";
 
 .user-component {
+    .profile-wrapper{
+        border-bottom: solid 1px white;
+        margin: 30px auto;
+        min-height: 150px;
+        width: 950px;
+    }
+    
     .follow-button{
         color: rgb(25, 136, 240);
         background-color: rgb(40, 40, 40);
@@ -62,3 +69,5 @@
         }
     }
 }
+
+

@@ -89,4 +89,9 @@
       background-color: rgb(187, 167, 167);
     }
   }
+
+  .account-top{
+    display: flex;
+    flex-flow: row nowrap;
+  }
 }

@@ -10,4 +10,8 @@ public class CommentNotFoundException extends RuntimeException
 	{
 		super("Comment not found");
 	}
+
+	public CommentNotFoundException(String msg) {
+		super(msg);
+	}
 }

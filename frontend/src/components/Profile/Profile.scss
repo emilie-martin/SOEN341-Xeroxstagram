@@ -1,0 +1,79 @@
+.profile-container {
+  margin: 20 20;
+  padding-bottom: 10px;
+
+  .profile-stats {
+    display: flex;
+    margin-top: 10px;
+
+    div {
+      padding-right: 20px;
+      padding-left: 20px;
+      border-right: 1px solid white;
+    }
+  }
+  .profile-stats-post {
+    padding-left: 0 !important;
+  }
+  .profile-stats-followings {
+    border-right: none !important;
+  }
+
+  .username {
+    display: inline;
+
+    h2 {
+      margin: 30px 0px;
+      font-size: 25px;
+      font-weight: normal;
+      display: inline;
+    }
+  }
+
+  .display-name {
+    display: inline;
+
+    h2 {
+      margin: 10px 0px;
+      font-size: 15px;
+      display: inline;
+    }
+  }
+
+  .profile-bio {
+    width: 950px;
+    word-wrap: break-word;
+    margin-top: 30px;
+  }
+
+  .edit {
+    display: inline;
+    margin-left: 30px;
+  }
+
+  .edit-btn {
+    color: rgb(25, 136, 240);
+    background-color: rgb(40, 40, 40);
+    outline: none;
+    border: none;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    text-transform: uppercase;
+    border-radius: 20px;
+    cursor: pointer;
+    display: inline-block;
+    text-align: right;
+  }
+
+  .edit-btn-text {
+    display: inline-flex;
+    margin-right: 5px;
+    font-size: 15px;
+  }
+
+  .gear-icon {
+    text-align: center;
+    margin: 2px 10px;
+    margin-bottom: 5px;
+  }
+}

@@ -1,19 +1,19 @@
 package com.soen341.instagram.utils;
 
 import java.util.regex.Pattern;
-import com.soen341.instagram.dao.impl.*;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.soen341.instagram.dao.impl.AccountRepository;
 import com.soen341.instagram.exception.account.EmailTakenException;
 import com.soen341.instagram.exception.account.InvalidEmailFormatException;
 import com.soen341.instagram.exception.account.InvalidNameException;
 import com.soen341.instagram.exception.account.InvalidUsernameFormatException;
-import com.soen341.instagram.exception.account.UsernameTakenException;
 import com.soen341.instagram.exception.account.SamePasswordException;
+import com.soen341.instagram.exception.account.UsernameTakenException;
 
-public class AccountVerifier {
-	static PasswordEncoder passwordEncoder;
-	
+public class AccountVerifier
+{
 	public static void checkIfEmailTaken(final String email, AccountRepository accountRepository)
 	{
 		if (!(accountRepository.findByEmail(email) == null))
@@ -38,28 +38,29 @@ public class AccountVerifier {
 			throw new InvalidEmailFormatException();
 		}
 	}
-	
+
 	public static void checkIfUsernameFormatValid(final String username)
 	{
 		String regex = "(?!.*\\.\\.)(?!.*\\.$)[^\\W][\\w.]+";
 		if (!Pattern.matches(regex, username) || username.length() < 3 || username.length() > 30)
 		{
 			throw new InvalidUsernameFormatException();
-		}	
+		}
 	}
-	
+
 	public static void checkNameFormat(final String name)
 	{
 		String regex = "^$|\\s+"; // empty or white spaces
-		if(Pattern.matches(regex, name))
+		if (Pattern.matches(regex, name))
 		{
 			throw new InvalidNameException();
 		}
 	}
 
-	public static void checkIfSamePassword(final String oldPassword, final String newPassword)
+	public static void checkIfSamePassword(final String newPassword, final String oldPassword,
+			final PasswordEncoder passwordEncoder)
 	{
-		if(passwordEncoder.matches(newPassword, oldPassword))
+		if (passwordEncoder.matches(newPassword, oldPassword))
 		{
 			throw new SamePasswordException();
 		}
