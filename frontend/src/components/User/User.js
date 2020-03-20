@@ -1,9 +1,9 @@
 import '../../config';
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import FollowingButton from "../Following/FollowingButton";
 import Post from "../Post/Post";
 import Profile from "../Profile/Profile";
-import FollowingButton from "../Following/FollowingButton";
 
 import './User.scss';
 
