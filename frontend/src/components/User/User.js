@@ -1,13 +1,13 @@
 import '../../config';
 import axios from "axios";
-import React, { useState, useEffect} from "react";
-
-import Post from "../Post/Post";
+import React, { useState, useEffect } from "react";
 import FollowingButton from "../Following/FollowingButton";
+import Post from "../Post/Post";
+import Profile from "../Profile/Profile";
 
 import './User.scss';
 
-export const User = props => {
+export default function User(props) {
 
     const [errorMsg, setErrorMsg] = useState("");
     const [Pictures, setPictures] = useState([]);
@@ -22,37 +22,35 @@ export const User = props => {
             ).catch(
                 (error) => {
                     setPictures([]);
-                    if(error.response && error.response.data && error.response.data.message)
-                    {
+                    if (error.response && error.response.data && error.response.data.message) {
                         setErrorMsg(error.response.data.message);
-                    } 
-                    else
-                    {
+                    }
+                    else {
                         setErrorMsg("An unknown error occurred.");
                     }
                 }
             )
         }
-
         loadUser();
-      }, [props.username])
+    }, [props.username])
 
     return (
         <div className="user-component">
-            { !(props.currentUser === props.username) &&
-            <FollowingButton {... props} class='following-user'></FollowingButton>
+            <div className="profile-wrapper">
+                <Profile username={props.username}></Profile>
+            </div>
+            {!(props.currentUser === props.username) &&
+                <FollowingButton {...props} class='following-user'></FollowingButton>
             }
             {errorMsg && <div className="error">{errorMsg}</div>}
             {
                 Pictures.map((id) => (
                     <div className="single-post" key={id}>
-                        <Post currentUser={props.currentUser} id={id}/>
-                        <br/>
+                        <Post currentUser={props.currentUser} id={id} />
+                        <br />
                     </div>
                 ))
             }
         </div>
     );
 };
-
-export default User;
