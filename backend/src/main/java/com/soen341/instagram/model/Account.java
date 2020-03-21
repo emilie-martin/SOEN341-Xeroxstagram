@@ -31,10 +31,11 @@ public class Account {
     @Temporal(TemporalType.DATE)
     @NotNull
     private Date created;
-
+    
+    @Column(columnDefinition="text")
     private String biography;
     
-   @NotNull
+    @NotNull
     private String displayName;
 
     @ManyToMany(fetch = FetchType.LAZY)   
