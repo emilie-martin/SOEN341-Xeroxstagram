@@ -1,9 +1,9 @@
-import '../../config';
-import axios from 'axios'
-import React, { useState, useEffect } from 'react'
-import { Redirect } from 'react-router-dom';
+import "../../config";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { Redirect } from "react-router-dom";
 
-import './EditProfile.scss'
+import "./EditProfile.scss";
 
 export default function EditProfile() {
     const [loading, setLoading] = useState(true);
@@ -105,69 +105,61 @@ export default function EditProfile() {
     }
 
     return (
-        <div>
-            {
-                loading ? 'loading' :
-                    <div className="edit-profile-page">
+        <div className="edit-profile">
+            {loading ? "loading"
+                    : <div className="edit-profile-page">
                         <div className="sidebar">
                             <nav class="nav">
                                 <ul>
-                                    <li class="active"><a href="#!">Instagram++</a></li>
+                                    <li class="active">Instagram++</li>
                                     <li><a href="#!" onClick={(e) => handleEditStatus(e, "profile")}>Edit Profile</a></li>
                                     <li><a href="#!" onClick={(e) => handleEditStatus(e, "account")} >Edit Account</a></li>
-                                    <li><a href="#!">Contact Support</a></li>
+                                    <li><a href="#!" style={{borderRight: "none"}}>Contact Support</a></li>
                                 </ul>
                             </nav>
                         </div>
-                        {
-                            (editStatus === "profile") ?
-                                <div className="edit-profile">
-                                    <form className="edit-profile-form" onSubmit={updateProfile}>
-                                        <h1>Public Profile</h1>
-                                        <div>
-                                            <label>Display Name</label>
-                                            <input type="text" name="displayName" value={displayName} onChange={(e) => handleTyping(e, setDisplayName)}></input>
-                                            {editDisplayNameSuccess ? <div className="success">Success</div> : ''}
-                                        </div>
-                                        <br />
-                                        <div>
-                                            <label>Bio</label>
-                                            <textarea name="biography" className="edit-profile-textarea" value={biography} onChange={(e) => handleTyping(e, setBiography)}></textarea>
-                                            {editBioSuccess ? <div className="success">Success</div> : ''}
-                                        </div>
-                                        <br />
-                                        <div>
-                                            <label>Email</label>
-                                            <input type="text" name="email" value={email} onChange={(e) => handleTyping(e, setEmail)}></input>
-                                            {editEmailSuccess ? <div className="success">Success</div> : ''}
-                                        </div>
-                                        <div className="edit-profile-button">
-                                            <button className="btn">Submit</button>
-                                        </div>
-                                        <br />
-                                    </form>
-                                </div>
-                                :
-                                <div className="edit-profile">
-                                    <form className="edit-profile-form" onSubmit={updateAccount} >
-                                        <h1>Edit Account</h1>
-                                        <div>
-                                            <label>Password Modification</label>
-                                            <input type="password" name="password"></input>
-                                            {editPasswordSuccess ? <div className="success">Success</div> : ''}
-                                        </div>
-                                        <br />
-                                        <div>
-                                            <label>Birthday</label>
-                                            <input type="date" name="birthday" value={birthday} onChange={(e) => handleTyping(e, setBirthday)}></input>
-                                            {editBirthdaySuccess ? <div className="success">Success</div> : ''}
-                                        </div>
-                                        <div className="edit-profile-button">
-                                            <button className="btn">Submit</button>
-                                        </div>
-                                        <br />
-                                    </form>
-                                </div>
+                        {(editStatus === "profile")
+                            ? <div className="edit-profile">
+                                <form className="edit-profile-form" onSubmit={updateProfile}>
+                                    <h1>Edit Profile</h1>
+                                    <div>
+                                        <label>Display Name</label><br/>
+                                        <input type="text" name="displayName" value={displayName} onChange={(e) => handleTyping(e, setDisplayName)}></input>
+                                        {editDisplayNameSuccess ? <div className="success">Success</div> : ''}
+                                    </div><br/>
+                                    <div>
+                                        <label>Bio</label><br/>
+                                        <textarea name="biography" className="edit-profile-textarea" value={biography} onChange={(e) => handleTyping(e, setBiography)}></textarea>
+                                        {editBioSuccess ? <div className="success">Success</div> : ''}
+                                    </div><br/>
+                                    <div>
+                                        <label>Email</label><br/>
+                                        <input type="text" name="email" value={email} onChange={(e) => handleTyping(e, setEmail)}></input>
+                                        {editEmailSuccess ? <div className="success">Success</div> : ''}
+                                    </div>
+                                    <div className="edit-profile-button">
+                                        <button className="btn">Submit</button>
+                                    </div><br/>
+                                </form>
+                             </div>
+                            : <div className="edit-profile">
+                                <form className="edit-profile-form" onSubmit={updateAccount} >
+                                    <h1>Edit Account</h1>
+                                    <div>
+                                        <label style={{verticalAlign: "middle"}}>Password Modification</label>
+                                        <input type="password" name="password"></input>
+                                        {editPasswordSuccess ? <div className="success">Success</div> : ''}
+                                    </div>
+                                    <div>
+                                        <label>Birthday</label><br/>
+                                        <input type="date" name="birthday" value={birthday} onChange={(e) => handleTyping(e, setBirthday)}></input>
+                                        {editBirthdaySuccess ? <div className="success">Success</div> : ''}
+                                    </div>
+                                    <div className="edit-profile-button">
+                                        <button className="btn">Submit</button>
+                                    </div>
+                                </form>
+                             </div>
                         }
                     </div>
             }

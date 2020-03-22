@@ -1,7 +1,7 @@
-import React from "react";
-import axios from "axios";
-import { useState } from "react"; 
 import '../../config'
+import axios from "axios";
+import React, { useState } from "react"; 
+
 import './Login.scss'
 
 export default function Login(props) {
@@ -36,13 +36,11 @@ export default function Login(props) {
         <div className="login">
             <form onSubmit={submit}>
                 <div className="login-username">
-                    <label>Username</label>
-                    <br/>
+                    <label>Username</label><br/>
                     <input className="login-field" name="username" type="text" placeholder="Enter username"/>
                 </div>
                 <div className="login-password">
-                    <label>Password</label>
-                    <br/>
+                    <label>Password</label><br/>
                     <input className="login-field" name="password" type="password" placeholder="Enter password"/>
                 </div>
                 <button className="button" type="submit">Login</button>

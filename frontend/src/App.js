@@ -91,7 +91,6 @@ export const App = () => {
 		<div className="App">
 			<Router>
 				<div className="nav-bar">
-
 					<Link to="/" id="app-name">
 						<div className="icon">
 							<svg className="bi bi-camera" width="1.5em" height="1.5em" viewBox="0 0 20 20" fill="currentColor">
@@ -111,7 +110,9 @@ export const App = () => {
 							</svg>
 						</div>
 						<input type="text" value={username} placeholder="Search for user..." onChange={(e) => handleChangeUser(e)} />
-						<Link to={`/account/${username}`} style={{ border: "1px solid silver", backgroundColor: "black", marginLeft: "5px" }}>
+						<Link to={`/account/${username}`}
+							style={{ border: "1px solid silver", backgroundColor: "black", marginLeft: "5px" }}
+						>
 							Search
 						</Link>
 					</div>
@@ -134,12 +135,11 @@ export const App = () => {
 							</div>
 							About
 						</Link>
-
 						{currentUser
 							? <div className="registered-user-options">
 									<div className="icon" style={{margin: "3px 0px 0px"}}>
 										<Link to={`/account/${currentUser}`}>
-											<svg className="bi bi-person" width="1.5em" height="1.5em" viewBox="0 0 20 20" fill="currentColor">
+											<svg className="bi bi-person" width="1.2em" height="1.2em" viewBox="0 0 20 20" fill="currentColor">
 												<path fillRule="evenodd" d="M15 16s1 0 1-1-1-4-6-4-6 3-6 4 1 1 1 1h10zm-9.995-.944v-.002zM5.022 15h9.956a.274.274 0 00.014-.002l.008-.002c-.001-.246-.154-.986-.832-1.664C13.516 12.68 12.289 12 10 12c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664a1.05 1.05 0 00.022.004zm9.974.056v-.002zM10 9a2 2 0 100-4 2 2 0 000 4zm3-2a3 3 0 11-6 0 3 3 0 016 0z" clipRule="evenodd"/>
 											</svg>
 											{currentUser}
@@ -174,7 +174,7 @@ export const App = () => {
 									</Link><br/>
 									<Link to="/register">
 										<div className="icon">
-											<svg className="bi bi-pencil" width="1.5em" height="1.5em" viewBox="0 0 20 20" fill="currentColor">
+											<svg className="bi bi-pencil" width="1.2em" height="1.2em" viewBox="0 0 20 20" fill="currentColor">
 												<path fillRule="evenodd" d="M13.293 3.293a1 1 0 011.414 0l2 2a1 1 0 010 1.414l-9 9a1 1 0 01-.39.242l-3 1a1 1 0 01-1.266-1.265l1-3a1 1 0 01.242-.391l9-9zM14 4l2 2-9 9-3 1 1-3 9-9z" clip-rule="evenodd"/>
 												<path fillRule="evenodd" d="M14.146 8.354l-2.5-2.5.708-.708 2.5 2.5-.708.708zM5 12v.5a.5.5 0 00.5.5H6v.5a.5.5 0 00.5.5H7v.5a.5.5 0 00.5.5H8v-1.5a.5.5 0 00-.5-.5H7v-.5a.5.5 0 00-.5-.5H5z" clip-rule="evenodd"/>
 											</svg>
