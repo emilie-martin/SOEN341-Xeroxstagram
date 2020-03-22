@@ -21,7 +21,6 @@ export default function Profile(props) {
             axios.get(global.config.BACKEND_URL + `/account/profile/${props.username}`)
             .then(
                 (response) => {
-                    setErrorMsg("");
                     setUsername(response.data.username);
                     setBiography(response.data.biography);
                     setDisplayName(response.data.displayName);

@@ -3,10 +3,10 @@ import React from "react";
 
 import "./PostImage.scss";
 
-export default function PostImage(pictureId) {
+export default function PostImage(props) {
 	return (
 		<div className="image-wrapper">
-			<img src={`${global.config.BACKEND_URL}/picture/${pictureId.pictureId}.jpg`} alt={`${pictureId.pictureId}}`} />
+			<img src={`${global.config.BACKEND_URL}/picture/${props.pictureId}.jpg`} alt={`${props.pictureId}}`} />
 		</div>
 	);
 }
