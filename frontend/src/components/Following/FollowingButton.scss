@@ -1,7 +1,7 @@
 @import "../../styles/prelude.scss";
 
 .following-post, .following-user{
-    color: rgb(25, 136, 240);
+    color: $secondary-color;
     border: none;
     text-transform: uppercase;
     border-radius: 2px;
@@ -17,5 +17,5 @@
     vertical-align: sub;
     padding: 9px 20px;
     margin-left: 20px;
-    background-color: rgb(40, 40, 40);
+    background-color: $primary-color-light;
 }

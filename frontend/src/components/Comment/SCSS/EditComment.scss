@@ -1,3 +1,5 @@
+@import "../../../styles/prelude.scss";
+
 .edit-button {
   flex-grow: 2;
   color: white;
@@ -36,7 +38,7 @@
 }
 
 .edit-menu-content {
-  background: rgb(40, 40, 40) !important;
+  background: $primary-color-light !important;
   border: 1px solid white !important;
   width: 500px !important;
   border-radius: 25px;
@@ -46,11 +48,11 @@
   position: relative;
 }
 .edit-text-area {
-  background-color: rgb(40, 40, 40);
+  background-color: $primary-color-light;
   color: white;
   flex-grow: 2;
   outline: none;
-  border: 1px solid rgb(40, 40, 40);
+  border: 1px solid $primary-color-light;
   word-wrap: break-word;
   resize: none;
   overflow-y: auto;
@@ -63,8 +65,8 @@
 }
 
 .update-comment-btn {
-  color: rgb(25, 136, 240);
-  background-color: rgb(40, 40, 40);
+  color: $secondary-color;
+  background-color: $primary-color-light;
   outline: none;
   border: none;
   padding-left: 20px;

@@ -138,7 +138,7 @@ export default function EditProfile() {
                                         {editEmailSuccess ? <div className="success">Success</div> : ''}
                                     </div>
                                     <div className="edit-profile-button">
-                                        <button className="btn">Submit</button>
+                                        <button className="button">Submit</button>
                                     </div><br/>
                                 </form>
                              </div>
@@ -156,7 +156,7 @@ export default function EditProfile() {
                                         {editBirthdaySuccess ? <div className="success">Success</div> : ''}
                                     </div>
                                     <div className="edit-profile-button">
-                                        <button className="btn">Submit</button>
+                                        <button className="button">Submit</button>
                                     </div>
                                 </form>
                              </div>

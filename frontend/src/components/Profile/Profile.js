@@ -82,7 +82,7 @@ export default function Profile(props) {
                 </div>
             </div>
             <div className="profile-bio">
-                <span>{biography}</span>
+                {biography}
             </div>
         </div>
     )

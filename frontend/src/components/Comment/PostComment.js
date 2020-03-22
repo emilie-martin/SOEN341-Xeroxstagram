@@ -38,13 +38,9 @@ export default function PostComment(props) {
     }
 
     return (
-        <div>
-            <form onSubmit={comment}>
-                <div className="comment-form-div">
-                    <textarea value={textAreaText} name="comment" className="comment-input" autoComplete="off" onChange={handleTyping} />
-                    <button className="btn">Post</button>
-                </div>
-            </form>
+        <div className="post-comment">
+            <textarea className="comment-input" value={textAreaText} name="comment" autoComplete="off" onChange={handleTyping}/>
+            <button className="button" onClick={comment}>Post</button>
         </div>
     )
 }
