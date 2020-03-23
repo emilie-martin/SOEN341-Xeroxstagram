@@ -4,6 +4,7 @@ import com.soen341.instagram.exception.account.AlreadyFollowingException;
 import com.soen341.instagram.exception.account.SameAccountException;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.*;
 
@@ -15,7 +16,7 @@ public class Account {
     @NotNull
     private String email;
 
-    @NotNull
+    @NotBlank(message="Password cannot be blank")
     private String password;
 
     @NotNull
