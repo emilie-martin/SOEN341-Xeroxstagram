@@ -6,11 +6,11 @@
 
 .App {
   color: silver;
-  padding: 20px;
+  padding: 20px 0px;
   padding-left: 0px;
   min-height: 100vh;
+  width: 100%;
   background-color: $primary-color;
-  box-sizing: border-box;
 
   h1, h3, h4 {
     color: whitesmoke;
@@ -19,63 +19,96 @@
   hr {
     margin: 10px 0px 10px;
   }
-}
 
-.bi {
-  padding-right: 3px;
-}
-
-.bi-search {
-  color: silver;
-  padding-right: 5px;
-}
-
-.nav-bar {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  align-items: center;
-  box-sizing: border-box;
-  margin: 20px auto;
-  padding: 5px;
-
-  #login {
-    display: flex;
+  .bi {
+    padding-right: 3px;
   }
   
-  a {
+  .bi-search {
+    color: silver;
+    padding-right: 5px;
+  }
+  
+  .nav-bar {
     display: flex;
-    color: $link-color;
-    padding: 0px 10px;
-    text-decoration: none;
-    font-size: $p-fontsize;
-    font-weight: 500;
-    transition: $hover-transition;
-
-    &:hover {
-      color: silver;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px auto;
+  
+    padding: 5px;
+    
+    a {
+      display: flex;
+      color: $link-color;
+      padding: 0px 10px;
+      text-decoration: none;
+      font-size: $p-fontsize;
+      font-weight: 500;
+      transition: $hover-transition;
+  
+      &:hover {
+        color: silver;
+      }
+  
+      // TABLET
+      @media #{$medium-and-down} {
+        font-size: $h6-fontsize;
+      }
+    }
+  
+    input[type="text"] {
+      max-height: 20px;
+      padding: 3px;
     }
 
+    #app-name {
+      flex: 1;
+      margin-left: 10px;
+
+      // MOBILE
+      @media #{$small-and-down} {
+        justify-content: center;
+      }
+    }
+
+    .search-bar {
+      display: flex;
+      margin-right: 10px;
+    }
+    
+    .nav-links {
+      margin: 0px auto;
+      padding: 5px 0px 0px;
+      justify-content: center;
+    }
+
+    // TABLET
     @media #{$medium-and-down} {
-      font-size: $h6-fontsize;
+
+      justify-content: center;
+
+      .app-name a {
+        padding: 0px 5px 5px;
+      }
+
+      .search-bar {
+        padding: 5px 0px;
+      }
+
+      .nav-links {     
+        a {
+          padding: 5px;
+        }
+      }
     }
   }
-
-  input[type="text"] {
-    max-height: 20px;
-    padding: 3px;
+  
+  .nav-links, .registered-user-options, .unregistered-user-options {
+    display: flex;
   }
   
-}
-
-.nav-links, .registered-user-options, .unregistered-user-options {
-  display: flex;
-}
-
-.nav-links {
-  flex-flow: row nowrap;
-}
-
-.registered-user-options, .unregistered-user-options {
-  justify-content: flex-end;
+  .nav-links {
+    flex-flow: row wrap;
+  }
 }

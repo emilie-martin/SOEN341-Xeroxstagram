@@ -1,10 +1,10 @@
-import React from "react";
-import axios from "axios";
-import { useState } from "react"; 
 import '../../config'
+import axios from "axios";
+import React, { useState } from "react"; 
+
 import './Login.scss'
 
-export const Login = (props) => {
+export default function Login(props) {
 
     const [errorMsg, setErrorMsg] = useState("");
 
@@ -36,14 +36,12 @@ export const Login = (props) => {
         <div className="login">
             <form onSubmit={submit}>
                 <div className="login-username">
-                    <label>Username</label>
-                    <br/>
-                    <input name="username" placeholder="Enter username" className="login-field"/>
+                    <label>Username</label><br/>
+                    <input className="login-field" name="username" type="text" placeholder="Enter username"/>
                 </div>
                 <div className="login-password">
-                    <label>Password</label>
-                    <br/>
-                    <input name="password" type="password" placeholder="Enter password" className="login-field"/>
+                    <label>Password</label><br/>
+                    <input className="login-field" name="password" type="password" placeholder="Enter password"/>
                 </div>
                 <button className="button" type="submit">Login</button>
                 {errorMsg && <div className="error">{errorMsg}</div>}
@@ -51,5 +49,3 @@ export const Login = (props) => {
         </div>
     );
 }
-
-export default Login;
