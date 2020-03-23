@@ -15,6 +15,7 @@ export default function EditProfile() {
     const [birthday, setBirthday] = useState(new Date());
     const [editStatus, setEditStatus] = useState("profile");
     const [originalEmail, setOriginalEmail] = useState("");
+    const [originalBirthday, setOriginalBirthday] = useState();
 
     const [editBioSuccess, setEditBioSuccess] = useState(false);
     const [editEmailSuccess, setEditEmailSuccess] = useState(false);
@@ -33,11 +34,17 @@ export default function EditProfile() {
                         setBiography(response.data.biography);
                         setEmail(response.data.email);
                         setBirthday(response.data.dateOfBirth);
+                        setOriginalBirthday(response.data.dateOfBirth);
                         setOriginalEmail(response.data.email);
-                        setCharLeft(maxChar - response.data.biography.length);
+                        setCharLeft(() => {
+                            return response.data.biography ?
+                                maxChar - response.data.biography.length : maxChar
+                        });
                         setLoading(false);
+                        console.log(loading);
                     })
-                .catch(() => {
+                .catch((error) => {
+                    console.log(error);
                     return <Redirect to="/register"></Redirect>
                 })
         }
@@ -105,25 +112,31 @@ export default function EditProfile() {
     }
     const updateAccount = (event) => {
         event.preventDefault();
-        axios.put(global.config.BACKEND_URL + `/account/passwordModification`,
-            {
-                "password": event.target.password.value
-            }).then(() => {
-                setEditPasswordSuccess(true);
-            }).catch((error) => {
-                setEditPasswordSuccess(false);
-                alert(error.response.data.message);
-            });
+        if (!(event.target.password.value.length <= 0)) {
+            axios.put(global.config.BACKEND_URL + `/account/passwordModification`,
+                {
+                    "password": event.target.password.value
+                }).then(() => {
+                    setEditPasswordSuccess(true);
+                }).catch((error) => {
+                    setEditPasswordSuccess(false);
+                    alert(error.response.data.message);
+                });
+        }
 
-        axios.put(global.config.BACKEND_URL + `/account/birthdayModification`,
-            {
-                "birthday": event.target.birthday.value
-            }).then(() => {
-                setEditBirthdaySuccess(true);
-            }).catch((error) => {
-                setEditBirthdaySuccess(false);
-                alert(error.response.data.message);
-            })
+
+
+        if (event.target.birthday.value !== originalBirthday) {
+            axios.put(global.config.BACKEND_URL + `/account/birthdayModification`,
+                {
+                    "birthday": event.target.birthday.value
+                }).then(() => {
+                    setEditBirthdaySuccess(true);
+                }).catch((error) => {
+                    setEditBirthdaySuccess(false);
+                    alert(error.response.data.message);
+                });
+        }
     }
 
     return (
@@ -183,13 +196,19 @@ export default function EditProfile() {
                                             <div style={{ display: "inline" }}>
                                                 <input type="password" name="password" placeholder="Enter new password"></input>
                                             </div>
-                                            {editPasswordSuccess ? <div className="success">Success</div> : ''}
+                                            <div class="test">
+                                                {editPasswordSuccess ? <div className="success">Success</div> : ''}
+                                            </div>
+
                                         </div>
                                         <br />
                                         <div>
                                             <label>Birthday</label>
                                             <input type="date" name="birthday" value={birthday} onChange={(e) => handleTyping(e, setBirthday)}></input>
-                                            {editBirthdaySuccess ? <div className="success">Success</div> : ''}
+                                            <div class="test">
+                                                {editBirthdaySuccess ? <div className="success">Success</div> : ''}
+                                            </div>
+
                                         </div>
                                         <div className="edit-profile-button">
                                             <button className="btn">Submit</button>
