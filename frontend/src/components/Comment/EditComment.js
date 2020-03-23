@@ -1,6 +1,6 @@
+import { deleteComment, editComment } from './CommentAPI'
 import Popup from 'reactjs-popup'
 import React, { useState } from 'react'
-import { deleteComment, editComment } from './CommentAPI'
 
 import './SCSS/EditComment.scss'
 
@@ -13,8 +13,7 @@ export default function EditComment(props) {
             .then(() => {
                 setTextAreaText("");
                 props.reloadComment();
-            }
-            )
+            });
     }
 
     const removeComment = (event) => {
