@@ -6,7 +6,9 @@ import { Redirect } from 'react-router-dom';
 import './EditProfile.scss'
 
 export default function EditProfile() {
+    const maxChar = 150;
     const [loading, setLoading] = useState(true);
+
     const [displayName, setDisplayName] = useState("");
     const [biography, setBiography] = useState("");
     const [email, setEmail] = useState("");
@@ -19,7 +21,9 @@ export default function EditProfile() {
     const [editDisplayNameSuccess, setEditDisplayNameSuccess] = useState(false);
     const [editPasswordSuccess, setEditPasswordSuccess] = useState(false);
     const [editBirthdaySuccess, setEditBirthdaySuccess] = useState(false);
-    
+
+    const [charLeft, setCharLeft] = useState(maxChar);
+
     useEffect(() => {
         const fetchCurrentUser = () => {
             axios.get(global.config.BACKEND_URL + "/account")
@@ -30,6 +34,7 @@ export default function EditProfile() {
                         setEmail(response.data.email);
                         setBirthday(response.data.dateOfBirth);
                         setOriginalEmail(response.data.email);
+                        setCharLeft(maxChar - response.data.biography.length);
                         setLoading(false);
                     })
                 .catch(() => {
@@ -52,6 +57,18 @@ export default function EditProfile() {
         setEditStatus(status);
     }
 
+    const handleCharacterCountBiography = (e) => {
+        e.preventDefault();
+        const input = e.target.value;
+
+        if (input.length > maxChar) {
+            return;
+        }
+
+        setCharLeft(maxChar - input.length);
+        setBiography(input);
+    }
+
     const updateProfile = (event) => {
         event.preventDefault();
         axios.put(global.config.BACKEND_URL + `/account/profile/biographyUpdate`,
@@ -60,6 +77,7 @@ export default function EditProfile() {
             }).then(() => {
                 setEditBioSuccess(true);
             }).catch((error) => {
+                setEditBioSuccess(false);
                 console.log(error.response.data);
             });
 
@@ -70,6 +88,7 @@ export default function EditProfile() {
                 }).then(() => {
                     setEditEmailSuccess(true);
                 }).catch((error) => {
+                    setEditEmailSuccess(false);
                     alert(error.response.data.message);
                 })
         }
@@ -80,6 +99,7 @@ export default function EditProfile() {
             }).then(() => {
                 setEditDisplayNameSuccess(true);
             }).catch((error) => {
+                setEditDisplayNameSuccess(false);
                 alert(error.response.data.message);
             });
     }
@@ -91,6 +111,7 @@ export default function EditProfile() {
             }).then(() => {
                 setEditPasswordSuccess(true);
             }).catch((error) => {
+                setEditPasswordSuccess(false);
                 alert(error.response.data.message);
             });
 
@@ -100,6 +121,7 @@ export default function EditProfile() {
             }).then(() => {
                 setEditBirthdaySuccess(true);
             }).catch((error) => {
+                setEditBirthdaySuccess(false);
                 alert(error.response.data.message);
             })
     }
@@ -127,13 +149,18 @@ export default function EditProfile() {
                                         <div>
                                             <label>Display Name</label>
                                             <input type="text" name="displayName" value={displayName} onChange={(e) => handleTyping(e, setDisplayName)}></input>
-                                            {editDisplayNameSuccess ? <div className="success">Success</div> : ''}
+                                            <div className="test" >
+                                                {editDisplayNameSuccess ? (<div className="success">Success</div>) : ''}
+                                            </div>
                                         </div>
                                         <br />
                                         <div>
                                             <label>Bio</label>
-                                            <textarea name="biography" className="edit-profile-textarea" value={biography} onChange={(e) => handleTyping(e, setBiography)}></textarea>
-                                            {editBioSuccess ? <div className="success">Success</div> : ''}
+                                            <textarea name="biography" className="edit-profile-textarea" value={biography} onChange={(e) => handleCharacterCountBiography(e)}></textarea>
+                                            <div className="test">
+                                                {editBioSuccess ? <div className="success">Success</div> : ''}
+                                                <div className="char-count">Character left: {charLeft}</div>
+                                            </div>
                                         </div>
                                         <br />
                                         <div>
@@ -153,7 +180,9 @@ export default function EditProfile() {
                                         <h1>Edit Account</h1>
                                         <div>
                                             <label>Password Modification</label>
-                                            <input type="password" name="password"></input>
+                                            <div style={{ display: "inline" }}>
+                                                <input type="password" name="password" placeholder="Enter new password"></input>
+                                            </div>
                                             {editPasswordSuccess ? <div className="success">Success</div> : ''}
                                         </div>
                                         <br />

@@ -1,3 +1,4 @@
+@import "../../styles/prelude.scss";
 .edit-profile {
   margin: 100px auto auto;
   width: 50%;
@@ -69,11 +70,23 @@
     margin-top: 0px;
   }
 }
-
-.success {
+.test{
+  position: relative;
+  width: 300px;
   padding-left: 200px;
+}
+.success {
+  display: inline-flex;
   color:  #42db18;
 }
+
+.char-count{
+  display: inline-flex;
+  color: #7A7676;
+  font-size: 14px;
+  position: absolute;
+  left: 79%;
+} 
 
 .sidebar {
   position: fixed;
