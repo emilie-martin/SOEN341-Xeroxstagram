@@ -1,7 +1,6 @@
+import { deleteComment, editComment } from './CommentAPI'
 import Popup from 'reactjs-popup'
 import React, { useState } from 'react'
-
-import { deleteComment, editComment } from './CommentAPI'
 
 import './SCSS/EditComment.scss'
 
@@ -10,17 +9,19 @@ export default function EditComment(props) {
 
     const updateComment = (event) => {
         event.preventDefault();
-        editComment(props.commentId, textAreaText).then(() => {
-            setTextAreaText("");
-            props.reloadComment();
-        });
+        editComment(props.commentId, textAreaText)
+            .then(() => {
+                setTextAreaText("");
+                props.reloadComment();
+            });
     }
 
     const removeComment = (event) => {
         event.preventDefault();
-        deleteComment(props.commentId).then(() => {
-            props.reloadComment();
-        });
+        deleteComment(props.commentId)
+            .then(() => {
+                props.reloadComment();
+            });
     }
 
     const handleTyping = (e) => {
