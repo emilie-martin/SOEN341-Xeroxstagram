@@ -41,7 +41,6 @@ export default function EditProfile() {
                                 maxChar - response.data.biography.length : maxChar
                         });
                         setLoading(false);
-                        console.log(loading);
                     })
                 .catch((error) => {
                     console.log(error);
@@ -162,7 +161,7 @@ export default function EditProfile() {
                                         <div>
                                             <label>Display Name</label>
                                             <input type="text" name="displayName" value={displayName} onChange={(e) => handleTyping(e, setDisplayName)}></input>
-                                            <div className="test" >
+                                            <div className="success-wrapper">
                                                 {editDisplayNameSuccess ? (<div className="success">Success</div>) : ''}
                                             </div>
                                         </div>
@@ -170,7 +169,7 @@ export default function EditProfile() {
                                         <div>
                                             <label>Bio</label>
                                             <textarea name="biography" className="edit-profile-textarea" value={biography} onChange={(e) => handleCharacterCountBiography(e)}></textarea>
-                                            <div className="test">
+                                            <div className="success-wrapper">
                                                 {editBioSuccess ? <div className="success">Success</div> : ''}
                                                 <div className="char-count">Character left: {charLeft}</div>
                                             </div>
@@ -196,7 +195,7 @@ export default function EditProfile() {
                                             <div style={{ display: "inline" }}>
                                                 <input type="password" name="password" placeholder="Enter new password"></input>
                                             </div>
-                                            <div class="test">
+                                            <div class="success-wrapper">
                                                 {editPasswordSuccess ? <div className="success">Success</div> : ''}
                                             </div>
 
@@ -205,7 +204,7 @@ export default function EditProfile() {
                                         <div>
                                             <label>Birthday</label>
                                             <input type="date" name="birthday" value={birthday} onChange={(e) => handleTyping(e, setBirthday)}></input>
-                                            <div class="test">
+                                            <div class="success-wrapper">
                                                 {editBirthdaySuccess ? <div className="success">Success</div> : ''}
                                             </div>
 

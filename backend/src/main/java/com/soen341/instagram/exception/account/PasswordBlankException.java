@@ -8,6 +8,6 @@ public class PasswordBlankException extends RuntimeException
 {
 	public PasswordBlankException()
 	{
-		super("Pssword cannot be blank");
+		super("Password cannot be blank");
 	}
 }
