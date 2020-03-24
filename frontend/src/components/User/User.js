@@ -1,33 +1,28 @@
-import '../../config';
+import "../../config";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import FollowingButton from "../Following/FollowingButton";
-import Post from "../Post/Post";
+
+import PostImage from "../Post/PostImage";
 import Profile from "../Profile/Profile";
 
-import './User.scss';
+import "./User.scss";
 
 export default function User(props) {
 
-    const [errorMsg, setErrorMsg] = useState("");
     const [Pictures, setPictures] = useState([]);
 
     useEffect(() => {
         const loadUser = () => {
-            axios.get(global.config.BACKEND_URL + "/" + props.username + "/pictures").then(
+            axios.get(global.config.BACKEND_URL + "/" + props.username + "/pictures")
+            .then(
                 (response) => {
-                    setErrorMsg("");
-                    setPictures(response.data);
+                    setPictures(response.data.reverse());
                 }
-            ).catch(
-                (error) => {
+            )
+            .catch(
+                () => {
                     setPictures([]);
-                    if (error.response && error.response.data && error.response.data.message) {
-                        setErrorMsg(error.response.data.message);
-                    }
-                    else {
-                        setErrorMsg("An unknown error occurred.");
-                    }
                 }
             )
         }
@@ -36,21 +31,18 @@ export default function User(props) {
 
     return (
         <div className="user-component">
-            <div className="profile-wrapper">
-                <Profile username={props.username}></Profile>
+            <Profile username={props.username}/>
+            <div className="all-posts">
+                {
+                    Pictures.map((id) => (
+                        <div className="single-post" key={id}>
+                            <Link to={`/post/${id}`}>
+                                <PostImage pictureId={id} />
+                            </Link>
+                        </div>
+                    ))
+                }
             </div>
-            {!(props.currentUser === props.username) &&
-                <FollowingButton {...props} class='following-user'></FollowingButton>
-            }
-            {errorMsg && <div className="error">{errorMsg}</div>}
-            {
-                Pictures.map((id) => (
-                    <div className="single-post" key={id}>
-                        <Post currentUser={props.currentUser} id={id} />
-                        <br />
-                    </div>
-                ))
-            }
         </div>
     );
-};
+}

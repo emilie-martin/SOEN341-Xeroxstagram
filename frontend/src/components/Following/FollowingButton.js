@@ -13,9 +13,12 @@ export default function FollowingButton(props) {
         axios.post(global.config.BACKEND_URL + "/account/following/newFollower/" + props.username)
             .then(
                 setIsFollowing(true)
-                ).catch(
-                (error) => {
-                    (error.response && error.response.data && error.response.data.message) ?  setErrorMsg(error.response.data.message): setErrorMsg("An unknown error occured"); 
+            )
+            .catch(
+            (error) => {
+                (error.response && error.response.data && error.response.data.message)
+                    ? setErrorMsg(error.response.data.message)
+                    : setErrorMsg("An unknown error occured"); 
                     alert(errorMsg.toString());
                 }
             )
@@ -26,7 +29,8 @@ export default function FollowingButton(props) {
         axios.delete(global.config.BACKEND_URL + "/account/following/followerRemoval/"+ props.username)
             .then(
                 setIsFollowing(false)
-            ).catch(
+            )
+            .catch(
                 (error) => {
                     error.response ?  setErrorMsg(error.response.data.message): setErrorMsg("An unknown error occured");
                     alert(errorMsg.toString());
@@ -36,13 +40,13 @@ export default function FollowingButton(props) {
 
 
     useEffect(() => {
-
         const isUserFollowing = () => {
             axios.get(global.config.BACKEND_URL + "/account/following/" +props.username).then(
                 (response) => {
                     setIsFollowing(response.data);
                 }
-            ).catch(
+            )
+            .catch(
                 (error) => {
                   console.log(error.response);
                 }
