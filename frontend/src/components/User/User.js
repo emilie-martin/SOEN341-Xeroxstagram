@@ -1,6 +1,6 @@
 import "../../config";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 
 import PostImage from "../Post/PostImage";
@@ -11,27 +11,32 @@ import "./User.scss";
 export default function User(props) {
 
     const [Pictures, setPictures] = useState([]);
-
+    const history = useHistory();
     useEffect(() => {
         const loadUser = () => {
             axios.get(global.config.BACKEND_URL + "/" + props.username + "/pictures")
-            .then(
-                (response) => {
-                    setPictures(response.data.reverse());
-                }
-            )
-            .catch(
-                () => {
-                    setPictures([]);
-                }
-            )
+                .then(
+                    (response) => {
+                        setPictures(response.data.reverse());
+                    }
+                )
+                .catch(
+                    (error) => {
+                        if (error.response.data.error === "Not Found") {
+                            alert("The user doesn't exist, redirecting to home");
+                        } else {
+                            alert("unexpected error, redirecting to home");
+                        }
+                        history.push("/");
+                    }
+                )
         }
         loadUser();
-    }, [props.username])
+    }, [props.username, history])
 
     return (
         <div className="user-component">
-            <Profile username={props.username}/>
+            <Profile username={props.username} />
             <div className="all-posts">
                 {
                     Pictures.map((id) => (
