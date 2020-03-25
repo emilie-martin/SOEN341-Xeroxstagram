@@ -51,8 +51,10 @@ export default function Post(props) {
                                 </div>
                                {Picture.caption}
                             </div>
-                            <LikePicture postId={props.id} likeCount={Picture.likeCount}/>
-                            <div className="date-created">{timeElapsedSincePosted(new Date(Picture.created))}</div>
+                            <div>
+                                <div className="date-created">{timeElapsedSincePosted(new Date(Picture.created))}</div>
+                                <LikePicture postId={props.id} likeCount={Picture.likeCount}/>
+                            </div>
                         </div>
                         <div className="comments">
                             <CommentList refreshComment={refreshComment} postId={props.id} />
