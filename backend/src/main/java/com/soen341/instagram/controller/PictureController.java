@@ -61,11 +61,17 @@ public class PictureController {
 	{
 		return pictureService.likePicture(pictureId);
 	}
-	
+    	
 	@PostMapping(value = "/picture/likeRemoval/{pictureId}")
 	public int unlikePicture(@PathVariable final String pictureId)
 	{
 		return pictureService.unlikePicture(pictureId);
 	}
     
+    @GetMapping(value = "/picture/likeStatus/{pictureId}")
+    public boolean getLikeStatusPicture(@PathVariable final String pictureId)
+    {
+    	return pictureService.getLikeStatus(pictureId);
+    }
+
 }

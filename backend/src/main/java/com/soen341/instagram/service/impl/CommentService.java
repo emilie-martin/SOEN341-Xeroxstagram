@@ -137,6 +137,19 @@ public class CommentService {
 		return comment.getLikeCount();
 	}
 
+	public boolean getLikeStatus(String commentId) {
+		if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken))
+		{
+			final Comment comment = findComment(commentId);
+			final Set<Account> likedBy = comment.getLikedBy();
+			return likedBy.contains(UserAccessor.getCurrentAccount(accountRepository));
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
 	public CommentResponseDTO determineEditable(final CommentResponseDTO commentResponseDTO) {
 		String currentUser = null;
 		if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {

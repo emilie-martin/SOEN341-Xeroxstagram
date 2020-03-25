@@ -94,6 +94,7 @@ public class CommentController
 
 		commentResponseDTO.setPictureDTO(pictureDTO);
 		commentResponseDTO.setAccount(comment.getAccount().getUsername());
+		commentResponseDTO.setLikeCount(comment.getLikeCount());
 
 		return commentService.determineEditable(commentResponseDTO);
 	}
@@ -109,4 +110,11 @@ public class CommentController
 	{
 		return commentService.unlikeComment(commentId);
 	}
+
+    @GetMapping(value = "/comment/likeStatus/{commentId}")
+    public boolean getLikeStatusPicture(@PathVariable final String commentId)
+    {
+    	return commentService.getLikeStatus(commentId);
+    }
+    
 }

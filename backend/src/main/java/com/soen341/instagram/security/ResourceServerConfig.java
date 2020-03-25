@@ -20,7 +20,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter
 	public void configure(HttpSecurity http) throws Exception
 	{
 		http.cors().and().headers().frameOptions().disable().and().authorizeRequests().antMatchers("/picture")
-				.authenticated().antMatchers("/comment/commentByPicture/**", "/comment/commentById/**").permitAll()
+				.authenticated().antMatchers("/**/likeStatus/**").permitAll().antMatchers("/comment/commentByPicture/**", "/comment/commentById/**").permitAll()
 				.antMatchers("/comment/**").authenticated().antMatchers("/account/profile/{username}").permitAll()
 				.antMatchers("/account/profile/**").authenticated().antMatchers("/account/following/**")
 				.authenticated();

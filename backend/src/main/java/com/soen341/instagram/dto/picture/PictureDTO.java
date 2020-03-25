@@ -7,6 +7,7 @@ public class PictureDTO {
     private String caption;
     private Date created;
     private String account;
+	private int likeCount;
 
     public long getId() {
         return id;
@@ -39,4 +40,12 @@ public class PictureDTO {
     public void setAccount(String account) {
         this.account = account;
     }
+
+    public int getLikeCount() {
+    	return likeCount;
+    }
+    
+	public void setLikeCount(int likeCount) {
+		this.likeCount = likeCount;
+	}
 }

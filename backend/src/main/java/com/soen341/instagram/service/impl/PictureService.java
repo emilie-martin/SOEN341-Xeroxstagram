@@ -12,6 +12,8 @@ import com.soen341.instagram.utils.UserAccessor;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -97,6 +99,7 @@ public class PictureService {
 	public PictureDTO toPictureDTO(Picture pic) {
 		PictureDTO picDTO = modelMapper.map(pic, PictureDTO.class);
 		picDTO.setAccount(pic.getAccount().getUsername());
+		picDTO.setLikeCount(pic.getLikeCount());
 		return picDTO;
 	}
 
@@ -162,6 +165,19 @@ public class PictureService {
 		}
 		pictureRepository.save(picture);
 		return picture.getLikeCount();
+	}
+
+	public boolean getLikeStatus(String pictureId) {
+		if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken))
+		{
+			final Picture picture = getPictureFromId(pictureId);
+			final Set<Account> likedBy = picture.getLikedBy();
+			return likedBy.contains(UserAccessor.getCurrentAccount(accountRepository));
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 }
