@@ -1,0 +1,12 @@
+@import "../../styles/prelude.scss";
+
+.like-component-comment{
+    display: flex;
+    flex-flow: row nowrap;
+    font-size: 12px;
+    position: relative;
+    right: -150px;
+}
+.like-button{
+    cursor: pointer;
+}
