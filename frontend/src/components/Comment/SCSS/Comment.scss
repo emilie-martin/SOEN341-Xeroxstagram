@@ -26,5 +26,12 @@
   .date-created {
     color: grey;
     font-size: 12px;
+    width: 75px;
   }
+  
+  .like-div{
+    display: flex;
+    flex-flow: row nowrap;
+  }
+
 }

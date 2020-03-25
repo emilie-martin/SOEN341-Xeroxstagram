@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios';
+import axios from 'axios'
 
 import "./LikeButtonPicture.scss"
 
@@ -38,7 +38,7 @@ export default function LikeButtonPicture(props) {
     }
 
     return (
-        <div className="like-component">
+        <div className="like-component-picture">
             <div className="like-button" onClick={(event) => likePicture(event)}>
                 {likeStatus ? "🌕" : "🌑"}
             </div>
