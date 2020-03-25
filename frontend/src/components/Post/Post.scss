@@ -77,7 +77,11 @@
 	// MOBILE
 	@media #{$small-and-down} {
 		display: block;
-		height: 491px;
+		max-height: 491px;
+
+		.image-wrapper, .image-wrapper img {
+			height: 350px;
+		}
 
 		.text-wrapper {
 			max-height: 300px;

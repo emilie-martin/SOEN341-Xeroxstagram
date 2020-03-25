@@ -15,14 +15,12 @@ export default function Comment(props) {
 
     return (
         <div className="comment-div">
-            <br />
             <Link to={`/account/${props.comment.account}`}>{props.comment.account} </Link> 
             {Boolean(props.comment.editable) ? <EditComment {...props} commentId={props.comment.id} ></EditComment>: ''}
-            <div className="commentContent">
+            <div className="comment-content">
                 {props.comment.comment}
             </div>
             <div className="date-created">{timePosted}</div>
-            <br />
         </div>
     );
 }
