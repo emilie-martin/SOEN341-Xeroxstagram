@@ -10,6 +10,7 @@ import PostImage from "./PostImage";
 import timeElapsedSincePosted from "../../services/TimeService";
 
 import "./Post.scss";
+import LikePicture from '../LikeButtonPicture/LikeButtonPicture';
 
 export default function Post(props) {
 
@@ -50,6 +51,7 @@ export default function Post(props) {
                                 </div>
                                {Picture.caption}
                             </div>
+                            <LikePicture postId={props.id} likeCount={Picture.likeCount}/>
                             <div className="date-created">{timeElapsedSincePosted(new Date(Picture.created))}</div>
                         </div>
                         <div className="comments">
