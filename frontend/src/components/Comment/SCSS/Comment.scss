@@ -3,7 +3,8 @@
 .comment-div {
   font-size: 14px;
   margin: 0 auto;
-  padding-left: 20px;
+  padding: 10px 20px;
+  max-width: 300px;
 
   border-bottom: 1px solid #a9a9a9;
   background: black;
@@ -17,9 +18,13 @@
     font-size: $h6-fontsize;
     font-weight: bold;
   }
-}
 
-.date-created {
-  color: grey;
-  font-size: 12px;
+  .comment-content {
+    padding: 5px 0px;
+  }
+
+  .date-created {
+    color: grey;
+    font-size: 12px;
+  }
 }
