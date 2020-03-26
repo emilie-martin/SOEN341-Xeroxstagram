@@ -51,7 +51,7 @@ export default function Post(props) {
                                 </div>
                                {Picture.caption}
                             </div>
-                            <div>
+                            <div className="like-wrapper">
                                 <div className="date-created">{timeElapsedSincePosted(new Date(Picture.created))}</div>
                                 <LikePicture postId={props.id} likeCount={Picture.likeCount}/>
                             </div>

@@ -40,7 +40,7 @@ export default function LikeButtonComment(props) {
     }
     
     return (
-        <div className="like-component-comment">
+        <div className="like-comment-component">
             <div className="like-button" onClick={(event) => likeComment(event)}>
                 {likeStatus ? "🌕" : "🌑"}
             </div>

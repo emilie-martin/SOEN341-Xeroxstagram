@@ -1,6 +1,6 @@
 @import "../../../styles/prelude.scss";
 
-.comment-div {
+.comment-component {
   font-size: 14px;
   margin: 0 auto;
   padding: 10px 20px;
@@ -19,19 +19,36 @@
     font-weight: bold;
   }
 
-  .comment-content {
+  .comment-div {
     padding: 5px 0px;
-  }
-
-  .date-created {
-    color: grey;
-    font-size: 12px;
-    width: 75px;
-  }
-  
-  .like-div{
     display: flex;
     flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    .comment-content {
+      display: flex;
+      flex-flow: column nowrap;
+    }
+
+    .comment-edit {
+      display: flex;
+      flex-flow: column;
+      align-self: baseline;
+      padding-top: 10px;
+    }
   }
 
+  .like-div {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    .date-created {
+      color: grey;
+      font-size: 12px;
+      width: 75px;
+    }
+  }
 }

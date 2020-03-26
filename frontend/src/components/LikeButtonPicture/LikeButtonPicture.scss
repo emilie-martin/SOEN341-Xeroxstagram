@@ -1,14 +1,12 @@
 @import "../../styles/prelude.scss";
 
-.like-component-picture{
-    display: flex;
-    flex-flow: row nowrap;
-    font-size: 15px;
-    position: relative;
-    bottom: -20px;
-    right: -10px;
-}
+.like-picture-component {
+  display: flex;
+  flex-flow: row nowrap;
+  font-size: 15px;
 
-.like-button{
+  .like-button {
     cursor: pointer;
+    padding-right: 3px;
+  }
 }

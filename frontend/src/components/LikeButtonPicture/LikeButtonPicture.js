@@ -40,7 +40,7 @@ export default function LikeButtonPicture(props) {
     }
 
     return (
-        <div className="like-component-picture">
+        <div className="like-picture-component">
             <div className="like-button" onClick={(event) => likePicture(event)}>
                 {likeStatus ? "🌕" : "🌑"}
             </div>
