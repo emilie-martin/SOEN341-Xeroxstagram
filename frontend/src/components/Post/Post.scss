@@ -24,7 +24,8 @@
 
     .posts-comment {
       position: absolute;
-      bottom: 0px;
+      bottom: -1px;
+      min-width: 100%;
     }
 
     .account-top {
@@ -38,7 +39,7 @@
       color: white;
       border-bottom: solid 1px #a9a9a9;
       height: 100px;
-      width: 300px;
+      min-width: 300px;
       padding: 20px;
 
       a {
@@ -94,13 +95,10 @@
     .text-wrapper {
 			max-height: 300px;
 			
-			.post-description {
-				width: 100%;
-			}
     }
 
     .posts-comment {
-      width: 100%;
+      min-width: 50%;
     }
   }
 }

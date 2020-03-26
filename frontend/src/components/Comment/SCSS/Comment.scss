@@ -21,6 +21,7 @@
     .comment-content {
       display: flex;
       flex-flow: column nowrap;
+      word-break: break-word;
       padding: 5px 0px;
     }
 
@@ -43,7 +44,7 @@
 
     // MOBILE
     @media #{$small-and-down} {
-      width: 100%;
+      min-width: 100%;
       box-sizing: border-box;
      }
 }
