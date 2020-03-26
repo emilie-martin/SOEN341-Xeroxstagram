@@ -5,7 +5,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
 public class MultipleLikeException extends RuntimeException {
-	public MultipleLikeException(String msg) {
+	public MultipleLikeException(String msg)
+	{
 		super(msg);
 	}
 }

@@ -18,20 +18,22 @@ export default function LikeButtonPicture(props) {
                 )
         }
         getLikeStatusPicture();
-    }, [likeStatus, likeCount, props.postId]) //when likeStatus change, re-render component (and call useEffect)
+    }, [likeStatus, likeCount, props.postId])
 
     const likePicture = (event) => {
         event.preventDefault();
-        likeStatus ?
-            axios.post(global.config.BACKEND_URL + "/picture/likeRemoval/" + props.postId).then(
-                (response) => { setLikeStatus(false); setLikeCount(response.data) }
-            )
+        likeStatus
+            ? axios.post(global.config.BACKEND_URL + "/picture/likeRemoval/" + props.postId)
+                .then(
+                    (response) => { setLikeStatus(false); setLikeCount(response.data) }
+                )
                 .catch(
                     (error) => { alert(error.response.data.message) }
                 )
-            : axios.post(global.config.BACKEND_URL + "/picture/like/" + props.postId).then(
-                (response) => { setLikeStatus(true); setLikeCount(response.data) }
-            )
+            : axios.post(global.config.BACKEND_URL + "/picture/like/" + props.postId)
+                .then(
+                    (response) => { setLikeStatus(true); setLikeCount(response.data) }
+                )
                 .catch(
                     (error) => { alert(error.response.data.message) }
                 )

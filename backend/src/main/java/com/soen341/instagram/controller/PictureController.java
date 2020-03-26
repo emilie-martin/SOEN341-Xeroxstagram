@@ -19,59 +19,60 @@ import java.util.List;
 
 @RestController
 public class PictureController {
+	@Autowired
+	private AccountRepository accountRepository;
+	@Autowired
+	private PictureService pictureService;
 
-    @Autowired
-    private AccountRepository accountRepository;
+	@PostMapping(value = "/picture", consumes = { "multipart/form-data" })
+	@ResponseStatus(value = HttpStatus.CREATED)
+	// cant use RequestBody with multipart, so have to use RequestParam
+	public PictureDTO uploadPicture(@RequestParam(required = false) String caption, @RequestParam MultipartFile picture)
+	{
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = ((UserDetails) authentication.getPrincipal()).getUsername();
+		Account user = accountRepository.findByUsername(username);
+		Picture newPic = pictureService.uploadPicture(caption, picture, user);
+		return pictureService.toPictureDTO(newPic);
+	}
 
-    @Autowired
-    private PictureService pictureService;
+	@GetMapping(value = "/picture/{id}")
+	public PictureDTO getPicture(@PathVariable String id)
+	{
+		return pictureService.getPictureDTOFromId(id);
+	}
 
-    @PostMapping(value = "/picture", consumes = {"multipart/form-data"})
-    @ResponseStatus(value = HttpStatus.CREATED)
-    // cant use RequestBody with multipart, so have to use RequestParam
-    public PictureDTO uploadPicture(@RequestParam(required = false) String caption,
-                              @RequestParam MultipartFile picture) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = ((UserDetails)authentication.getPrincipal()).getUsername();
-        Account user = accountRepository.findByUsername(username);
-        Picture newPic = pictureService.uploadPicture(caption, picture, user);
-        return pictureService.toPictureDTO(newPic);
-    }
+	@GetMapping(value = "/picture/{id}.jpg", produces = MediaType.IMAGE_JPEG_VALUE)
+	public byte[] getPictureFile(@PathVariable String id)
+	{
+		return pictureService.loadPicture(id);
+	}
 
-    @GetMapping(value = "/picture/{id}")
-    public PictureDTO getPicture(@PathVariable String id) {
-        return pictureService.getPictureDTOFromId(id);
-    }
+	@GetMapping(value = "/{username}/pictures")
+	public List<Long> getAccountPictures(@PathVariable String username)
+	{
+		Account user = accountRepository.findByUsername(username);
+		if (user == null)
+			throw new AccountNotFoundException("The specified user could not be found");
+		return pictureService.getAccountPictures(user);
+	}
 
-    @GetMapping(value = "/picture/{id}.jpg", produces = MediaType.IMAGE_JPEG_VALUE)
-    public byte[] getPictureFile(@PathVariable String id) {
-        return pictureService.loadPicture(id);
-    }
-
-    @GetMapping(value = "/{username}/pictures")
-    public List<Long> getAccountPictures(@PathVariable String username) {
-        Account user = accountRepository.findByUsername(username);
-        if(user == null)
-            throw new AccountNotFoundException("The specified user could not be found");
-        return pictureService.getAccountPictures(user);
-    }
-    
-    @PostMapping(value = "/picture/like/{pictureId}")
+	@PostMapping(value = "/picture/like/{pictureId}")
 	public int likePicture(@PathVariable final String pictureId)
 	{
 		return pictureService.likePicture(pictureId);
 	}
-    	
+
 	@PostMapping(value = "/picture/likeRemoval/{pictureId}")
 	public int unlikePicture(@PathVariable final String pictureId)
 	{
 		return pictureService.unlikePicture(pictureId);
 	}
-    
-    @GetMapping(value = "/picture/likeStatus/{pictureId}")
-    public boolean getLikeStatusPicture(@PathVariable final String pictureId)
-    {
-    	return pictureService.getLikeStatus(pictureId);
-    }
+
+	@GetMapping(value = "/picture/likeStatus/{pictureId}")
+	public boolean getLikeStatusPicture(@PathVariable final String pictureId)
+	{
+		return pictureService.getLikeStatus(pictureId);
+	}
 
 }

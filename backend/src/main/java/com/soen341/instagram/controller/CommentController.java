@@ -27,8 +27,7 @@ import com.soen341.instagram.model.Picture;
 import com.soen341.instagram.service.impl.CommentService;
 
 @RestController
-public class CommentController
-{
+public class CommentController {
 	@Autowired
 	private CommentService commentService;
 	@Autowired
@@ -76,8 +75,7 @@ public class CommentController
 		final List<Comment> comments = commentService.getCommentsByPicture(pictureId);
 		List<CommentResponseDTO> commentsResponseDTO = new LinkedList<CommentResponseDTO>();
 
-		for (Comment comment : comments)
-		{
+		for (Comment comment : comments) {
 			commentsResponseDTO.add(convertCommentIntoDTO(comment));
 		}
 		return commentsResponseDTO;
@@ -98,7 +96,7 @@ public class CommentController
 
 		return commentService.determineEditable(commentResponseDTO);
 	}
-	
+
 	@PostMapping(value = "/comment/like/{commentId}")
 	public int likeComment(@PathVariable final String commentId)
 	{
@@ -111,10 +109,10 @@ public class CommentController
 		return commentService.unlikeComment(commentId);
 	}
 
-    @GetMapping(value = "/comment/likeStatus/{commentId}")
-    public boolean getLikeStatusPicture(@PathVariable final String commentId)
-    {
-    	return commentService.getLikeStatus(commentId);
-    }
-    
+	@GetMapping(value = "/comment/likeStatus/{commentId}")
+	public boolean getLikeStatusPicture(@PathVariable final String commentId)
+	{
+		return commentService.getLikeStatus(commentId);
+	}
+
 }

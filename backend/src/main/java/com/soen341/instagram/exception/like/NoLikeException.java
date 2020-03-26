@@ -5,9 +5,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
 public class NoLikeException extends RuntimeException {
-	public NoLikeException(String message) {
+	public NoLikeException(String message)
+	{
 		super(message);
-		// TODO Auto-generated constructor stub
 	}
-
 }

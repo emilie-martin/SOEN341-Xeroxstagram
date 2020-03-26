@@ -14,67 +14,83 @@ public class CommentResponseDTO {
 	private boolean editable;
 	private int likeCount;
 
-	public int getNbLikes() {
+	public int getNbLikes()
+	{
 		return nbLikes;
 	}
 
-	public void setNbLikes(int nbLikes) {
+	public void setNbLikes(int nbLikes)
+	{
 		this.nbLikes = nbLikes;
 	}
 
-	public String getAccount() {
+	public String getAccount()
+	{
 		return account;
 	}
 
-	public void setAccount(String account) {
+	public void setAccount(String account)
+	{
 		this.account = account;
 	}
 
-	public PictureDTO getPictureDTO() {
+	public PictureDTO getPictureDTO()
+	{
 		return pictureDTO;
 	}
 
-	public void setPictureDTO(PictureDTO pictureDTO) {
+	public void setPictureDTO(PictureDTO pictureDTO)
+	{
 		this.pictureDTO = pictureDTO;
 	}
 
-	public long getId() {
+	public long getId()
+	{
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(long id)
+	{
 		this.id = id;
 	}
 
-	public String getComment() {
+	public String getComment()
+	{
 		return comment;
 	}
 
-	public void setComment(String comment) {
+	public void setComment(String comment)
+	{
 		this.comment = comment;
 	}
 
-	public Date getCreated() {
+	public Date getCreated()
+	{
 		return created;
 	}
 
-	public void setCreated(Date created) {
+	public void setCreated(Date created)
+	{
 		this.created = created;
 	}
 
-	public boolean isEditable() {
+	public boolean isEditable()
+	{
 		return editable;
 	}
 
-	public void setEditable(boolean editable) {
+	public void setEditable(boolean editable)
+	{
 		this.editable = editable;
 	}
 
-	public int getLikeCount() {
+	public int getLikeCount()
+	{
 		return likeCount;
 	}
 
-	public void setLikeCount(int likeCount) {
+	public void setLikeCount(int likeCount)
+	{
 		this.likeCount = likeCount;
 	}
 

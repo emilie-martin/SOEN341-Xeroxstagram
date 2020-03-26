@@ -5,12 +5,12 @@ import React, { useState, useEffect } from 'react';
 
 import CommentList from "../Comment/CommentList";
 import FollowingButton from "../Following/FollowingButton.js";
+import LikePicture from '../LikeButtonPicture/LikeButtonPicture';
 import PostComment from "../Comment/PostComment";
 import PostImage from "./PostImage";
 import timeElapsedSincePosted from "../../services/TimeService";
 
 import "./Post.scss";
-import LikePicture from '../LikeButtonPicture/LikeButtonPicture';
 
 export default function Post(props) {
 

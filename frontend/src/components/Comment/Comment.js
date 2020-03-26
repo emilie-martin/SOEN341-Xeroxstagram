@@ -2,10 +2,10 @@ import { Link } from "react-router-dom"
 import React, { useState, useEffect } from 'react'
 
 import EditComment from './EditComment'
+import LikeButtonComment from "../LikeButtonComment/LikeButtonComment"
 import timeElapsedSincePosted from '../../services/TimeService'
 
 import './SCSS/Comment.scss'
-import LikeButtonComment from "../LikeButtonComment/LikeButtonComment"
 
 export default function Comment(props) {
     const [timePosted, setTimePosted] = useState("");
