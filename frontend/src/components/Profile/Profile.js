@@ -55,7 +55,6 @@ export default function Profile(props) {
     }, [props, refreshToggle, history])
 
     const handleFollowChange = () => {
-        // Re-render jsx, when FollowingButton has trigger a follow or un-follow
         setRefreshToggle(!refreshToggle);
     }
 
