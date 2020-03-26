@@ -40,6 +40,7 @@ export default function Feed(props) {
             setPosts([]);
             loadMorePosts();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.currentUser]);
 
     return (
