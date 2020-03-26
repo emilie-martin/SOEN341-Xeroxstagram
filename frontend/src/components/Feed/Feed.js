@@ -1,7 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import Post from "../Post/Post";
 import axios from "axios";
 import InfiniteScroll from 'react-infinite-scroller';
+import React, { useEffect, useState } from 'react';
+
+import Post from "../Post/Post";
 
 export default function Feed(props) {
     const [posts, setPosts] = useState([]);

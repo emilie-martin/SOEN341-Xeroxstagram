@@ -10,14 +10,6 @@ import com.soen341.instagram.model.Account;
 import com.soen341.instagram.model.Picture;
 import com.soen341.instagram.utils.UserAccessor;
 
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.imageio.ImageIO;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -27,10 +19,18 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.List;
 import java.util.stream.Collectors;
+import javax.imageio.ImageIO;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service("pictureService")
 public class PictureService {
