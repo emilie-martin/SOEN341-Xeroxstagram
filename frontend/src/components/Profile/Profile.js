@@ -1,8 +1,8 @@
 import "../../config";
 import axios from "axios";
 import FollowingButton from "../Following/FollowingButton";
-import { Link, useHistory } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
 
 import "./Profile.scss";
 
@@ -31,7 +31,6 @@ export default function Profile(props) {
                         setNumPictures(response.data.numPictures);
                     })
                 .catch((error) => {
-                    console.log(error.response);
                     if (error.response && error.response.data && error.response.data.message) {
                         setErrorMsg(error.response.data.message);
                     }
