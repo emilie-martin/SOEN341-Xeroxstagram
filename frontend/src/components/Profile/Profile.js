@@ -44,14 +44,13 @@ export default function Profile(props) {
         const getCurentClient = () => {
             axios.get(global.config.BACKEND_URL + `/account`)
                 .then((response) => {
-                    console.log(response.data.username);
                     setCurrentClient(response.data.username);
                 }).catch(() => {
                     alert("Unexpected error, redirecting to home");
                     history.push("/");
                 });
         }
-        
+
         loadProfile();
         getCurentClient();
     }, [props, refreshToggle, history])

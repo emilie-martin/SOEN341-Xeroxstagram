@@ -8,12 +8,11 @@ import './FollowingButton.scss'
 
 export default function FollowingButton(props) {
     const [isFollowing, setIsFollowing] = useState();
-    const [errorMsg, setErrorMsg] = useState("");
     const history = useHistory();
+    let errorMsg = "";
 
     useEffect(() => {
         const isUserFollowing = () => {
-            console.log(props.username);
             axios.get(global.config.BACKEND_URL + "/account/following/" + props.username,
                 { headers: { Authorization: `Bearer ${LocalStorageService.getAccessToken()}` } })
                 .then(
@@ -38,10 +37,12 @@ export default function FollowingButton(props) {
             })
             .catch(
                 (error) => {
-                    (error.response && error.response.data && error.response.data.message)
-                        ? setErrorMsg(error.response.data.message)
-                        : setErrorMsg("An unknown error occured");
-                    alert(errorMsg.toString());
+                    if (error.response.data.error === "unauthorized") {
+                        errorMsg = "Must be logged in to follow";
+                    } else {
+                        errorMsg = "Unexpected error";
+                    }
+                    alert(errorMsg);
                 })
     };
 
@@ -54,8 +55,12 @@ export default function FollowingButton(props) {
             })
             .catch(
                 (error) => {
-                    error.response ? setErrorMsg(error.response.data.message) : setErrorMsg("An unknown error occured");
-                    alert(errorMsg.toString());
+                    if (error.response.data.error === "unauthorized") {
+                        errorMsg = "Must be logged in to unfollow";
+                    } else {
+                        errorMsg = "Unexpected error";
+                    }
+                    alert(errorMsg);
                 })
     };
 
