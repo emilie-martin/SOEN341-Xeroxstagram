@@ -1,0 +1,155 @@
+@import "../../styles/prelude.scss";
+
+.edit-profile, .edit-profile-page {
+	display: flex;
+	flex-flow: row wrap;
+	align-items: center;
+	max-width: 800px;
+	margin: 0 auto;
+
+	.success {
+		padding: 5px 0px 0px 200px;
+		color:  #42db18;
+	}
+
+	.sidebar .nav {
+		text-align: right;
+		font-weight: bold;
+		
+		ul {
+			list-style: none;
+
+			:first-child { //equalize styles
+				padding-bottom: 30px;
+			}
+		
+			li {
+				position: relative;
+				padding-top: 30px;
+		
+				a {
+					color: rgba(#fff, 0.35);
+					line-height: 70px;
+					text-decoration: none;
+					transition: all ease 300ms;
+				}
+		
+				&.active a {
+					color: white;
+				}
+			
+				&:not(.active)::after {
+					opacity: 0.5;
+				}
+			
+				&:not(.active):hover a {
+					color: rgba(#fff, 0.75);
+				}
+
+				// TABLET AND UP
+				@media #{$medium-and-up} {
+					&::after {
+						content: "";
+						position: absolute;
+						left: 0;
+						bottom: 0;
+						width: 100%;
+						height: 0.2em;
+						background-image: linear-gradient(to right, #114dad, #2eb8e6);
+					}
+				}
+			}
+
+			// MOBILE
+			@media #{$small-and-down} {
+				display: flex;
+				flex-flow: row wrap;
+				justify-content: center;
+				margin: 0px;
+				padding: 20px 0px;
+
+				:first-child {
+					padding-bottom: 5px;
+				}
+
+				li {
+					padding: 0;
+
+					a {
+						padding: 5px;
+						border-right: 1px solid silver;
+					}
+
+					&.active {
+						width: 100%;
+						padding-left: 20px;
+						text-align: left;
+					}
+				}
+
+				&::after {
+					content: "";
+					width: 100%;
+					height: 0.2em;
+					margin-top: 10px;
+					background-image: linear-gradient(to right, #114dad, #2eb8e6);
+				}
+			}
+		}
+	}
+
+	.edit-profile {
+		padding: 30px 50px 20px;
+
+		input, textarea {
+			min-width: 200px;
+			max-width: 300px;
+			color: white;
+			background-color: rgb(18, 18, 18);
+			border: solid 1px rgb(164, 154, 154);
+		}
+
+		textarea {
+			min-height: 50px;
+			max-height: 200px;
+			vertical-align: top;
+			word-wrap: break-word;
+			overflow-y: auto;
+		}
+
+		h1 {
+			text-align: center;
+		}
+
+		.edit-profile-form {
+			padding-left: 100px;
+			max-width: 1000px;
+
+			label {
+				display: inline-block;
+				text-align: left;
+				margin: 0 0 5px;
+				width: 100px;
+				clear: left;
+			}
+		}
+
+		.edit-profile-button {
+			margin: 20px auto 0px;
+			width: 100px;
+
+			.button {
+				border-radius: 20px;
+				padding: 10px 0px 10px 0px;
+				width: 100px;
+			}
+		}
+
+		// MOBILE
+		@media #{$small-and-down} {
+			.edit-profile-form {
+				padding-left: 0px;
+			}
+		}
+	}
+}

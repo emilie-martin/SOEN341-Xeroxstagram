@@ -1,0 +1,93 @@
+@import "../../styles/prelude.scss";
+
+.profile-container {
+	border-bottom: solid 1px white;
+	margin: 30px auto;
+	padding: 30px;
+	max-width: 1000px;
+
+	.user-details {
+		display: flex;
+		flex-flow: row wrap;
+		align-items: center;
+
+		.names {
+			display: flex;
+			flex-flow: row nowrap;
+			align-items: center;
+
+			.display-name {
+				margin-right: 10px;
+				font-size: $h4-fontsize;
+			}
+	
+			.username {
+				font-size: $h6-fontsize;
+			}
+		}
+	}
+
+	.profile-stats {
+		display: flex;
+		margin-top: 10px;
+
+		:not(:first-child) {
+			padding-left: 20px;
+		}
+
+		:not(:last-child) {
+			border-right: 1px solid white;
+		}
+
+		.posts, .followers, .following {
+			padding-right: 20px;
+			text-align: center;
+		}
+	}
+
+	.profile-bio {
+		margin-top: 20px;
+		padding-top: 10px;
+		word-wrap: break-word;
+		border-top: 1px solid rgba(100, 100, 100, 0.5);
+	}
+
+	.edit-btn {
+		a {
+			display: flex;
+			color: $secondary-color;
+			background-color: $primary-color-light;
+			text-decoration: none;
+			padding: 5px 20px;
+			margin-left: 20px;
+		}
+
+		.edit-button-component {
+			color: $secondary-color;
+			background-color: transparent;
+			border: none;
+			border-radius: 2px;
+			text-transform: uppercase;
+			cursor: pointer;
+		}
+	}
+
+	// MOBILE
+	@media #{$small-and-down} {
+		padding: 0;
+		margin: 0;
+
+		.user-details {
+			justify-content: center;
+
+			.names {
+				width: 100%;
+				justify-content: center;
+			}
+		}
+
+		.profile-stats {
+			justify-content: center;
+		}
+	}
+}

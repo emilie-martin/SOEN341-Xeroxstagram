@@ -1,33 +1,36 @@
 import '../../config';
 import axios from "axios";
 import { Link } from "react-router-dom";
-import React, { useState, useEffect } from 'react'
-
-import timeElapsedSincePosted from "../../services/TimeService";
+import React, { useState, useEffect } from 'react';
 
 import CommentList from "../Comment/CommentList";
-import { PostComment } from "../Comment/PostComment";
+import FollowingButton from "../Following/FollowingButton.js";
+import PostComment from "../Comment/PostComment";
+import PostImage from "./PostImage";
+import timeElapsedSincePosted from "../../services/TimeService";
 
 import "./Post.scss";
 
 export default function Post(props) {
+
     const [Picture, setPicture] = useState(undefined);
     const [refreshComment, setRefreshComment] = useState(false);
 
     useEffect(() => {
         const loadPicture = () => {
-            axios.get(global.config.BACKEND_URL + "/picture/" + props.id).then(
+            axios.get(global.config.BACKEND_URL + "/picture/" + props.id)
+            .then(
                 (response) => {setPicture(response.data);}
-            ).catch( () => {setPicture(null);}
+            )
+            .catch(
+                () => {setPicture(null);}
             )
         }
 
         loadPicture();
-
-    }, [props.id])
+    }, [props.id]) // when logged in state changes
 
     const onCommentPosted = () => {
-        // Whenever a comment is posted, inverse the boolean associated to refreshComment
         // This state will be passed into a commentList in order to make the component rerender
         setRefreshComment(!refreshComment);
     }
@@ -36,16 +39,16 @@ export default function Post(props) {
         <div>
             {Picture
                 ? <div className="post">
-                    <div className="image-wrapper">
-                        <img src={`${global.config.BACKEND_URL}/picture/${props.id}.jpg`}
-                            alt={`${props.id}`} />
-                    </div>
+                    <PostImage pictureId={props.id}/>
                     <div className="text-wrapper">
                         <div className="post-description">
                             <div className="account-name">
-                                <Link to={`/account/${Picture.account}`}>
-                                    {Picture.account}
-                                </Link>: {Picture.caption}
+                                <div className="account-top">
+                                    <div> <Link to={`/account/${Picture.account}`}>{Picture.account}</Link></div>
+                                    {!(props.currentUser === Picture.account) && <div> &nbsp; • &nbsp;</div>}
+                                    {!(props.currentUser === Picture.account) && <FollowingButton {... props} username={Picture.account} class='following-post'></FollowingButton>}
+                                </div>
+                               {Picture.caption}
                             </div>
                             <div className="date-created">{timeElapsedSincePosted(new Date(Picture.created))}</div>
                         </div>
