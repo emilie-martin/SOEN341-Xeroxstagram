@@ -3,7 +3,7 @@
 .post {
   display: flex;
   width: 80%;
-  height: 620px;
+  max-height: 620px;
   max-width: 970px;
   margin: 30px auto;
   justify-content: space-between;
@@ -88,7 +88,7 @@
     max-height: 491px;
 
     .image-wrapper, .image-wrapper img {
-      height: 350px;
+      max-height: 350px;
     }
 
     .text-wrapper {
