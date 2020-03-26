@@ -21,7 +21,6 @@
     word-wrap: break-word;
     position: relative;
     background: black;
-    min-width: 300px;
 
     .posts-comment {
       position: absolute;
@@ -34,10 +33,8 @@
 
     .post-description {
       display: flex;
-      flex-flow: row nowrap;
       justify-content: space-between;
       box-sizing: border-box;
-      background: black;
       color: white;
       border-bottom: solid 1px #a9a9a9;
       height: 100px;
@@ -90,13 +87,16 @@
     display: block;
     max-height: 491px;
 
-    .image-wrapper,
-    .image-wrapper img {
+    .image-wrapper, .image-wrapper img {
       height: 350px;
     }
 
     .text-wrapper {
-      max-height: 300px;
+			max-height: 300px;
+			
+			.post-description {
+				width: 100%;
+			}
     }
 
     .posts-comment {

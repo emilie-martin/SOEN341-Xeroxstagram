@@ -2,52 +2,48 @@
 
 .comment-component {
   font-size: 14px;
-  margin: 0 auto;
-  padding: 10px 20px;
+  padding: 10px 15px;
   max-width: 300px;
-
-  border-bottom: 1px solid #a9a9a9;
-  background: black;
   color: white;
-  break-inside: avoid;
+  border-bottom: 1px solid #a9a9a9;
 
   a {
     color: white;
-    text-decoration: none;
-
-    font-size: $h6-fontsize;
     font-weight: bold;
+    font-size: $h6-fontsize;
+    text-decoration: none;
   }
 
   .comment-div {
-    padding: 5px 0px;
     display: flex;
-    flex-flow: row nowrap;
     justify-content: space-between;
-    align-items: flex-end;
 
     .comment-content {
       display: flex;
       flex-flow: column nowrap;
+      padding: 5px 0px;
     }
 
     .comment-edit {
       display: flex;
-      flex-flow: column;
-      align-self: baseline;
+      flex-direction: column;
       padding-top: 10px;
     }
   }
 
   .like-div {
     display: flex;
-    flex-flow: row nowrap;
     justify-content: space-between;
-    align-items: flex-end;
+    font-size: 12px;
 
     .date-created {
       color: grey;
-      font-size: 12px;
     }
   }
+
+    // MOBILE
+    @media #{$small-and-down} {
+      width: 100%;
+      box-sizing: border-box;
+     }
 }
