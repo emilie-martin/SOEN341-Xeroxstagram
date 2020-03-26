@@ -2,7 +2,8 @@ package com.soen341.instagram.dto.picture;
 
 import java.util.Date;
 
-public class PictureDTO {
+public class PictureDTO
+{
 	private long id;
 	private String caption;
 	private Date created;

@@ -21,7 +21,7 @@ public class CreateAccountRequestDTO
 
 	@NotBlank
 	private String lastName;
-	
+
 	@NotBlank
 	private String displayName;
 
@@ -42,7 +42,7 @@ public class CreateAccountRequestDTO
 	{
 		return username;
 	}
-	
+
 	public void setUsername(String username)
 	{
 		this.username = username;
@@ -87,7 +87,7 @@ public class CreateAccountRequestDTO
 	{
 		this.lastName = lastName;
 	}
-	
+
 	public String getDisplayName()
 	{
 		return displayName;

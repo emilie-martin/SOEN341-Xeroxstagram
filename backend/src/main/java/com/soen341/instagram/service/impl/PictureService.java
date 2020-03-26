@@ -33,7 +33,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service("pictureService")
-public class PictureService {
+public class PictureService
+{
 	@Autowired
 	private AccountRepository accountRepository;
 

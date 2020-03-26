@@ -27,7 +27,8 @@ import com.soen341.instagram.model.Picture;
 import com.soen341.instagram.service.impl.CommentService;
 
 @RestController
-public class CommentController {
+public class CommentController
+{
 	@Autowired
 	private CommentService commentService;
 	@Autowired

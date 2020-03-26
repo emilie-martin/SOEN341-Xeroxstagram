@@ -27,7 +27,8 @@ import com.soen341.instagram.model.Picture;
 import com.soen341.instagram.utils.UserAccessor;
 
 @Service("commentService")
-public class CommentService {
+public class CommentService
+{
 	@Autowired
 	private CommentRepository commentRepository;
 	@Autowired
@@ -64,7 +65,8 @@ public class CommentService {
 	{
 		final Comment comment = findComment(commentId);
 		if (comment.getAccount().getUsername()
-				.equals(UserAccessor.getCurrentAccount(accountRepository).getUsername())) {
+				.equals(UserAccessor.getCurrentAccount(accountRepository).getUsername()))
+		{
 			commentRepository.delete(comment);
 		} else {
 			throw new UnauthorizedRightsException();
@@ -80,7 +82,8 @@ public class CommentService {
 		final Comment comment = findComment(commentId);
 
 		if (comment.getAccount().getUsername()
-				.equals(UserAccessor.getCurrentAccount(accountRepository).getUsername())) {
+				.equals(UserAccessor.getCurrentAccount(accountRepository).getUsername()))
+		{
 			comment.setComment(newComment);
 			commentRepository.save(comment);
 		} else {

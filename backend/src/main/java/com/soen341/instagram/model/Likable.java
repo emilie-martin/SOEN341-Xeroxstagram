@@ -7,7 +7,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public abstract class Likable {
+public abstract class Likable
+{
 	@ManyToMany
 	private Set<Account> likedBy;
 

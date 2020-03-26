@@ -18,7 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @RestController
-public class PictureController {
+public class PictureController
+{
 	@Autowired
 	private AccountRepository accountRepository;
 	@Autowired

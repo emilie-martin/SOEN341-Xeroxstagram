@@ -11,7 +11,8 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Picture extends Likable {
+public class Picture extends Likable
+{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;

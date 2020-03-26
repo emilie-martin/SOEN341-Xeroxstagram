@@ -4,7 +4,8 @@ import java.util.Date;
 
 import com.soen341.instagram.dto.picture.PictureDTO;
 
-public class CommentResponseDTO {
+public class CommentResponseDTO
+{
 	private long id;
 	private String comment;
 	private Date created;
