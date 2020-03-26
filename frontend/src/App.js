@@ -6,6 +6,7 @@ import localStorageService from "./services/LocalStorageService";
 
 import About from "./pages/About";
 import EditProfile from "./components/EditProfile/EditProfile";
+import Feed from "./components/Feed/Feed";
 import Login from "./components/Login/Login";
 import Post from "./components/Post/Post";
 import PostPicture from "./components/Post/PostPicture";
@@ -13,7 +14,6 @@ import Register from "./components/Register/Register"
 import User from "./components/User/User";
 
 import "./App.scss";
-import Feed from "./components/Feed/Feed";
 
 export const App = () => {
 	
