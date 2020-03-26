@@ -1,7 +1,7 @@
 import "../../config";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import "./EditProfile.scss";
 
@@ -20,6 +20,8 @@ export default function EditProfile() {
     const [editPasswordSuccess, setEditPasswordSuccess] = useState(false);
     const [editBirthdaySuccess, setEditBirthdaySuccess] = useState(false);
     
+    const history = useHistory();
+    
     useEffect(() => {
         const fetchCurrentUser = () => {
             axios.get(global.config.BACKEND_URL + "/account")
@@ -33,11 +35,11 @@ export default function EditProfile() {
                         setLoading(false);
                     })
                 .catch(() => {
-                    return <Redirect to="/register"></Redirect>
+                    history.push("/register");
                 })
         }
         fetchCurrentUser();
-    }, [loading])
+    }, [loading, history])
 
     useEffect(() => {
         //This useEffect purpose is to force the page to re-render without having to make an API request

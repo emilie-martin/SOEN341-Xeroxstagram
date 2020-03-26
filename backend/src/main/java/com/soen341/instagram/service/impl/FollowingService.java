@@ -4,6 +4,8 @@ import java.util.Set;
 
 //Spring
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 //Project
@@ -22,7 +24,14 @@ public class FollowingService {
 	
 	public boolean isFollowing(String username)
 	{
-		return (accountRepository.doesUserFollow(UserAccessor.getCurrentAccount(accountRepository).getUsername(), username)==1);
+		if(!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken))
+		{
+			return (accountRepository.doesUserFollow(UserAccessor.getCurrentAccount(accountRepository).getUsername(), username)==1);
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	public void follow(final String username)

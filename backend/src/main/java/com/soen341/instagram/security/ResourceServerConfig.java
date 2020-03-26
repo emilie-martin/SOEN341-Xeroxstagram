@@ -22,7 +22,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter
 		http.cors().and().headers().frameOptions().disable().and().authorizeRequests().antMatchers("/picture")
 				.authenticated().antMatchers("/comment/commentByPicture/**", "/comment/commentById/**").permitAll()
 				.antMatchers("/comment/**").authenticated().antMatchers("/account/profile/{username}").permitAll()
-				.antMatchers("/account/profile/**").authenticated().antMatchers("/account/following/**")
+				.antMatchers("/account/profile/**").authenticated().antMatchers("/account/following/{username}").permitAll().antMatchers("/account/following/**")
 				.authenticated();
 	}
 
