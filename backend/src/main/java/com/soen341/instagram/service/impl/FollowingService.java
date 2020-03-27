@@ -23,8 +23,7 @@ public class FollowingService
 
 	public boolean isFollowing(String username)
 	{
-		return (accountRepository.doesUserFollow(UserAccessor.getCurrentAccount(accountRepository).getUsername(),
-				username) == 1);
+		return (accountRepository.doesUserFollow(UserAccessor.getCurrentAccount(accountRepository).getUsername(),username) == 1);
 	}
 
 	public void follow(final String username)
