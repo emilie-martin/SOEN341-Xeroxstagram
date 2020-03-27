@@ -39,8 +39,7 @@ public class LoginService
 	private RestTemplate createRestTemplateBasicAuth()
 	{
 		RestTemplate restTemplate = new RestTemplate();
-		restTemplate.getInterceptors().add(new BasicAuthenticationInterceptor(AuthorizationServerConfig.CLIENT_ID,
-				AuthorizationServerConfig.CLIENT_SECRET));
+		restTemplate.getInterceptors().add(new BasicAuthenticationInterceptor(AuthorizationServerConfig.CLIENT_ID,AuthorizationServerConfig.CLIENT_SECRET));
 		return restTemplate;
 	}
 
@@ -50,9 +49,6 @@ public class LoginService
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE);
 		HttpEntity<String> requestEntity = new HttpEntity(bodyParams, headers);
-
-		return restTemplate.postForEntity(
-				"http://localhost:" + environment.getProperty("local.server.port") + "/oauth/token", requestEntity,
-				String.class);
+		return restTemplate.postForEntity("http://localhost:" + environment.getProperty("local.server.port") + "/oauth/token", requestEntity,String.class);
 	}
 }

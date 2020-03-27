@@ -64,9 +64,7 @@ public class CommentService
 	public void deleteComment(final String commentId)
 	{
 		final Comment comment = findComment(commentId);
-		if (comment.getAccount().getUsername()
-				.equals(UserAccessor.getCurrentAccount(accountRepository).getUsername()))
-		{
+		if (comment.getAccount().getUsername().equals(UserAccessor.getCurrentAccount(accountRepository).getUsername())) {
 			commentRepository.delete(comment);
 		} else {
 			throw new UnauthorizedRightsException();
@@ -81,9 +79,7 @@ public class CommentService
 
 		final Comment comment = findComment(commentId);
 
-		if (comment.getAccount().getUsername()
-				.equals(UserAccessor.getCurrentAccount(accountRepository).getUsername()))
-		{
+		if (comment.getAccount().getUsername().equals(UserAccessor.getCurrentAccount(accountRepository).getUsername())) {
 			comment.setComment(newComment);
 			commentRepository.save(comment);
 		} else {
@@ -123,16 +119,17 @@ public class CommentService
 		return commentOptional.get();
 	}
 
-	// like service
 	public int likeComment(final String commentId)
 	{
 		final Comment comment = findComment(commentId);
 		final Set<Account> likedBy = comment.getLikedBy();
-		final boolean addedSuccessfully = likedBy.add(UserAccessor.getCurrentAccount(accountRepository));
-		if (!addedSuccessfully) {
-			throw new MultipleLikeException("You can only like this comment once.");
+		if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
+			final boolean addedSuccessfully = likedBy.add(UserAccessor.getCurrentAccount(accountRepository));
+			if (!addedSuccessfully) {
+				throw new MultipleLikeException("You can only like this comment once.");
+			}
+			commentRepository.save(comment);
 		}
-		commentRepository.save(comment);
 		return comment.getLikeCount();
 	}
 

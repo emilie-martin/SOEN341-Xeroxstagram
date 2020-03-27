@@ -35,11 +35,9 @@ import java.util.stream.Collectors;
 @Service("pictureService")
 public class PictureService
 {
+	private final static int MAX_RETRIES = 1000;
 	@Autowired
 	private AccountRepository accountRepository;
-
-	private final static int MAX_RETRIES = 1000;
-
 	@Autowired
 	private PictureRepository pictureRepository;
 	@Autowired
@@ -153,16 +151,17 @@ public class PictureService
 		return compressedImage;
 	}
 
-	// like service
 	public int likePicture(final String pictureId)
 	{
 		final Picture picture = getPictureFromId(pictureId);
 		final Set<Account> likedBy = picture.getLikedBy();
-		final boolean liked = likedBy.add(UserAccessor.getCurrentAccount(accountRepository));
-		if (!liked) {
-			throw new MultipleLikeException("You can only like this picture once.");
+		if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
+			final boolean liked = likedBy.add(UserAccessor.getCurrentAccount(accountRepository));
+			if (!liked) {
+				throw new MultipleLikeException("You can only like this picture once.");
+			}
+			pictureRepository.save(picture);
 		}
-		pictureRepository.save(picture);
 		return picture.getLikeCount();
 	}
 

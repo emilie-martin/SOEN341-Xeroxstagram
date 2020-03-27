@@ -8,7 +8,6 @@ import com.soen341.instagram.model.Account;
 
 public class UserAccessor
 {
-
 	public static Account getCurrentAccount(AccountRepository accountRepository)
 	{
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

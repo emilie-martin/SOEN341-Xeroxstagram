@@ -32,13 +32,10 @@ public class RegistrationService
 	public void createNewAccount(final Account account)
 	{
 		checkIfEmailTaken(account.getEmail());
-
 		checkIfUsernameTaken(account.getUsername());
-
 		checkIfEmailFormatValid(account.getEmail());
-
 		checkIfUsernameFormatValid(account.getUsername());
-
+		
 		account.setPassword(passwordEncoder.encode(account.getPassword()));
 		account.setCreated(new Date());
 		accountRepository.save(account);
