@@ -18,13 +18,4 @@ public interface AccountRepository extends PagingAndSortingRepository<Account, S
 			+ "WHERE follow.account_username = :currentUser AND follow.following_username = :accountToFollow "
 			+ "LIMIT 1);", nativeQuery = true)
 	int doesUserFollow(@Param("currentUser") String currentUser, @Param("accountToFollow") String accountToFollow); // returns
-																													// 1
-																													// if
-																													// following,
-																													// returns
-																													// 0
-																													// if
-																													// not
-																													// following
-
 }
