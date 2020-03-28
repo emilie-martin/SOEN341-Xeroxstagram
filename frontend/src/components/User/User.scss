@@ -1,19 +1,60 @@
 @import "../../styles/prelude.scss";
 
-.follow-button{
-    color: rgb(25, 136, 240);
-    background-color: rgb(40, 40, 40);
-    outline: none;
-    border: none;
-    padding: 5px 20px;
-    text-transform: uppercase;
-    border-radius: 2px;
-    cursor: pointer;
+.user-component {
+   
+    .follow-button{
+        color: $secondary-color;
+        background-color: $primary-color-light;
+        outline: none;
+        border: none;
+        padding: 5px 20px;
+        text-transform: uppercase;
+        border-radius: 2px;
+        cursor: pointer;
+    }
+    .all-posts {
+        box-sizing: border-box;
+        margin: 0 auto;
+        columns: 3;
+        column-gap: 7px;
+        max-width: 1000px;
+
+        .single-post .image-wrapper {
+            margin: 0 auto;
+            padding: 10px 0px;
+            text-align: center;
+            max-width: 300px;
+
+            img {
+                max-width: 300px;
+            }
+        }
+
+        .single-post {
+            a {
+                cursor: context-menu;
+            }
+            
+            img {
+                cursor: pointer;
+            }
+        }
+
+        // TABLET
+        @media #{$medium-and-down} {
+            columns: 3;
+
+            .single-post .image-wrapper, .single-post .image-wrapper img {
+                max-width: 200px;
+            }
+        }
+
+        // MOBILE
+        @media #{$small-and-down} {
+            columns: 1;
+            column-gap: 5px;
+        }
+    }
 }
 
-.profile-wrapper{
-    margin: 30px auto;
-    width: 950px;
-    border-bottom: solid 1px white;
-    min-height: 150px;
-}
+
