@@ -4,7 +4,7 @@ import React, { useState } from "react";
 
 import "./PostPicture.scss";
 
-export const PostPicture = props => {
+export default function PostPicture(props) {
   const [errorMsg, setErrorMsg] = useState("");
 
   const submit = event => {
@@ -44,5 +44,4 @@ export const PostPicture = props => {
       </form>
     </div>
   );
-};
-export default PostPicture;
+}
