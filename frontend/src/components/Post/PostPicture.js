@@ -1,7 +1,8 @@
-import React from "react";
-import { useState } from "react";
-import axios from "axios";
 import "../../config";
+import axios from "axios";
+import React, { useState } from "react";
+
+import "./PostPicture.scss";
 
 export const PostPicture = props => {
   const [errorMsg, setErrorMsg] = useState("");
@@ -32,14 +33,14 @@ export const PostPicture = props => {
   return (
     <div className="postPicture">
       <form onSubmit={submit}>
-        <label>File</label>
+        <h2>Upload a Picture</h2>
         <input name="picture" type="file" />
-        <br />
         <label>Caption</label>
-        <input name="caption" />
-        <br />
+        <textarea name="caption"></textarea>
         {errorMsg && <div className="error">Error: {errorMsg}</div>}
-        <button type="submit">Post</button>
+        <button className="button" type="submit">
+          Post
+        </button>
       </form>
     </div>
   );

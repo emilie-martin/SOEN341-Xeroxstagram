@@ -1,0 +1,31 @@
+.postPicture {
+  display: flex;
+  justify-content: center;
+  max-width: 400px;
+  margin: 60px auto 0;
+
+  form {
+    display: flex;
+    flex-direction: column;
+
+    input[type="file"] {
+      margin-bottom: 30px;
+      padding-left: 0;
+    }
+
+    textarea {
+      height: 100px;
+      width: 300px;
+      resize: none;
+      margin-top: 5px;
+    }
+
+    .button {
+      align-self: flex-end;
+      border-radius: 20px;
+      padding: 10px 0px 10px 0px;
+      margin: 15px 0px;
+      width: 100px;
+    }
+  }
+}
