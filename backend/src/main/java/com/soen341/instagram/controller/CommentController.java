@@ -31,17 +31,19 @@ public class CommentController
 {
 	@Autowired
 	private CommentService commentService;
+	
 	@Autowired
 	PictureRepository rep;
+	
 	@Autowired
 	AccountRepository acrep;
+	
 	@Autowired
 	private ModelMapper modelMapper;
 
 	@PostMapping(value = "/comment/newComment/{pictureId}")
 	@ResponseStatus(value = HttpStatus.CREATED)
-	public CommentResponseDTO addComment(@Valid @RequestBody final CommentDTO commentDTO,
-			@PathVariable final long pictureId)
+	public CommentResponseDTO addComment(@Valid @RequestBody final CommentDTO commentDTO,@PathVariable final long pictureId)
 	{
 		final Comment comment = commentService.createComment(commentDTO.getComment(), pictureId);
 		final CommentResponseDTO commentResponse = convertCommentIntoDTO(comment);
@@ -56,8 +58,7 @@ public class CommentController
 
 	// Discuss what we should return
 	@PutMapping(value = "/comment/commentUpdate/{commentId}")
-	public CommentResponseDTO updateComment(@Valid @RequestBody final CommentDTO commentDTO,
-			@PathVariable String commentId)
+	public CommentResponseDTO updateComment(@Valid @RequestBody final CommentDTO commentDTO,@PathVariable String commentId)
 	{
 		final Comment comment = commentService.editComment(commentId, commentDTO.getComment());
 		return convertCommentIntoDTO(comment);
@@ -76,8 +77,7 @@ public class CommentController
 		final List<Comment> comments = commentService.getCommentsByPicture(pictureId);
 		List<CommentResponseDTO> commentsResponseDTO = new LinkedList<CommentResponseDTO>();
 
-		for (Comment comment : comments)
-		{
+		for (Comment comment : comments) {
 			commentsResponseDTO.add(convertCommentIntoDTO(comment));
 		}
 		return commentsResponseDTO;
@@ -94,10 +94,11 @@ public class CommentController
 
 		commentResponseDTO.setPictureDTO(pictureDTO);
 		commentResponseDTO.setAccount(comment.getAccount().getUsername());
+		commentResponseDTO.setLikeCount(comment.getLikeCount());
 
 		return commentService.determineEditable(commentResponseDTO);
 	}
-	
+
 	@PostMapping(value = "/comment/like/{commentId}")
 	public int likeComment(@PathVariable final String commentId)
 	{
@@ -109,4 +110,11 @@ public class CommentController
 	{
 		return commentService.unlikeComment(commentId);
 	}
+
+	@GetMapping(value = "/comment/likeStatus/{commentId}")
+	public boolean getLikeStatusPicture(@PathVariable final String commentId)
+	{
+		return commentService.getLikeStatus(commentId);
+	}
+
 }

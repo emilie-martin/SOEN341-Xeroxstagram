@@ -1,77 +1,69 @@
 @import "../../../styles/prelude.scss";
 
-.edit-button {
-  flex-grow: 2;
-  color: white;
-  background: black;
-  border: none;
-  height: 30px;
-  outline: none;
-  float: right;
-  padding-right: 5%;
-}
+.edit-overlay {
+ 
+  .edit-page-button {
+    color: white;
+    background-color: black;
+    width: 100%;
+    padding: 50px 20px;
+    border: none;
+    border-bottom: 1px solid white;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  
+  .edit-content {
+    background: black !important;
+    border: 1px solid black !important;
+    padding: 0px !important;
+  }
+  
+  .edit-menu-content {
+    background: $primary-color-light !important;
+    width: 400px !important;
+    top: 250px !important;
+    left: 55px !important;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: none;
+  
+    // TABLET
+    @media #{$medium-and-down} {
+      top: 250px !important;
+      left: 30px !important;
+      max-width: 320px;
+    }
 
-.edit-page-button {
-  color: white;
-  background-color: black;
-  outline: none;
-  padding: 50px 20px;
-  text-transform: uppercase;
-  cursor: pointer;
-  width: 100%;
-  border: none;
-  border-bottom: 1px solid white;
-  font-weight: bold;
-}
+    // MOBILE
+    @media #{$small-and-down} {
+      left: 10px !important;
+      max-width: 150px;
 
-.edit-page {
-  background: black;
-  border: none;
-}
-
-.edit-content {
-  background: black !important;
-  border: 1px solid black !important;
-  width: 600px !important;
-  height: 200px;
-  padding: 0px !important;
-}
-
-.edit-menu-content {
-  background: $primary-color-light !important;
-  border: 1px solid white !important;
-  width: 500px !important;
-  border-radius: 25px;
-}
-
-.edit-menu-arrow {
-  position: relative;
-}
-.edit-text-area {
-  background-color: $primary-color-light;
-  color: white;
-  flex-grow: 2;
-  outline: none;
-  border: 1px solid $primary-color-light;
-  word-wrap: break-word;
-  resize: none;
-  overflow-y: auto;
-  font-size: 16px;
-  width: 450px;
-  align-items: center;
-  border-radius: 50px;
-  padding-left: 20px;
-  border-bottom-left-radius: 100px;
-}
-
-.update-comment-btn {
-  color: $secondary-color;
-  background-color: $primary-color-light;
-  outline: none;
-  border: none;
-  padding-left: 20px;
-  padding-bottom: 10px;
-  text-transform: uppercase;
-  border-radius: 20px;
-  cursor: pointer;
+      textarea {
+        max-width: 105px;
+      }
+    }
+  }
+  
+  .edit-text-area {
+    color: white;
+    background-color: $primary-color-light;
+    border: 1px solid $primary-color-light;
+    outline: none;
+    resize: none;
+    overflow-y: auto;
+    font-size: $h6-fontsize;
+    word-wrap: break-word;
+  }
+  
+  .update-comment-btn {
+    border: none;
+    color: $secondary-color;
+    background-color: $primary-color-light;
+    text-transform: uppercase;
+    outline: none;
+    cursor: pointer;
+  }  
 }

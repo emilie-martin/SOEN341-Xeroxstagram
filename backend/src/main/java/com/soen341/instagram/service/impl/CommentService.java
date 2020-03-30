@@ -27,7 +27,8 @@ import com.soen341.instagram.model.Picture;
 import com.soen341.instagram.utils.UserAccessor;
 
 @Service("commentService")
-public class CommentService {
+public class CommentService
+{
 	@Autowired
 	private CommentRepository commentRepository;
 	@Autowired
@@ -37,7 +38,8 @@ public class CommentService {
 
 	private static int maxCommentLength = 250;
 
-	public Comment createComment(final String commentContent, final long pictureId) {
+	public Comment createComment(final String commentContent, final long pictureId)
+	{
 		if (commentContent.length() > maxCommentLength) {
 			throw new CommentLengthTooLongException("Comment length exceeds " + maxCommentLength + " characters");
 		}
@@ -59,25 +61,25 @@ public class CommentService {
 		return comment;
 	}
 
-	public void deleteComment(final String commentId) {
+	public void deleteComment(final String commentId)
+	{
 		final Comment comment = findComment(commentId);
-		if (comment.getAccount().getUsername()
-				.equals(UserAccessor.getCurrentAccount(accountRepository).getUsername())) {
+		if (comment.getAccount().getUsername().equals(UserAccessor.getCurrentAccount(accountRepository).getUsername())) {
 			commentRepository.delete(comment);
 		} else {
 			throw new UnauthorizedRightsException();
 		}
 	}
 
-	public Comment editComment(final String commentId, final String newComment) {
+	public Comment editComment(final String commentId, final String newComment)
+	{
 		if (newComment.length() > maxCommentLength) {
 			throw new CommentLengthTooLongException("Comment length exceeds " + maxCommentLength + " characters");
 		}
 
 		final Comment comment = findComment(commentId);
 
-		if (comment.getAccount().getUsername()
-				.equals(UserAccessor.getCurrentAccount(accountRepository).getUsername())) {
+		if (comment.getAccount().getUsername().equals(UserAccessor.getCurrentAccount(accountRepository).getUsername())) {
 			comment.setComment(newComment);
 			commentRepository.save(comment);
 		} else {
@@ -87,12 +89,14 @@ public class CommentService {
 		return comment;
 	}
 
-	public List<Comment> getCommentsByPicture(final long pictureId) {
+	public List<Comment> getCommentsByPicture(final long pictureId)
+	{
 		final Picture picture = findPicture(pictureId);
 		return commentRepository.findByPicture(picture);
 	}
 
-	private Picture findPicture(final long pictureId) {
+	private Picture findPicture(final long pictureId)
+	{
 		Optional<Picture> pictureOptional = pictureRepository.findById(pictureId);
 		if (!pictureOptional.isPresent()) {
 			throw new InvalidIdException("Picture Id is invalid");
@@ -100,7 +104,8 @@ public class CommentService {
 		return pictureOptional.get();
 	}
 
-	public Comment findComment(final String id) {
+	public Comment findComment(final String id)
+	{
 		long commentId;
 		try {
 			commentId = Long.valueOf(id);
@@ -114,19 +119,22 @@ public class CommentService {
 		return commentOptional.get();
 	}
 
-	// like service
-	public int likeComment(final String commentId) {
+	public int likeComment(final String commentId)
+	{
 		final Comment comment = findComment(commentId);
 		final Set<Account> likedBy = comment.getLikedBy();
-		final boolean addedSuccessfully = likedBy.add(UserAccessor.getCurrentAccount(accountRepository));
-		if (!addedSuccessfully) {
-			throw new MultipleLikeException("You can only like this comment once.");
+		if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
+			final boolean addedSuccessfully = likedBy.add(UserAccessor.getCurrentAccount(accountRepository));
+			if (!addedSuccessfully) {
+				throw new MultipleLikeException("You can only like this comment once.");
+			}
+			commentRepository.save(comment);
 		}
-		commentRepository.save(comment);
 		return comment.getLikeCount();
 	}
 
-	public int unlikeComment(final String commentId) {
+	public int unlikeComment(final String commentId)
+	{
 		final Comment comment = findComment(commentId);
 		final Set<Account> likedBy = comment.getLikedBy();
 		final boolean removedSuccessfully = likedBy.remove(UserAccessor.getCurrentAccount(accountRepository));
@@ -137,7 +145,19 @@ public class CommentService {
 		return comment.getLikeCount();
 	}
 
-	public CommentResponseDTO determineEditable(final CommentResponseDTO commentResponseDTO) {
+	public boolean getLikeStatus(String commentId)
+	{
+		if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
+			final Comment comment = findComment(commentId);
+			final Set<Account> likedBy = comment.getLikedBy();
+			return likedBy.contains(UserAccessor.getCurrentAccount(accountRepository));
+		} else {
+			return false;
+		}
+	}
+
+	public CommentResponseDTO determineEditable(final CommentResponseDTO commentResponseDTO)
+	{
 		String currentUser = null;
 		if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
 			final Account currentUserRequest = UserAccessor.getCurrentAccount(accountRepository);
