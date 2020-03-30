@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CommentRepository extends PagingAndSortingRepository<Comment, Long> {
-    List<Comment> findByPicture(Picture picture);
+public interface CommentRepository extends PagingAndSortingRepository<Comment, Long>
+{
+	List<Comment> findByPicture(Picture picture);
 }

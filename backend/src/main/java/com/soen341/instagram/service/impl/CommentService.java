@@ -70,6 +70,7 @@ public class CommentService
 		if (comment.getAccount().getUsername().equals(currentUser)
 				|| comment.getPicture().getAccount().getUsername().equals(currentUser))
 		{
+
 			commentRepository.delete(comment);
 		}
 		else
@@ -135,17 +136,20 @@ public class CommentService
 		return commentOptional.get();
 	}
 
+
 	// like service
 	public int likeComment(final String commentId)
 	{
 		final Comment comment = findComment(commentId);
 		final Set<Account> likedBy = comment.getLikedBy();
-		final boolean addedSuccessfully = likedBy.add(UserAccessor.getCurrentAccount(accountRepository));
-		if (!addedSuccessfully)
-		{
-			throw new MultipleLikeException("You can only like this comment once.");
+
+		if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
+			final boolean addedSuccessfully = likedBy.add(UserAccessor.getCurrentAccount(accountRepository));
+			if (!addedSuccessfully) {
+				throw new MultipleLikeException("You can only like this comment once.");
+			}
+			commentRepository.save(comment);
 		}
-		commentRepository.save(comment);
 		return comment.getLikeCount();
 	}
 
@@ -160,6 +164,17 @@ public class CommentService
 		}
 		commentRepository.save(comment);
 		return comment.getLikeCount();
+	}
+
+	public boolean getLikeStatus(String commentId)
+	{
+		if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
+			final Comment comment = findComment(commentId);
+			final Set<Account> likedBy = comment.getLikedBy();
+			return likedBy.contains(UserAccessor.getCurrentAccount(accountRepository));
+		} else {
+			return false;
+		}
 	}
 
 	public CommentResponseDTO determineEditable(final CommentResponseDTO commentResponseDTO)

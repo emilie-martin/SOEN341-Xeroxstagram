@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PictureRepository extends PagingAndSortingRepository<Picture, Long> {
-    List<Picture> findByAccount(Account account);
+public interface PictureRepository extends PagingAndSortingRepository<Picture, Long>
+{
+	List<Picture> findByAccount(Account account);
 }

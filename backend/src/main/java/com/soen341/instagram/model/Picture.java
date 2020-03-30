@@ -11,62 +11,73 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Picture extends Likable{
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+public class Picture extends Likable
+{
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
 
-    @ManyToOne
-    @NotNull
-    private Account account;
+	@ManyToOne
+	@NotNull
+	private Account account;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @NotNull
-    private Date created;
+	@Temporal(TemporalType.TIMESTAMP)
+	@NotNull
+	private Date created;
 
-    @NotNull
-    private String filePath;
+	@NotNull
+	private String filePath;
 
-    private String caption;
+	private String caption;
 
-    public long getId() {
-        return id;
-    }
+	public long getId()
+	{
+		return id;
+	}
 
-    public void setId(long id) {
-        this.id = id;
-    }
+	public void setId(long id)
+	{
+		this.id = id;
+	}
 
-    public Account getAccount() {
-        return account;
-    }
+	public Account getAccount()
+	{
+		return account;
+	}
 
-    public void setAccount(Account account) {
-        this.account = account;
-    }
+	public void setAccount(Account account)
+	{
+		this.account = account;
+	}
 
-    public Date getCreated() {
-        return created;
-    }
+	public Date getCreated()
+	{
+		return created;
+	}
 
-    public void setCreated(Date created) {
-        this.created = created;
-    }
+	public void setCreated(Date created)
+	{
+		this.created = created;
+	}
 
-    public String getCaption() {
-        return caption;
-    }
+	public String getCaption()
+	{
+		return caption;
+	}
 
-    public void setCaption(String caption) {
-        this.caption = caption;
-    }
+	public void setCaption(String caption)
+	{
+		this.caption = caption;
+	}
 
-    public String getFilePath() {
-        return filePath;
-    }
+	public String getFilePath()
+	{
+		return filePath;
+	}
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
-    }
-    
+	public void setFilePath(String filePath)
+	{
+		this.filePath = filePath;
+	}
+
 }
