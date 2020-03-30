@@ -24,6 +24,7 @@ public class FollowingService {
 	
 	public boolean isFollowing(String username)
 	{
+		//If client is annononymous, return false, as they are not following for sure
 		if(!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken))
 		{
 			return (accountRepository.doesUserFollow(UserAccessor.getCurrentAccount(accountRepository).getUsername(), username)==1);
