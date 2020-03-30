@@ -36,13 +36,13 @@ public class CommentService
 	@Autowired
 	private PictureRepository pictureRepository;
 
-	private static int maxCommentLength = 250;
+	private final static int MAX_COMMENT_LENGTH = 250;
 
 	public Comment createComment(final String commentContent, final long pictureId)
 	{
-		if (commentContent.length() > maxCommentLength)
+		if (commentContent.length() > MAX_COMMENT_LENGTH)
 		{
-			throw new CommentLengthTooLongException("Comment length exceeds " + maxCommentLength + " characters");
+			throw new CommentLengthTooLongException("Comment length exceeds " + MAX_COMMENT_LENGTH + " characters");
 		}
 
 		final Account account = UserAccessor.getCurrentAccount(accountRepository);
@@ -80,9 +80,9 @@ public class CommentService
 
 	public Comment editComment(final String commentId, final String newComment)
 	{
-		if (newComment.length() > maxCommentLength)
+		if (newComment.length() > MAX_COMMENT_LENGTH)
 		{
-			throw new CommentLengthTooLongException("Comment length exceeds " + maxCommentLength + " characters");
+			throw new CommentLengthTooLongException("Comment length exceeds " + MAX_COMMENT_LENGTH + " characters");
 		}
 
 		final Comment comment = findComment(commentId);
