@@ -23,7 +23,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter
 				.authenticated().antMatchers("/**/likeStatus/**").permitAll()
 				.antMatchers("/comment/commentByPicture/**", "/comment/commentById/**").permitAll()
 				.antMatchers("/comment/**").authenticated().antMatchers("/account/profile/{username}").permitAll()
-				.antMatchers("/account/profile/**").authenticated().antMatchers("/account/following/**")
+				.antMatchers("/account/profile/**").authenticated().antMatchers("/account/following/{username}").permitAll().antMatchers("/account/following/**")
 				.authenticated();
 	}
 

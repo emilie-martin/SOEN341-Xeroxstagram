@@ -48,8 +48,7 @@ export default function EditProfile() {
                         });
                         setLoading(false);
                     })
-                .catch((error) => {
-                    console.log(error);
+                .catch(() => {
                     history.push("/register");
                 })
         }

@@ -1,59 +1,68 @@
 import '../../config';
 import axios from "axios";
+import LocalStorageService from '../../services/LocalStorageService';
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import './FollowingButton.scss'
 
 export default function FollowingButton(props) {
-    const [isFollowing, setIsFollowing] = useState(false);
-    const [errorMsg, setErrorMsg] = useState("");
+    const [isFollowing, setIsFollowing] = useState();
+    const history = useHistory();
+    let errorMsg = "";
+
+    useEffect(() => {
+        const isUserFollowing = () => {
+            axios.get(global.config.BACKEND_URL + "/account/following/" + props.username,
+                { headers: { Authorization: `Bearer ${LocalStorageService.getAccessToken()}` } })
+                .then(
+                    (response) => {
+                        setIsFollowing(Boolean(response.data));
+                    })
+                .catch(
+                    () => {
+                        alert("Unexpected error, redirecting to home");
+                        history.push("/");
+                    })
+        }
+        isUserFollowing();
+    }, [props.currentUser, props.username, history])
 
     const follow = (event) => {
         event.preventDefault();
         axios.post(global.config.BACKEND_URL + "/account/following/newFollower/" + props.username)
-            .then(
-                setIsFollowing(true)
-            )
+            .then(() => {
+                setIsFollowing(true);
+                props.refreshProfile();
+            })
             .catch(
-            (error) => {
-                (error.response && error.response.data && error.response.data.message)
-                    ? setErrorMsg(error.response.data.message)
-                    : setErrorMsg("An unknown error occured"); 
-                    alert(errorMsg.toString());
+                (error) => {
+                    if (error.response.data.error === "unauthorized") {
+                        errorMsg = "Must be logged in to follow";
+                    } else {
+                        errorMsg = "Unexpected error";
+                    }
+                    alert(errorMsg);
                 })
     };
 
     const unfollow = (event) => {
         event.preventDefault();
         axios.delete(global.config.BACKEND_URL + "/account/following/followerRemoval/" + props.username)
-            .then(
-                setIsFollowing(false)
-            )
+            .then(() => {
+                setIsFollowing(false);
+                props.refreshProfile();
+            })
             .catch(
                 (error) => {
-                    error.response ? setErrorMsg(error.response.data.message) : setErrorMsg("An unknown error occured");
-                    alert(errorMsg.toString());
+                    if (error.response.data.error === "unauthorized") {
+                        errorMsg = "Must be logged in to unfollow";
+                    } else {
+                        errorMsg = "Unexpected error";
+                    }
+                    alert(errorMsg);
                 })
     };
-
-    useEffect(() => {
-        const isUserFollowing = () => {
-            axios.get(global.config.BACKEND_URL + "/account/following/" + props.username).then(
-                (response) => {
-                    setIsFollowing(response.data);
-                }
-            )
-            .catch(
-                (error) => {
-                    console.log(error.response);
-                }
-            )
-        }
-
-        if (props.currentUser) {
-            isUserFollowing();
-        }
-    }, [props.currentUser, props.username])
 
     return (
         <div className="follow-button-component">
