@@ -1,56 +1,47 @@
-import React from "react";
+import "../../config";
 import axios from "axios";
-import '../../config';
+import React, { useState } from "react";
 
-class PostPicture extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            errorMsg: ""
+import "./PostPicture.scss";
+
+export default function PostPicture(props) {
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const submit = event => {
+    event.preventDefault();
+    const data = new FormData();
+    data.append("picture", event.target.picture.files[0]);
+    data.append("caption", event.target.caption.value);
+    axios.post(global.config.BACKEND_URL + "/picture", data).then(
+      response => {
+        props.history.push(`/post/${response.data.id}`);
+      },
+      e => {
+        if (e.response) {
+          if (e.response.status === 401) {
+            setErrorMsg("You must be logged in.");
+          } else {
+            setErrorMsg(e.response.data.message);
+          }
+        } else {
+          setErrorMsg("An unknown error occured.");
         }
-    }
-    submit(event) {
-        event.preventDefault();
-        const data = new FormData();
-        data.append('picture', event.target.picture.files[0]);
-        data.append('caption', event.target.caption.value);
-        axios.post(global.config.BACKEND_URL + "/picture", data)
-            .then(
-                (response) => {
-                    this.props.history.push(`/post/${response.data.id}`);
-                },
-                (e) => {
-                    if (e.response) {
-                        if(e.response.status === 401) {
-                            this.setState({errorMsg: "You must be logged in."});
-                        } else {
-                            this.setState({errorMsg: e.response.data.message});
-                        }
-                    } else {
-                        this.setState({errorMsg: "An unknown error occured."});
-                    }
-                }
-            )
-    }
+      }
+    );
+  };
 
-    render() {
-        return (
-            <div className="postPicture">
-                <form onSubmit={this.submit.bind(this)}>
-                    <label>File</label>
-                    <input name="picture" type="file"/>
-                    <br/>
-                    <label>Caption</label>
-                    <input name="caption"/>
-                    <br/>
-                    { this.state.errorMsg && <div className="error">Error: {this.state.errorMsg}</div> }
-                    <button type="submit">
-                        Post
-                    </button>
-                </form>
-            </div>
-        );
-    }
+  return (
+    <div className="postPicture">
+      <form onSubmit={submit}>
+        <h2>Upload a Picture</h2>
+        <input name="picture" type="file" />
+        <label>Caption</label>
+        <textarea name="caption"></textarea>
+        {errorMsg && <div className="error">Error: {errorMsg}</div>}
+        <button className="button" type="submit">
+          Post
+        </button>
+      </form>
+    </div>
+  );
 }
-
-export default PostPicture;
