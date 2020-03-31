@@ -39,23 +39,29 @@ public class CommentServiceTest
 	@Mock
 	private PictureRepository pictureRepository;
 
-	private final static long pictureId = 1;
-	private final static String validComment = "This is a valid comment";
 	private final static Account account = Mockito.mock(Account.class);
-	private final static Optional<Picture> Emptypicture = Optional.empty();
-	private final static Optional<Picture> picture = Optional.of(new Picture());
+
+	private final static long PICTURE_ID = 1;
+	private final static long COMMENT_ID = 1;
+	private final static String VALID_COMMENT = "This is a valid comment";
+	private final static Optional<Picture> EMPTY_PICTURE = Optional.empty();
+	private final static Optional<Picture> PICTURE = Optional.of(new Picture());
+	private final String COMMENT_LENGTH_273 = "sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
+			+ "ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
+			+ "sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
+			+ "sssssssssssssssssssssssssssssssssssss";
+
 	private static Comment comment;
-	private static long commentId = 1;
 
 	@Before
 	public void setup()
 	{
 		comment = new Comment();
 		comment.setAccount(account);
-		comment.setComment(validComment);
+		comment.setComment(VALID_COMMENT);
 		comment.setCreated(new Date());
 		comment.setPicture(new Picture());
-		comment.setId(commentId);
+		comment.setId(COMMENT_ID);
 
 		PowerMockito.mockStatic(UserAccessor.class);
 		PowerMockito.when(UserAccessor.getCurrentAccount(accountRepository)).thenReturn(account);
@@ -64,28 +70,22 @@ public class CommentServiceTest
 	@Test(expected = CommentLengthTooLongException.class)
 	public void createCommentLengthTooLong_ExpectCommentLengthTooLongException()
 	{
-		// final CommentService commentService = Mockito.mock(CommentService.class);
-		final String commentLength273 = "sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
-				+ "ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
-				+ "sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
-				+ "sssssssssssssssssssssssssssssssssssss";
-		commentService.createComment(commentLength273, pictureId);
+		commentService.createComment(COMMENT_LENGTH_273, PICTURE_ID);
 	}
 
 	@Test(expected = PictureNotFoundException.class)
 	public void createCommentWithInvalidPictureID_ExpectPictureNotFoundException()
 	{
-		Mockito.when(pictureRepository.findById(pictureId)).thenReturn(Emptypicture);
-		commentService.createComment(validComment, pictureId);
-
+		Mockito.when(pictureRepository.findById(PICTURE_ID)).thenReturn(EMPTY_PICTURE);
+		commentService.createComment(VALID_COMMENT, PICTURE_ID);
 	}
 
 	@Test
 	public void createCommentSuccessfully()
 	{
-		Mockito.when(pictureRepository.findById(pictureId)).thenReturn(picture);
-		final Comment comment = commentService.createComment(validComment, pictureId);
-		assertEquals(comment.getComment(), validComment);
+		Mockito.when(pictureRepository.findById(PICTURE_ID)).thenReturn(PICTURE);
+		final Comment comment = commentService.createComment(VALID_COMMENT, PICTURE_ID);
+		assertEquals(comment.getComment(), VALID_COMMENT);
 	}
 
 	@Test(expected = CommentLengthTooLongException.class)
@@ -95,17 +95,17 @@ public class CommentServiceTest
 				+ "ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
 				+ "sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
 				+ "sssssssssssssssssssssssssssssssssssss";
-		commentService.editComment(commentId, commentLength273);
+		commentService.editComment(String.valueOf(COMMENT_ID), commentLength273);
 	}
 
 	@Test
 	public void editCommentSuccessfully()
 	{
 		final String newComment = "This is a new comment";
-		Mockito.when(commentRepository.findById(commentId)).thenReturn(Optional.of(comment));
+		Mockito.when(commentRepository.findById(COMMENT_ID)).thenReturn(Optional.of(comment));
 		Mockito.when(account.getUsername()).thenReturn("username");
 		commentRepository.save(comment);
-		final Comment comment = this.commentService.editComment(commentId, newComment);
+		final Comment comment = this.commentService.editComment(String.valueOf(COMMENT_ID), newComment);
 		assertEquals(comment.getComment(), newComment);
 	}
 }

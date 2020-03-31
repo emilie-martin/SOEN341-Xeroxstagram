@@ -1,7 +1,5 @@
 package com.soen341.instagram.service.impl;
 
-import java.util.Set;
-
 // Spring
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,16 +7,18 @@ import org.springframework.stereotype.Service;
 // Project
 import com.soen341.instagram.dao.impl.AccountRepository;
 import com.soen341.instagram.dao.impl.PictureRepository;
+import com.soen341.instagram.exception.account.BiographyLengthTooLongException;
 import com.soen341.instagram.model.Account;
 import com.soen341.instagram.utils.AccountVerifier;
 import com.soen341.instagram.utils.UserAccessor;
 
 @Service
-public class ProfileService {
-	
+public class ProfileService
+{
+
 	@Autowired
 	AccountRepository accountRepository;
-	
+
 	@Autowired
 	PictureRepository pictureRepository;
 
@@ -32,7 +32,7 @@ public class ProfileService {
 //		account.setUsername(username);
 //		accountRepository.save(account);
 //	}
-	
+
 //TODO: Implement changing profile pictures	
 //	public void setProfilePicture(ProfilePictureDTO profilePicture)
 //	{
@@ -40,95 +40,63 @@ public class ProfileService {
 //		//account.setProfilePicture(profilePicture);
 //		accountRepository.save(account);
 //	}
-	
+
 	public void setEmail(final String email)
 	{
 		AccountVerifier.checkIfEmailFormatValid(email);
 		AccountVerifier.checkIfEmailTaken(email, accountRepository);
-		
+
 		final Account account = getCurrentAccount();
 		account.setEmail(email);
 		accountRepository.save(account);
 	}
-	
+
 	public void setBiography(final String biography)
 	{
 		final Account account = getCurrentAccount();
+		if (biography.length() > 150)
+		{
+			throw new BiographyLengthTooLongException("Biography length cannot exceed 150 characters");
+		}
 		account.setBiography(biography);
 		accountRepository.save(account);
 	}
-	
+
 	public void setDisplayName(final String displayName)
 	{
 		final Account account = getCurrentAccount();
 		account.setDisplayName(displayName);
 		accountRepository.save(account);
 	}
-	
+
 	public void setName(final String firstName, final String lastName)
 	{
 		final Account account = getCurrentAccount();
-		
-		if(firstName != null)
-		{
+
+		if (firstName != null) {
 			AccountVerifier.checkNameFormat(firstName);
 			account.setFirstName(firstName);
 		}
-		
-		if(lastName !=null)
-		{
+
+		if (lastName != null) {
 			AccountVerifier.checkNameFormat(lastName);
 			account.setLastName(lastName);
 		}
-		
+
 		accountRepository.save(account);
 	}
-	
-	public String getUsername()
+
+	public int getNumberOfPictures(final String username)
 	{
-		return getCurrentAccount().getUsername();
-	}
-	
-	public int getNumberOfFollowers()
-	{
-		return getCurrentAccount().getFollowers().size();
-	}
-	
-	public int getNumberOfPictures()
-	{
-		return pictureRepository.findByAccount(getCurrentAccount()).size();
-	}
-	
-	public Set<Account> getFollowers()
-	{	
-		return getCurrentAccount().getFollowers();
+		final Account account = accountRepository.findByUsername(username);
+		return pictureRepository.findByAccount(account).size();
 	}
 
-	public String getDisplayName()
-	{	
-		return getCurrentAccount().getDisplayName();
+	public Account getProfile(String username)
+	{
+		return accountRepository.findByUsername(username);
 	}
 
-	public String getBiography() {
-		
-		return getCurrentAccount().getBiography();
-	}
-	
-	public String getEmail()
-	{
-		return getCurrentAccount().getEmail();
-	}
-	
-	public String getFirstName()
-	{
-		return getCurrentAccount().getFirstName();
-	}
-	
-	public String getLastName()
-	{
-		return getCurrentAccount().getLastName();
-	}
-	
 	// Helper methods
 	private Account getCurrentAccount()
 	{

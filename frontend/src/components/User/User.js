@@ -1,122 +1,53 @@
-import React from "react";
+import "../../config";
 import axios from "axios";
-import Post from "../Post/Post";
-import { useState, useEffect} from "react";
-import '../../config';
-import './User.scss';
+import { Link, useHistory } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 
-export const User = props => {
+import PostImage from "../Post/PostImage";
+import Profile from "../Profile/Profile";
 
-    const [errorMsg, setErrorMsg] = useState("");
+import "./User.scss";
+
+export default function User(props) {
+
     const [Pictures, setPictures] = useState([]);
-    const [isFollowing, setFollowing] = useState(false);
-
-    const follow = (event) => {
-        event.preventDefault();
-        axios.post(global.config.BACKEND_URL + "/account/following/newFollower/" + props.username)
-            .then(
-                (response) => {
-                    setFollowing(true);
-                },
-                (error) => {
-                    if (error.response)
-                    {
-                        setErrorMsg(error.response.data.message);
-                    } 
-                    else
-                    {
-                        setErrorMsg("An unknown error occurred");
-                    }
-                }
-            )
-    };
-
-    const unfollow = (event) => {
-        event.preventDefault();
-        axios.delete(global.config.BACKEND_URL + "/account/following/followerRemoval/"+ props.username)
-            .then(
-                (response) => {
-                    setFollowing(false);
-                },
-                (error) => {
-                    if (error.response)
-                    {
-                        setErrorMsg(error.response.data.message);
-                    } 
-                    else
-                    {
-                        setErrorMsg("An unknown error occurred");
-                    }
-                }
-            )
-    };
-
+    const history = useHistory();
     useEffect(() => {
-
-        const isUserFollowing = () => {
-            axios.get(global.config.BACKEND_URL + "/account/following/" +props.username).then(
-                (response) => {
-                    setFollowing(response.data);
-                    console.log(response.data);
-                }
-            ).catch(
-                (error) => {
-                    if(error.response && error.response.data && error.response.data.message)
-                    {
-                        setErrorMsg(error.response.data.message);
-                    } 
-                    else
-                    {
-                        setErrorMsg("An unknown error occurred.");
-                    }
-                }
-            )
-        }
-
         const loadUser = () => {
-            axios.get(global.config.BACKEND_URL + "/" + props.username + "/pictures").then(
-                (response) => {
-                    setErrorMsg("");
-                    setPictures(response.data);
-                }
-            ).catch(
-                (error) => {
-                    setPictures([]);
-                    if(error.response && error.response.data && error.response.data.message)
-                    {
-                        setErrorMsg(error.response.data.message);
-                    } 
-                    else
-                    {
-                        setErrorMsg("An unknown error occurred.");
+            axios.get(global.config.BACKEND_URL + "/" + props.username + "/pictures")
+                .then(
+                    (response) => {
+                        setPictures(response.data.reverse());
                     }
-                }
-            )
+                )
+                .catch(
+                    (error) => {
+                        if (error.response.data.error === "Not Found") {
+                            alert("The user doesn't exist, redirecting to home");
+                        } else {
+                            alert("unexpected error, redirecting to home");
+                        }
+                        history.push("/");
+                    }
+                )
         }
-
-        isUserFollowing();
         loadUser();
-      }, [props.username, isFollowing])
+    }, [props.username, history])
 
     return (
         <div className="user-component">
-            <form onSubmit={isFollowing ? unfollow : follow}>
-                <div className="follow">
-                    <button className="follow-button" type="submit">{isFollowing ? "Unfollow" : "Follow"}</button>
-                </div>
-            </form>
-            
-            {errorMsg && <div className="error">{errorMsg}</div>}
-            {
-                Pictures.map((id) => (
-                    <div className="single-post" key={id}>
-                        <Post id={id}/>
-                        <br/>
-                    </div>
-                ))
-            }
+            <Profile username={props.username} />
+            <div className="all-posts">
+                {
+                    Pictures.map((id) => (
+                        <div className="single-post" key={id}>
+                            <Link to={`/post/${id}`}>
+                                <PostImage pictureId={id} />
+                            </Link>
+                        </div>
+                    ))
+                }
+            </div>
         </div>
     );
-};
-
-export default User;
+}

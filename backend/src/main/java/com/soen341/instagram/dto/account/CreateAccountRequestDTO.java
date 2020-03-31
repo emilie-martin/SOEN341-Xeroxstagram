@@ -9,22 +9,16 @@ public class CreateAccountRequestDTO
 {
 	@NotBlank
 	private String username;
-
 	@NotBlank
 	private String email;
-
 	@NotBlank
 	private String password;
-
 	@NotBlank
 	private String firstName;
-
 	@NotBlank
 	private String lastName;
-	
 	@NotBlank
 	private String displayName;
-
 	@NotNull
 	private Date dateOfBirth;
 
@@ -42,7 +36,7 @@ public class CreateAccountRequestDTO
 	{
 		return username;
 	}
-	
+
 	public void setUsername(String username)
 	{
 		this.username = username;
@@ -87,7 +81,7 @@ public class CreateAccountRequestDTO
 	{
 		this.lastName = lastName;
 	}
-	
+
 	public String getDisplayName()
 	{
 		return displayName;
