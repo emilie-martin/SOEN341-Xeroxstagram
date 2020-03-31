@@ -27,7 +27,8 @@ import com.soen341.instagram.model.Picture;
 import com.soen341.instagram.utils.UserAccessor;
 
 @Service("commentService")
-public class CommentService {
+public class CommentService
+{
 	@Autowired
 	private CommentRepository commentRepository;
 	@Autowired
@@ -35,17 +36,20 @@ public class CommentService {
 	@Autowired
 	private PictureRepository pictureRepository;
 
-	private static int maxCommentLength = 250;
+	private final static int MAX_COMMENT_LENGTH = 250;
 
-	public Comment createComment(final String commentContent, final long pictureId) {
-		if (commentContent.length() > maxCommentLength) {
-			throw new CommentLengthTooLongException("Comment length exceeds " + maxCommentLength + " characters");
+	public Comment createComment(final String commentContent, final long pictureId)
+	{
+		if (commentContent.length() > MAX_COMMENT_LENGTH)
+		{
+			throw new CommentLengthTooLongException("Comment length exceeds " + MAX_COMMENT_LENGTH + " characters");
 		}
 
 		final Account account = UserAccessor.getCurrentAccount(accountRepository);
 		final Optional<Picture> picture = pictureRepository.findById(pictureId);
 
-		if (!picture.isPresent()) {
+		if (!picture.isPresent())
+		{
 			throw new PictureNotFoundException();
 		}
 
@@ -59,87 +63,125 @@ public class CommentService {
 		return comment;
 	}
 
-	public void deleteComment(final String commentId) {
+	public void deleteComment(final String commentId)
+	{
 		final Comment comment = findComment(commentId);
-		if (comment.getAccount().getUsername()
-				.equals(UserAccessor.getCurrentAccount(accountRepository).getUsername())) {
+		final String currentUser = UserAccessor.getCurrentAccount(accountRepository).getUsername();
+		if (comment.getAccount().getUsername().equals(currentUser)
+				|| comment.getPicture().getAccount().getUsername().equals(currentUser))
+		{
+
 			commentRepository.delete(comment);
-		} else {
+		}
+		else
+		{
 			throw new UnauthorizedRightsException();
 		}
 	}
 
-	public Comment editComment(final String commentId, final String newComment) {
-		if (newComment.length() > maxCommentLength) {
-			throw new CommentLengthTooLongException("Comment length exceeds " + maxCommentLength + " characters");
+	public Comment editComment(final String commentId, final String newComment)
+	{
+		if (newComment.length() > MAX_COMMENT_LENGTH)
+		{
+			throw new CommentLengthTooLongException("Comment length exceeds " + MAX_COMMENT_LENGTH + " characters");
 		}
 
 		final Comment comment = findComment(commentId);
 
-		if (comment.getAccount().getUsername()
-				.equals(UserAccessor.getCurrentAccount(accountRepository).getUsername())) {
+		if (comment.getAccount().getUsername().equals(UserAccessor.getCurrentAccount(accountRepository).getUsername()))
+		{
 			comment.setComment(newComment);
 			commentRepository.save(comment);
-		} else {
+		}
+		else
+		{
 			throw new UnauthorizedRightsException();
 		}
 
 		return comment;
 	}
 
-	public List<Comment> getCommentsByPicture(final long pictureId) {
+	public List<Comment> getCommentsByPicture(final long pictureId)
+	{
 		final Picture picture = findPicture(pictureId);
 		return commentRepository.findByPicture(picture);
 	}
 
-	private Picture findPicture(final long pictureId) {
+	private Picture findPicture(final long pictureId)
+	{
 		Optional<Picture> pictureOptional = pictureRepository.findById(pictureId);
-		if (!pictureOptional.isPresent()) {
+		if (!pictureOptional.isPresent())
+		{
 			throw new InvalidIdException("Picture Id is invalid");
 		}
 		return pictureOptional.get();
 	}
 
-	public Comment findComment(final String id) {
+	public Comment findComment(final String id)
+	{
 		long commentId;
-		try {
+		try
+		{
 			commentId = Long.valueOf(id);
-		} catch (NumberFormatException e) {
+		}
+		catch (NumberFormatException e)
+		{
 			throw new InvalidIdException("Invalid comment ID.");
 		}
 		Optional<Comment> commentOptional = commentRepository.findById(commentId);
-		if (!commentOptional.isPresent()) {
+		if (!commentOptional.isPresent())
+		{
 			throw new CommentNotFoundException();
 		}
 		return commentOptional.get();
 	}
 
+
 	// like service
-	public int likeComment(final String commentId) {
+	public int likeComment(final String commentId)
+	{
 		final Comment comment = findComment(commentId);
 		final Set<Account> likedBy = comment.getLikedBy();
-		final boolean addedSuccessfully = likedBy.add(UserAccessor.getCurrentAccount(accountRepository));
-		if (!addedSuccessfully) {
-			throw new MultipleLikeException("You can only like this comment once.");
+
+		if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
+			final boolean addedSuccessfully = likedBy.add(UserAccessor.getCurrentAccount(accountRepository));
+			if (!addedSuccessfully) {
+				throw new MultipleLikeException("You can only like this comment once.");
+			}
+			commentRepository.save(comment);
 		}
-		commentRepository.save(comment);
 		return comment.getLikeCount();
 	}
 
-	public int unlikeComment(final String commentId) {
+	public int unlikeComment(final String commentId)
+	{
 		final Comment comment = findComment(commentId);
 		final Set<Account> likedBy = comment.getLikedBy();
 		final boolean removedSuccessfully = likedBy.remove(UserAccessor.getCurrentAccount(accountRepository));
-		if (!removedSuccessfully) {
+		if (!removedSuccessfully)
+		{
 			throw new NoLikeException("You have not liked this comment yet.");
 		}
 		commentRepository.save(comment);
 		return comment.getLikeCount();
 	}
 
-	public CommentResponseDTO determineEditable(final CommentResponseDTO commentResponseDTO) {
-		String currentUser = null;
+	public boolean getLikeStatus(String commentId)
+	{
 		if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
+			final Comment comment = findComment(commentId);
+			final Set<Account> likedBy = comment.getLikedBy();
+			return likedBy.contains(UserAccessor.getCurrentAccount(accountRepository));
+		} else {
+			return false;
+		}
+	}
+
+	public CommentResponseDTO determineEditable(final CommentResponseDTO commentResponseDTO)
+	{
+		String currentUser = null;
+		if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken))
+		{
 			final Account currentUserRequest = UserAccessor.getCurrentAccount(accountRepository);
 			currentUser = currentUserRequest.getUsername();
 		}

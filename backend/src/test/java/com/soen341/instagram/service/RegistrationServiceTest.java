@@ -1,5 +1,15 @@
 package com.soen341.instagram.service;
 
+import java.util.Date;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.soen341.instagram.dao.impl.AccountRepository;
 import com.soen341.instagram.exception.account.EmailTakenException;
@@ -9,64 +19,76 @@ import com.soen341.instagram.exception.account.UsernameTakenException;
 import com.soen341.instagram.model.Account;
 import com.soen341.instagram.service.impl.RegistrationService;
 
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.security.crypto.password.PasswordEncoder;
+@RunWith(MockitoJUnitRunner.class)
+public class RegistrationServiceTest
+{
 
-import java.util.Date;
+	@InjectMocks
+	private RegistrationService registrationService;
+	@Mock
+	private AccountRepository accountRepository;
+	@Mock
+	private PasswordEncoder passwordEncoder;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.mockito.AdditionalAnswers.returnsFirstArg;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
+	private Account validAccountRegistered;
 
-@DataJpaTest
-public class RegistrationServiceTest {
-    @Autowired
-    private AccountRepository accountRepository;
-    private PasswordEncoder passwordEncoder = Mockito.mock(PasswordEncoder.class);
+	@Before
+	public void setup()
+	{
+		validAccountRegistered = new Account();
+		validAccountRegistered.setEmail("valid@email.com");
+		validAccountRegistered.setPassword("password");
+		validAccountRegistered.setUsername("username");
+		validAccountRegistered.setFirstName("first");
+		validAccountRegistered.setLastName("last");
+		validAccountRegistered.setDisplayName("displayName");
+		validAccountRegistered.setDateOfBirth(new Date());
 
-    private RegistrationService registrationService;
+		// Mocking the existence of an account in database
+		Mockito.when(accountRepository.findByEmail("valid@email.com")).thenReturn(validAccountRegistered);
+		Mockito.when(accountRepository.findByUsername("username")).thenReturn(validAccountRegistered);
+	}
 
-    @Test
-    public void createNewAccount(){
-        registrationService = new RegistrationService(accountRepository, passwordEncoder);
+	@Test(expected = InvalidEmailFormatException.class)
+	public void createNewAccount_withInvalidEmail_ExpectInvalidEmailFormatException()
+	{
+		final Account account = new Account();
+		account.setEmail("invalidEmail");
+		registrationService.createNewAccount(account);
+	}
 
-        //Test invalid email
-        Account invalidEmail = new Account();
-        invalidEmail.setEmail("badEmail");
-        assertThatCode(() -> registrationService.createNewAccount(invalidEmail)).isInstanceOf(InvalidEmailFormatException.class);
+	@Test(expected = InvalidUsernameFormatException.class)
+	public void createNewAccount_withInvalidUsername_ExpectInvalidUsernameFormatException()
+	{
+		final Account account = new Account();
+		account.setEmail("valid@valid.com");
+		account.setUsername("a");
+		registrationService.createNewAccount(account);
+	}
 
-        //Test invalid username
-        Account invalidUsername = new Account();
-        invalidUsername.setEmail("valid@valid.com");
-        invalidUsername.setUsername("a");
-        assertThatCode(() -> registrationService.createNewAccount(invalidUsername)).isInstanceOf(InvalidUsernameFormatException.class);
+	@Test(expected = EmailTakenException.class)
+	public void createNewAccount_withEmailTaken_ExpectEmailTakenException()
+	{
+		final Account account = new Account();
+		account.setEmail(validAccountRegistered.getEmail());
+		registrationService.createNewAccount(account);
+	}
 
-        //Create valid account
-        Account validAccount = new Account();
-        validAccount.setEmail("valid@email.com");
-        validAccount.setPassword("password");
-        validAccount.setUsername("username");
-        validAccount.setFirstName("first");
-        validAccount.setLastName("last");
-        validAccount.setDisplayName("displayName");
-        validAccount.setDateOfBirth(new Date());
-        when(passwordEncoder.encode(anyString())).then(returnsFirstArg());
-        registrationService.createNewAccount(validAccount);
-        assertThat(accountRepository.findByEmail(validAccount.getEmail())).isEqualTo(validAccount);
+	@Test(expected = UsernameTakenException.class)
+	public void createNewAccount_withUsernameTaken_ExpectUsernameTakenException()
+	{
+		final Account account = new Account();
+		account.setUsername(validAccountRegistered.getUsername());
+		registrationService.createNewAccount(account);
+	}
 
-        //Test Email taken
-        Account takenEmail = new Account();
-        takenEmail.setEmail(validAccount.getEmail());
-        assertThatCode(() -> registrationService.createNewAccount(takenEmail)).isInstanceOf(EmailTakenException.class);
-
-        //Test Username taken
-        Account usernameTaken = new Account();
-        usernameTaken.setUsername(validAccount.getUsername());
-        assertThatCode(() -> registrationService.createNewAccount(usernameTaken)).isInstanceOf(UsernameTakenException.class);
-    }
+	@Test
+	public void createNewAccountSuccessfully()
+	{
+		final Account account = new Account();
+		account.setEmail("johndoe@valid.com");
+		account.setUsername("JohnDoe");
+		account.setPassword("password");
+		registrationService.createNewAccount(account);
+	}
 }
