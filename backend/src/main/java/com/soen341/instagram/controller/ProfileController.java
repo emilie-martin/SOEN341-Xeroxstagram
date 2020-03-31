@@ -20,6 +20,7 @@ public class ProfileController
 
 	@Autowired
 	private ProfileService profileService;
+	
 	@Autowired
 	private ModelMapper modelMapper;
 

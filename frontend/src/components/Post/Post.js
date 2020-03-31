@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 
 import CommentList from "../Comment/CommentList";
 import FollowingButton from "../Following/FollowingButton.js";
+import LikePicture from '../LikeButtonPicture/LikeButtonPicture';
 import PostComment from "../Comment/PostComment";
 import PostImage from "./PostImage";
 import timeElapsedSincePosted from "../../services/TimeService";
@@ -52,7 +53,10 @@ export default function Post(props) {
                                 </div>
                                 {Picture.caption}
                             </div>
-                            <div className="date-created">{timeElapsedSincePosted(new Date(Picture.created))}</div>
+                            <div className="like-wrapper">
+                                <div className="date-created">{timeElapsedSincePosted(new Date(Picture.created))}</div>
+                                <LikePicture postId={props.id} likeCount={Picture.likeCount}/>
+                            </div>
                         </div>
                         <div className="comments">
                             <CommentList refreshComment={refreshComment} postId={props.id} />

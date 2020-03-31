@@ -73,14 +73,12 @@ public class ProfileService
 	{
 		final Account account = getCurrentAccount();
 
-		if (firstName != null)
-		{
+		if (firstName != null) {
 			AccountVerifier.checkNameFormat(firstName);
 			account.setFirstName(firstName);
 		}
 
-		if (lastName != null)
-		{
+		if (lastName != null) {
 			AccountVerifier.checkNameFormat(lastName);
 			account.setLastName(lastName);
 		}
