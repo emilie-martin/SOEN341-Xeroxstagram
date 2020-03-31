@@ -1,6 +1,7 @@
 package com.soen341.instagram.controller;
 
 import org.modelmapper.ModelMapper;
+
 // Spring Boot
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,14 +24,6 @@ public class ProfileController
 	
 	@Autowired
 	private ModelMapper modelMapper;
-
-// For now we are not allowing the user to change their username
-//	@PutMapping(value = "account/profile/usernameUpdate")
-//	public void setUsername(@RequestBody final UpdateProfileRequestDTO profileRequest)
-//	{
-//		String username = profileRequest.getUsername();
-//		profileService.setUsername(username);
-//	}
 
 	@PutMapping(value = "account/profile/biographyUpdate")
 	public void setBiography(@RequestBody final ProfileRequestDTO profileRequest)
@@ -58,16 +51,8 @@ public class ProfileController
 	{
 		String firstName = profileRequest.getFirstName();
 		String lastName = profileRequest.getLastName();
-
 		profileService.setName(firstName, lastName);
 	}
-
-//TODO: Implement changing profile pictures
-//	@PostMapping(value = "account/profile/newProfilePicture")
-//	public void setProfilePicture(@RequestBody final ProfilePictureDTO picture)
-//	{
-//		profileService.setProfilePicture(picture);
-//	}
 
 	@GetMapping(value = "account/profile/{username}")
 	public ProfileRequestDTO getProfile(@PathVariable final String username)

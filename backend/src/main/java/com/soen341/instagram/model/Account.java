@@ -1,8 +1,10 @@
 package com.soen341.instagram.model;
 
+// Project
 import com.soen341.instagram.exception.account.AlreadyFollowingException;
 import com.soen341.instagram.exception.account.SameAccountException;
 
+// Other libraries
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -13,38 +15,27 @@ public class Account
 {
 	@Id
 	private String username;
-
 	@NotNull
 	private String email;
-
 	@NotBlank(message = "Password cannot be blank")
 	private String password;
-
 	@NotNull
 	private String firstName;
-
 	@NotNull
 	private String lastName;
-
 	@Temporal(TemporalType.DATE)
 	@NotNull
 	private Date dateOfBirth;
-
 	@Temporal(TemporalType.DATE)
 	@NotNull
 	private Date created;
-
 	private String biography;
-
 	@NotNull
 	private String displayName;
-
 	@ManyToMany(fetch = FetchType.LAZY)
 	private Set<Account> following;
-
 	@ManyToMany
 	private Set<Account> followers;
-
 	@OneToOne
 	private Picture profilePicture;
 
@@ -150,7 +141,6 @@ public class Account
 
 	public Set<Account> getFollowing()
 	{
-		// Never return a null object
 		if (following == null)
 		{
 			following = new HashSet<>();
@@ -160,7 +150,6 @@ public class Account
 
 	public Set<Account> getFollowers()
 	{
-		// Never return a null object
 		if (followers == null)
 		{
 			followers = new HashSet<>();

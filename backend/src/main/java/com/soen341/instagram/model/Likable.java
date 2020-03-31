@@ -28,5 +28,4 @@ public abstract class Likable
 	{
 		return getLikedBy().size();
 	}
-
 }

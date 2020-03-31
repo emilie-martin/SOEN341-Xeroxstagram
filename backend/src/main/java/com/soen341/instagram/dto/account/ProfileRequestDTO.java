@@ -4,7 +4,6 @@ import java.util.Set;
 
 public class ProfileRequestDTO
 {
-
 	private String username;
 	private String email;
 	private String displayName;
@@ -126,5 +125,4 @@ public class ProfileRequestDTO
 	{
 		this.followings = followings;
 	}
-
 }

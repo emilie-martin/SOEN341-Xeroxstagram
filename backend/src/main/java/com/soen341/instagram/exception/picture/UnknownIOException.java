@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
 public class UnknownIOException extends RuntimeException
 {
-
 	public UnknownIOException(String msg)
 	{
 		super(msg);

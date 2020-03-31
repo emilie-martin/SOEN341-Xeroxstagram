@@ -2,6 +2,7 @@ package com.soen341.instagram.controller;
 
 import javax.validation.Valid;
 
+// Spring Boot
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+// Project
 import com.soen341.instagram.dto.account.CreateAccountRequestDTO;
 import com.soen341.instagram.model.Account;
 import com.soen341.instagram.service.impl.RegistrationService;

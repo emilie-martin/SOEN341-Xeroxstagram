@@ -2,7 +2,7 @@ package com.soen341.instagram.service.impl;
 
 import java.util.Set;
 
-//Spring
+//Spring Boot
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,13 +19,11 @@ import com.soen341.instagram.utils.UserAccessor;
 @Service
 public class FollowingService
 {
-
 	@Autowired
 	AccountRepository accountRepository;
 
 	public boolean isFollowing(String username)
 	{
-		//If client is anonymous, return false, as they are not following for sure
 		if(!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken))
 		{
 			return (accountRepository.doesUserFollow(UserAccessor.getCurrentAccount(accountRepository).getUsername(), username)==1);
@@ -56,13 +54,15 @@ public class FollowingService
 
 	private void startFollowing(final Account accountFollowing, final Account accountBeingFollowed)
 	{
-		if (accountFollowing.equals(accountBeingFollowed)) {
+		if (accountFollowing.equals(accountBeingFollowed))
+		{
 			throw new SameAccountException("Accounts cannot follow themselves");
 		}
 
 		Set<Account> followingSet = accountFollowing.getFollowing();
 
-		if (!followingSet.add(accountBeingFollowed)) {
+		if (!followingSet.add(accountBeingFollowed))
+		{
 			throw new AlreadyFollowingException("Account is already following this user");
 		}
 
@@ -71,13 +71,15 @@ public class FollowingService
 
 	private void stopFollowing(final Account accountFollowing, final Account accountBeingFollowed)
 	{
-		if (accountFollowing.equals(accountBeingFollowed)) {
+		if (accountFollowing.equals(accountBeingFollowed))
+		{
 			throw new SameAccountException("Accounts cannot unfollow themselves");
 		}
 
 		Set<Account> followingSet = accountFollowing.getFollowing();
 
-		if (!followingSet.remove(accountBeingFollowed)) {
+		if (!followingSet.remove(accountBeingFollowed))
+		{
 			throw new AccountNotFoundException("Cannot unfollow an account that is not already being followed");
 		}
 
@@ -104,7 +106,8 @@ public class FollowingService
 	{
 		Account account = accountRepository.findByUsername(username);
 
-		if (account == null) {
+		if (account == null)
+		{
 			throw new AccountNotFoundException("Account not found");
 		}
 

@@ -1,12 +1,6 @@
 package com.soen341.instagram.controller;
 
-import com.soen341.instagram.dao.impl.AccountRepository;
-import com.soen341.instagram.dto.account.AccountDTO;
-import com.soen341.instagram.dto.account.LoginRequestDTO;
-import com.soen341.instagram.dto.account.RefreshLoginRequestDTO;
-import com.soen341.instagram.model.Account;
-import com.soen341.instagram.service.impl.LoginService;
-import org.modelmapper.ModelMapper;
+// Spring Boot
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -16,7 +10,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+// Project
+import com.soen341.instagram.dao.impl.AccountRepository;
+import com.soen341.instagram.dto.account.AccountDTO;
+import com.soen341.instagram.dto.account.LoginRequestDTO;
+import com.soen341.instagram.dto.account.RefreshLoginRequestDTO;
+import com.soen341.instagram.model.Account;
+import com.soen341.instagram.service.impl.LoginService;
+
+// Other libraries
 import javax.validation.Valid;
+import org.modelmapper.ModelMapper;
 
 @RestController
 public class LoginController
@@ -39,6 +44,7 @@ public class LoginController
 			return null;
 		String username = ((UserDetails) authentication.getPrincipal()).getUsername();
 		Account user = accountRepository.findByUsername(username);
+		
 		return modelMapper.map(user, AccountDTO.class);
 	}
 

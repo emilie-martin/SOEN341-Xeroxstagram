@@ -16,9 +16,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 /*
- * This class main purpose is to get the authentication manager bean. All HTTP
- * request configuration should be done in
- * com.soen341.instagram.security.ResourceServerConfig
+ * This class' main purpose is to get the authentication manager bean.
+ * All HTTP request configuration should be done in com.soen341.instagram.security.ResourceServerConfig
  */
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 {

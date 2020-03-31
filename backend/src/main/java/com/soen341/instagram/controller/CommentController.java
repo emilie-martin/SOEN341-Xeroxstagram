@@ -1,11 +1,6 @@
 package com.soen341.instagram.controller;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.validation.Valid;
-
-import org.modelmapper.ModelMapper;
+// Spring Boot
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+// Project
 import com.soen341.instagram.dao.impl.AccountRepository;
 import com.soen341.instagram.dao.impl.PictureRepository;
 import com.soen341.instagram.dto.comment.CommentDTO;
@@ -25,6 +21,12 @@ import com.soen341.instagram.dto.picture.PictureDTO;
 import com.soen341.instagram.model.Comment;
 import com.soen341.instagram.model.Picture;
 import com.soen341.instagram.service.impl.CommentService;
+
+// Other libraries
+import org.modelmapper.ModelMapper;
+import java.util.LinkedList;
+import java.util.List;
+import javax.validation.Valid;
 
 @RestController
 public class CommentController
@@ -47,6 +49,7 @@ public class CommentController
 	{
 		final Comment comment = commentService.createComment(commentDTO.getComment(), pictureId);
 		final CommentResponseDTO commentResponse = convertCommentIntoDTO(comment);
+		
 		return commentResponse;
 	}
 
@@ -56,11 +59,11 @@ public class CommentController
 		commentService.deleteComment(commentId);
 	}
 
-	// Discuss what we should return
 	@PutMapping(value = "/comment/commentUpdate/{commentId}")
 	public CommentResponseDTO updateComment(@Valid @RequestBody final CommentDTO commentDTO,@PathVariable String commentId)
 	{
 		final Comment comment = commentService.editComment(commentId, commentDTO.getComment());
+		
 		return convertCommentIntoDTO(comment);
 	}
 
@@ -68,6 +71,7 @@ public class CommentController
 	public CommentResponseDTO getCommentById(@PathVariable final String commentId)
 	{
 		final Comment comment = commentService.findComment(commentId);
+		
 		return convertCommentIntoDTO(comment);
 	}
 
@@ -77,9 +81,11 @@ public class CommentController
 		final List<Comment> comments = commentService.getCommentsByPicture(pictureId);
 		List<CommentResponseDTO> commentsResponseDTO = new LinkedList<CommentResponseDTO>();
 
-		for (Comment comment : comments) {
+		for (Comment comment : comments)
+		{
 			commentsResponseDTO.add(convertCommentIntoDTO(comment));
 		}
+		
 		return commentsResponseDTO;
 	}
 
@@ -87,7 +93,7 @@ public class CommentController
 	{
 		final CommentResponseDTO commentResponseDTO = modelMapper.map(comment, CommentResponseDTO.class);
 		commentResponseDTO.setNbLikes(comment.getLikedBy().size());
-		// Creating picture DTO
+		
 		final Picture picture = comment.getPicture();
 		final PictureDTO pictureDTO = modelMapper.map(picture, PictureDTO.class);
 		pictureDTO.setAccount(picture.getAccount().getUsername());

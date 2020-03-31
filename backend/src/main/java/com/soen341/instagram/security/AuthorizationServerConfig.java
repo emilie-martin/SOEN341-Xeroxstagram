@@ -35,9 +35,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	public void configure(final ClientDetailsServiceConfigurer clients) throws Exception
 	{
 		clients.inMemory().withClient(CLIENT_ID).authorizedGrantTypes("client_credentials", "password", "refresh_token")
-				.authorities().scopes("read", "write", "trust").resourceIds("oauth2-resource")
-				.accessTokenValiditySeconds(TOKEN_VALIDITY_SECONDS) // Token time subject to change
-				.secret(passwordEncoder.encode(CLIENT_SECRET));
+			.authorities().scopes("read", "write", "trust").resourceIds("oauth2-resource")
+			.accessTokenValiditySeconds(TOKEN_VALIDITY_SECONDS)
+			.secret(passwordEncoder.encode(CLIENT_SECRET));
 	}
 
 	@Override
