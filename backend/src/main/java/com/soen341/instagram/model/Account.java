@@ -4,6 +4,7 @@ import com.soen341.instagram.exception.account.AlreadyFollowingException;
 import com.soen341.instagram.exception.account.SameAccountException;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.*;
 
@@ -16,7 +17,7 @@ public class Account
 	@NotNull
 	private String email;
 
-	@NotNull
+	@NotBlank(message = "Password cannot be blank")
 	private String password;
 
 	@NotNull
@@ -150,7 +151,8 @@ public class Account
 	public Set<Account> getFollowing()
 	{
 		// Never return a null object
-		if (following == null) {
+		if (following == null)
+		{
 			following = new HashSet<>();
 		}
 		return following;
@@ -159,7 +161,8 @@ public class Account
 	public Set<Account> getFollowers()
 	{
 		// Never return a null object
-		if (followers == null) {
+		if (followers == null)
+		{
 			followers = new HashSet<>();
 		}
 		return followers;
@@ -167,7 +170,8 @@ public class Account
 
 	public void follow(Account otherAccount)
 	{
-		if (this.equals(otherAccount)) {
+		if (this.equals(otherAccount))
+		{
 			throw new SameAccountException("You cannot follow yourself.");
 		}
 		else if (getFollowing().contains(otherAccount))

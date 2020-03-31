@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 // Project
 import com.soen341.instagram.dao.impl.AccountRepository;
+import com.soen341.instagram.exception.account.PasswordBlankException;
 import com.soen341.instagram.model.Account;
 import com.soen341.instagram.utils.AccountVerifier;
 import com.soen341.instagram.utils.UserAccessor;
@@ -23,6 +24,10 @@ public class AccountService
 
 	public void setPassword(final String newPassword)
 	{
+		if (newPassword.length() <= 0)
+		{
+			throw new PasswordBlankException();
+		}
 
 		final Account account = UserAccessor.getCurrentAccount(accountRepository);
 		String oldPassword = account.getPassword();
