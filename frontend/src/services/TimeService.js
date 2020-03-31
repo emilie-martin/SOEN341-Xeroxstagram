@@ -22,7 +22,7 @@ export default function timeElapsedSincePosted(date) {
         timePosted = (timePosted / (60 * 60 * 24)).toFixed(0);
         timeFormat = "days";
     }
-    else if (timePosted <31449600) {
+    else if (timePosted < 31449600) {
         //Display in weeks
         timePosted = (timePosted / (60 * 60 * 24 * 7)).toFixed(0);
         timeFormat = "w";

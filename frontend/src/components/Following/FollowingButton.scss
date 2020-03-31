@@ -1,21 +1,21 @@
 @import "../../styles/prelude.scss";
 
 .following-post, .following-user{
-    color: $secondary-color;
-    border: none;
-    text-transform: uppercase;
-    border-radius: 2px;
-    cursor: pointer;
+	color: $secondary-color;
+	border: none;
+	text-transform: uppercase;
+	border-radius: 2px;
+	cursor: pointer;
 }
 
 .following-post{
-    background-color: transparent;
-    padding: 5px 7px;
+	background-color: transparent;
+	padding: 5px 7px;
 }
 
 .following-user{
-    vertical-align: sub;
-    padding: 9px 20px;
-    margin-left: 20px;
-    background-color: $primary-color-light;
+	vertical-align: sub;
+	padding: 9px 20px;
+	margin-left: 20px;
+	background-color: $primary-color-light;
 }

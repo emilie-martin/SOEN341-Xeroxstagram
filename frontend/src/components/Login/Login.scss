@@ -1,20 +1,20 @@
 @import "../../styles/prelude.scss";
 
 .login {
-    margin: 40px auto;
-    max-width: 175px;
+	margin: 40px auto;
+	max-width: 175px;
 
-    form {
-        display: flex;
-        flex-flow: column nowrap;
-        justify-content: center;
-    }
-    
-    .login-field, .button {
-        margin: 10px 0;
-    }
+	form {
+		display: flex;
+		flex-flow: column nowrap;
+		justify-content: center;
+	}
+	
+	.login-field, .button {
+		margin: 10px 0;
+	}
 
-    .error {
-        text-align: center;
-    }
+	.error {
+		text-align: center;
+	}
 }

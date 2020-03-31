@@ -1,59 +1,59 @@
 @import "../../styles/prelude.scss";
 
 .register {
-    color: white;
-    font-size: $p-fontsize;
-    box-sizing: border-box;
+	color: white;
+	font-size: $p-fontsize;
+	box-sizing: border-box;
 
-    input {
-        margin-bottom: 5px;
+	input {
+		margin-bottom: 5px;
 
-        // MOBILE
-        @media #{$small-and-down} {
-            margin-bottom: 10px;
-        }
-    }
+		// MOBILE
+		@media #{$small-and-down} {
+			margin-bottom: 10px;
+		}
+	}
 
-    .external {
-        margin: 0 auto;
-        max-width: 400px;
-        padding: 20px;
-        border-radius: 25px;
-        border: 2px solid rgba(54, 52, 52, 0.707);
-        background-color: rgba(54, 52, 52, 0.707);
-    }
-    
-    .title {
-        text-align: center;
-    }
+	.external {
+		margin: 0 auto;
+		max-width: 400px;
+		padding: 20px;
+		border-radius: 25px;
+		border: 2px solid rgba(54, 52, 52, 0.707);
+		background-color: rgba(54, 52, 52, 0.707);
+	}
+	
+	.title {
+		text-align: center;
+	}
 
-    .registration-form {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        box-sizing: border-box;
-    }
-    
-    .user-names {
-        display: flex;
-        flex-flow: row wrap;
-        justify-content: space-around;
-        margin: 0px 0px 10px;
+	.registration-form {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		box-sizing: border-box;
+	}
+	
+	.user-names {
+		display: flex;
+		flex-flow: row wrap;
+		justify-content: space-around;
+		margin: 0px 0px 10px;
 
-        .user-names-left {
-            margin-right: 20px;
-        }
-        
-        // MOBILE
-        @media #{$small-and-down} {
-            .user-names-left, .user-names-right {
-                margin: 0 auto;
-            }
-        }
-    }
-    
-    .register-button .button {
-        margin: 0;
-        padding: 10px 20px;
-    }
+		.user-names-left {
+			margin-right: 20px;
+		}
+		
+		// MOBILE
+		@media #{$small-and-down} {
+			.user-names-left, .user-names-right {
+				margin: 0 auto;
+			}
+		}
+	}
+	
+	.register-button .button {
+		margin: 0;
+		padding: 10px 20px;
+	}
 }
