@@ -1,79 +1,93 @@
+@import "../../styles/prelude.scss";
+
 .profile-container {
-  margin: 20 20;
-  padding-bottom: 10px;
+	border-bottom: solid 1px white;
+	margin: 30px auto;
+	padding: 30px;
+	max-width: 1000px;
 
-  .profile-stats {
-    display: flex;
-    margin-top: 10px;
+	.user-details {
+		display: flex;
+		flex-flow: row wrap;
+		align-items: center;
 
-    div {
-      padding-right: 20px;
-      padding-left: 20px;
-      border-right: 1px solid white;
-    }
-  }
-  .profile-stats-post {
-    padding-left: 0 !important;
-  }
-  .profile-stats-followings {
-    border-right: none !important;
-  }
+		.names {
+			display: flex;
+			flex-flow: row nowrap;
+			align-items: center;
 
-  .username {
-    display: inline;
+			.display-name {
+				margin-right: 10px;
+				font-size: $h4-fontsize;
+			}
+	
+			.username {
+				font-size: $h6-fontsize;
+			}
+		}
+	}
 
-    h2 {
-      margin: 30px 0px;
-      font-size: 25px;
-      font-weight: normal;
-      display: inline;
-    }
-  }
+	.profile-stats {
+		display: flex;
+		margin-top: 10px;
 
-  .display-name {
-    display: inline;
+		:not(:first-child) {
+			padding-left: 20px;
+		}
 
-    h2 {
-      margin: 10px 0px;
-      font-size: 15px;
-      display: inline;
-    }
-  }
+		:not(:last-child) {
+			border-right: 1px solid white;
+		}
 
-  .profile-bio {
-    width: 950px;
-    word-wrap: break-word;
-    margin-top: 30px;
-  }
+		.posts, .followers, .following {
+			padding-right: 20px;
+			text-align: center;
+		}
+	}
 
-  .edit {
-    display: inline;
-    margin-left: 30px;
-  }
+	.profile-bio {
+		margin-top: 20px;
+		padding: 10px;
+		word-wrap: break-word;
+		border-top: 1px solid rgba(100, 100, 100, 0.5);
+	}
 
-  .edit-btn {
-    color: rgb(25, 136, 240);
-    background-color: rgb(40, 40, 40);
-    outline: none;
-    border: none;
-    padding-bottom: 10px;
-    padding-top: 10px;
-    text-transform: uppercase;
-    border-radius: 20px;
-    cursor: pointer;
-    display: inline-block;
-    text-align: right;
-  }
+	.edit-btn {
+		a {
+			display: flex;
+			color: $secondary-color;
+			background-color: $primary-color-light;
+			text-decoration: none;
+			padding: 5px 20px;
+			margin-left: 20px;
+		}
 
-  .edit-btn-text {
-    display: inline-flex;
-    margin-right: 5px;
-    font-size: 15px;
-  }
+		.edit-button-component {
+			color: $secondary-color;
+			background-color: transparent;
+			border: none;
+			border-radius: 2px;
+			text-transform: uppercase;
+			cursor: pointer;
+		}
+	}
 
-  .gear-icon {
-    text-align: center;
-    margin: 2px 10px;
-    margin-bottom: 5px;
-  }
+	// MOBILE
+	@media #{$small-and-down} {
+		padding: 0;
+		margin: 0;
+
+		.user-details {
+			justify-content: center;
+
+			.names {
+				width: 100%;
+				justify-content: center;
+			}
+		}
+
+		.profile-stats {
+			justify-content: center;
+		}
+	}
 }

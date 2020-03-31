@@ -8,162 +8,189 @@ import javax.validation.constraints.NotNull;
 import java.util.*;
 
 @Entity
-public class Account {
-    @Id
-    private String username;
+public class Account
+{
+	@Id
+	private String username;
 
-    @NotNull
-    private String email;
+	@NotNull
+	private String email;
 
-    @NotNull
-    private String password;
+	@NotNull
+	private String password;
 
-    @NotNull
-    private String firstName;
+	@NotNull
+	private String firstName;
 
-    @NotNull
-    private String lastName;
+	@NotNull
+	private String lastName;
 
-    @Temporal(TemporalType.DATE)
-    @NotNull
-    private Date dateOfBirth;
+	@Temporal(TemporalType.DATE)
+	@NotNull
+	private Date dateOfBirth;
 
-    @Temporal(TemporalType.DATE)
-    @NotNull
-    private Date created;
-    
-    @Column(columnDefinition="text")
-    private String biography;
-    
-    @NotNull
-    private String displayName;
+	@Temporal(TemporalType.DATE)
+	@NotNull
+	private Date created;
 
-    @ManyToMany(fetch = FetchType.LAZY)   
-    private Set<Account> following;
-    
-    @ManyToMany
-    private Set<Account> followers;
+	private String biography;
 
-    @OneToOne
-    private Picture profilePicture;
+	@NotNull
+	private String displayName;
 
-    public String getDisplayName()
-    {
-    	return displayName;
-    }
-    
-    public void setDisplayName(String displayName)
-    {
-    	this.displayName = displayName;
-    }
-    
-    public String getUsername() {
-        return username;
-    }
+	@ManyToMany(fetch = FetchType.LAZY)
+	private Set<Account> following;
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+	@ManyToMany
+	private Set<Account> followers;
 
-    public String getEmail() {
-        return email;
-    }
+	@OneToOne
+	private Picture profilePicture;
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public String getDisplayName()
+	{
+		return displayName;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public void setDisplayName(String displayName)
+	{
+		this.displayName = displayName;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public String getUsername()
+	{
+		return username;
+	}
 
-    public String getFirstName() {
-        return firstName;
-    }
+	public void setUsername(String username)
+	{
+		this.username = username;
+	}
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+	public String getEmail()
+	{
+		return email;
+	}
 
-    public String getLastName() {
-        return lastName;
-    }
+	public void setEmail(String email)
+	{
+		this.email = email;
+	}
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+	public String getPassword()
+	{
+		return password;
+	}
 
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
+	public void setPassword(String password)
+	{
+		this.password = password;
+	}
 
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
+	public String getFirstName()
+	{
+		return firstName;
+	}
 
-    public String getBiography() {
-        return biography;
-    }
+	public void setFirstName(String firstName)
+	{
+		this.firstName = firstName;
+	}
 
-    public void setBiography(String biography) {
-        this.biography = biography;
-    }
+	public String getLastName()
+	{
+		return lastName;
+	}
 
-    public Date getCreated() {
-        return created;
-    }
+	public void setLastName(String lastName)
+	{
+		this.lastName = lastName;
+	}
 
-    public void setCreated(Date created) {
-        this.created = created;
-    }
+	public Date getDateOfBirth()
+	{
+		return dateOfBirth;
+	}
 
-    public Picture getProfilePicture() {
-        return profilePicture;
-    }
+	public void setDateOfBirth(Date dateOfBirth)
+	{
+		this.dateOfBirth = dateOfBirth;
+	}
 
-    public void setProfilePicture(Picture profilePicture) {
-        this.profilePicture = profilePicture;
-    }
+	public String getBiography()
+	{
+		return biography;
+	}
 
-    public Set<Account> getFollowing() {
-        // Never return a null object
-        if (following == null) {
-            following = new HashSet<>();
-        }
-        return following;
-    }
-    
-    public Set<Account> getFollowers() {
-    	// Never return a null object
-    	if(followers == null) {
-    		followers = new HashSet<>();
-    	}
-    	return followers;
-    }
+	public void setBiography(String biography)
+	{
+		this.biography = biography;
+	}
 
-    public void follow(Account otherAccount) {
-        if (this.equals(otherAccount)) {
-            throw new SameAccountException("You cannot follow yourself.");
-        } else if (getFollowing().contains(otherAccount)) {
-            throw new AlreadyFollowingException("You are already following this user.");
-        }
-        getFollowing().add(otherAccount);
-    }
+	public Date getCreated()
+	{
+		return created;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Account account = (Account) o;
-        return username.equals(account.username);
-    }
+	public void setCreated(Date created)
+	{
+		this.created = created;
+	}
 
-    @Override
-    public int hashCode() {
-        return username.hashCode();
-    }
+	public Picture getProfilePicture()
+	{
+		return profilePicture;
+	}
+
+	public void setProfilePicture(Picture profilePicture)
+	{
+		this.profilePicture = profilePicture;
+	}
+
+	public Set<Account> getFollowing()
+	{
+		// Never return a null object
+		if (following == null) {
+			following = new HashSet<>();
+		}
+		return following;
+	}
+
+	public Set<Account> getFollowers()
+	{
+		// Never return a null object
+		if (followers == null) {
+			followers = new HashSet<>();
+		}
+		return followers;
+	}
+
+	public void follow(Account otherAccount)
+	{
+		if (this.equals(otherAccount)) {
+			throw new SameAccountException("You cannot follow yourself.");
+		}
+		else if (getFollowing().contains(otherAccount))
+		{
+			throw new AlreadyFollowingException("You are already following this user.");
+		}
+		getFollowing().add(otherAccount);
+	}
+
+	@Override
+	public boolean equals(Object o)
+	{
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Account account = (Account) o;
+		return username.equals(account.username);
+	}
+
+	@Override
+	public int hashCode()
+	{
+		return username.hashCode();
+	}
 }

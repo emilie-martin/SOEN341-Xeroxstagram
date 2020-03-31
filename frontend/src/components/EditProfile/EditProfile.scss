@@ -1,133 +1,155 @@
-.edit-profile {
-  margin: 100px auto auto;
-  width: 50%;
-  max-height: 500px;
+@import "../../styles/prelude.scss";
 
-  input,
-  textarea {
-    color: white;
-    width: 300px;
-    background-color: rgb(18, 18, 18);
-    border: solid 1px rgb(164, 154, 154);
-  }
+.edit-profile, .edit-profile-page {
+	display: flex;
+	flex-flow: row wrap;
+	align-items: center;
+	max-width: 800px;
+	margin: 0 auto;
 
-  textarea,
-  .btn {
-    outline: none;
-    resize: none;
-  }
+	.success {
+		padding: 5px 0px 0px 200px;
+		color:  #42db18;
+	}
 
-  textarea {
-    overflow-y: auto;
-    height: 50px;
-    vertical-align: top;
-    word-wrap: break-word;
-  }
+	.sidebar .nav {
+		text-align: right;
+		font-weight: bold;
+		
+		ul {
+			list-style: none;
 
-  h1 {
-    max-width: 300px;
-    padding-left: 200px;
-  }
+			:first-child { //equalize styles
+				padding-bottom: 30px;
+			}
+		
+			li {
+				position: relative;
+				padding-top: 30px;
+		
+				a {
+					color: rgba(#fff, 0.35);
+					line-height: 70px;
+					text-decoration: none;
+					transition: all ease 300ms;
+				}
+		
+				&.active a {
+					color: white;
+				}
+			
+				&:not(.active)::after {
+					opacity: 0.5;
+				}
+			
+				&:not(.active):hover a {
+					color: rgba(#fff, 0.75);
+				}
 
-  label {
-    vertical-align: middle;
-  }
+				// TABLET AND UP
+				@media #{$medium-and-up} {
+					&::after {
+						content: "";
+						position: absolute;
+						left: 0;
+						bottom: 0;
+						width: 100%;
+						height: 0.2em;
+						background-image: linear-gradient(to right, #114dad, #2eb8e6);
+					}
+				}
+			}
 
-  .edit-profile-form {
-    width: 1000px;
+			// MOBILE
+			@media #{$small-and-down} {
+				display: flex;
+				flex-flow: row wrap;
+				justify-content: center;
+				margin: 0px;
+				padding: 20px 0px;
 
-    label {
-      display: inline-block;
-      clear: left;
-      text-align: right;
-      margin: 0 50px;
-      width: 100px;
-    }
-  }
+				:first-child {
+					padding-bottom: 5px;
+				}
 
-  .edit-profile-button {
-    padding-left: 410px;
-    margin-top: 10px;
-    width: 100px;
-  }
+				li {
+					padding: 0;
 
-  .btn {
-    display: inline-block;
-    color: rgb(25, 136, 240);
-    background-color: rgb(40, 40, 40);
-    border-radius: 20px;
-    padding: 10px 0px 10px 0px;
-    text-align: center;
-    text-transform: uppercase;
-    cursor: pointer;
-    width: 100px;
-  }
+					a {
+						padding: 5px;
+						border-right: 1px solid silver;
+					}
 
-  .edit-profile-page {
-    width: 100%;
-    height: 50%;
-    margin-top: 0px;
-  }
-}
+					&.active {
+						width: 100%;
+						padding-left: 20px;
+						text-align: left;
+					}
+				}
 
-.success {
-  padding-left: 200px;
-  color:  #42db18;
-}
+				&::after {
+					content: "";
+					width: 100%;
+					height: 0.2em;
+					margin-top: 10px;
+					background-image: linear-gradient(to right, #114dad, #2eb8e6);
+				}
+			}
+		}
+	}
 
-.sidebar {
-  position: fixed;
-  width: 25%;
-  height: 100vh;
-  background: rgb(28, 27, 27);
-  padding-bottom: 10px;
-}
-.nav {
-  top: 100px;
-  position: relative;
-  text-align: right;
-  font-weight: bold;
-  margin: 0 15%;
-  transform: translateY(-50%);
+	.edit-profile {
+		padding: 30px 50px 20px;
 
-  ul {
-    list-style: none;
+		input, textarea {
+			min-width: 200px;
+			max-width: 300px;
+			color: white;
+			background-color: rgb(18, 18, 18);
+			border: solid 1px rgb(164, 154, 154);
+		}
 
-    li {
-      position: relative;
-      margin: 3.2em 0;
+		textarea {
+			min-height: 50px;
+			max-height: 200px;
+			vertical-align: top;
+			word-wrap: break-word;
+			overflow-y: auto;
+		}
 
-      a {
-        display: inline-block;
-        color: rgba(#fff, 0.35);
-        line-height: 5em;
-        text-decoration: none;
-        transition: all ease-out 300ms;
-        white-space: nowrap;
-      }
+		h1 {
+			text-align: center;
+		}
 
-      &.active a {
-        color: white;
-      }
+		.edit-profile-form {
+			padding-left: 100px;
+			max-width: 1000px;
 
-      &:not(.active)::after {
-        opacity: 0.2;
-      }
+			label {
+				display: inline-block;
+				text-align: left;
+				margin: 0 0 5px;
+				width: 100px;
+				clear: left;
+			}
+		}
 
-      &:not(.active):hover a {
-        color: rgba(#fff, 0.75);
-      }
+		.edit-profile-button {
+			margin: 20px auto 0px;
+			width: 100px;
 
-      &::after {
-        content: "";
-        position: absolute;
-        width: 100%;
-        height: 0.2em;
-        background: black;
-        left: 0;
-        bottom: 0;
-        background-image: linear-gradient(to right, #114dad, #2eb8e6);
-      }
-    }
-  }
+			.button {
+				border-radius: 20px;
+				padding: 10px 0px 10px 0px;
+				width: 100px;
+			}
+		}
+
+		// MOBILE
+		@media #{$small-and-down} {
+			.edit-profile-form {
+				padding-left: 0px;
+			}
+		}
+	}
 }

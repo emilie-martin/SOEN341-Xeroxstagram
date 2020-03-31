@@ -1,24 +1,50 @@
 @import "../../../styles/prelude.scss";
 
-.comment-div {
+.comment-component {
   font-size: 14px;
-  margin: 0 auto;
-  padding-left: 20px;
-
-  background: black;
+  padding: 10px 15px;
+  max-width: 300px;
   color: white;
   border-bottom: 1px solid #a9a9a9;
 
   a {
     color: white;
-    text-decoration: none;
-
-    font-size: $h6-fontsize;
     font-weight: bold;
+    font-size: $h6-fontsize;
+    text-decoration: none;
   }
-}
 
-.date-created {
-  color: grey;
-  font-size: 12px;
+  .comment-div {
+    display: flex;
+    justify-content: space-between;
+
+    .comment-content {
+      display: flex;
+      flex-flow: column nowrap;
+      word-break: break-word;
+      padding: 5px 0px;
+    }
+
+    .comment-edit {
+      display: flex;
+      flex-direction: column;
+      padding-top: 10px;
+    }
+  }
+
+  .like-div {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+
+    .date-created {
+      color: grey;
+    }
+  }
+
+    // MOBILE
+    @media #{$small-and-down} {
+      min-width: 100%;
+      box-sizing: border-box;
+     }
 }

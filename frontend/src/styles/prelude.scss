@@ -32,7 +32,32 @@ $small-and-down: "only screen and (max-width : #{$small-screen})";
     OTHER
 ===========*/
 $primary-color: #1c1b1b;
+$primary-color-light: rgb(40,40,40);
+$secondary-color: rgb(25, 136, 240);
 
 $border-color: 1px solid black;
 $link-color: cornflowerblue;
 $hover-transition: color 500ms;
+
+textarea,
+input[type="text"],
+input[type="value"],
+input[type="password"],
+input[type="email"],
+input[type="date"],
+input[type="submit"],
+input[type="file"] {
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 4px;
+}
+
+.button {
+    outline: none;
+    border: none;
+    padding: 7px 10px;
+    color: $secondary-color;
+    background-color: $primary-color-light;
+    border-radius: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+}

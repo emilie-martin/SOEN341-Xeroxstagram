@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Switch, Route, Link, withRouter, Redirect } fr
 import localStorageService from "./services/LocalStorageService";
 
 import About from "./pages/About";
+import EditProfile from "./components/EditProfile/EditProfile";
 import Login from "./components/Login/Login";
 import Post from "./components/Post/Post";
 import PostPicture from "./components/Post/PostPicture";
@@ -12,13 +13,13 @@ import Register from "./components/Register/Register"
 import User from "./components/User/User";
 
 import "./App.scss";
-import "./config"
-import EditProfile from "./components/EditProfile/EditProfile";
 
 export const App = () => {
+	
 	const [username, setUsername] = useState();
 	const [currentUser, setCurrentUser] = useState(undefined);
 	const [loading, setLoading] = useState(true);
+
 	useEffect(() => {
 		if (localStorageService.getAccessToken()) {
 			localStorageService.setBearerToken();
@@ -90,7 +91,6 @@ export const App = () => {
 		<div className="App">
 			<Router>
 				<div className="nav-bar">
-
 					<Link to="/" id="app-name">
 						<div className="icon">
 							<svg className="bi bi-camera" width="1.5em" height="1.5em" viewBox="0 0 20 20" fill="currentColor">
@@ -102,7 +102,7 @@ export const App = () => {
 						Instagram++
 					</Link>
 
-					<div className="nav-links">
+					<div className="search-bar">
 						<div className="icon">
 							<svg className="bi bi-search" width="1.2em" height="1.2em" viewBox="0 0 20 20" fill="currentColor">
 								<path fillRule="evenodd" d="M12.442 12.442a1 1 0 011.415 0l3.85 3.85a1 1 0 01-1.414 1.415l-3.85-3.85a1 1 0 010-1.415z" clipRule="evenodd" />
@@ -110,10 +110,14 @@ export const App = () => {
 							</svg>
 						</div>
 						<input type="text" value={username} placeholder="Search for user..." onChange={(e) => handleChangeUser(e)} />
-						<Link to={`/account/${username}`} style={{ border: "1px solid silver", backgroundColor: "black", marginLeft: "5px" }}>
+						<Link to={`/account/${username}`}
+							style={{ border: "1px solid silver", backgroundColor: "black", marginLeft: "5px" }}
+						>
 							Search
 						</Link>
+					</div>
 
+					<div className="nav-links">
 						<Link to="/">
 							<div className="icon">
 								<svg className="bi bi-house" width="1.2em" height="1.2em" viewBox="0 0 20 20" fill="currentColor">
@@ -131,18 +135,22 @@ export const App = () => {
 							</div>
 							About
 						</Link>
-
 						{currentUser
 							? <div className="registered-user-options">
-								<p id="login" style={{ margin: "3px 0px 0px" }}>
-									Logged in as: <Link to={`/account/${currentUser}`}>{currentUser}</Link>
-								</p>
-								<Link to="/logout">
-									<div className="icon">
-										<svg className="bi bi-lock" width="1.2em" height="1.2em" viewBox="0 0 20 20" fill="currentColor">
-											<path fillRule="evenodd" d="M13.655 9H6.333c-.264 0-.398.068-.471.121a.73.73 0 00-.224.296 1.626 1.626 0 00-.138.59V15c0 .342.076.531.14.635.064.106.151.18.256.237a1.122 1.122 0 00.436.127l.013.001h7.322c.264 0 .398-.068.471-.121a.73.73 0 00.224-.296 1.627 1.627 0 00.138-.59V10c0-.342-.076-.531-.14-.635a.658.658 0 00-.255-.237 1.123 1.123 0 00-.45-.128zm.012-1H6.333C4.5 8 4.5 10 4.5 10v5c0 2 1.833 2 1.833 2h7.334c1.833 0 1.833-2 1.833-2v-5c0-2-1.833-2-1.833-2zM6.5 5a3.5 3.5 0 117 0v3h-1V5a2.5 2.5 0 00-5 0v3h-1V5z" clipRule="evenodd" />
-										</svg>
+									<div className="icon" style={{margin: "3px 0px 0px"}}>
+										<Link to={`/account/${currentUser}`}>
+											<svg className="bi bi-person" width="1.2em" height="1.2em" viewBox="0 0 20 20" fill="currentColor">
+												<path fillRule="evenodd" d="M15 16s1 0 1-1-1-4-6-4-6 3-6 4 1 1 1 1h10zm-9.995-.944v-.002zM5.022 15h9.956a.274.274 0 00.014-.002l.008-.002c-.001-.246-.154-.986-.832-1.664C13.516 12.68 12.289 12 10 12c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664a1.05 1.05 0 00.022.004zm9.974.056v-.002zM10 9a2 2 0 100-4 2 2 0 000 4zm3-2a3 3 0 11-6 0 3 3 0 016 0z" clipRule="evenodd"/>
+											</svg>
+											{currentUser}
+										</Link>
 									</div>
+									<Link to="/logout">
+										<div className="icon">
+											<svg className="bi bi-lock" width="1.2em" height="1.2em" viewBox="0 0 20 20" fill="currentColor">
+												<path fillRule="evenodd" d="M13.655 9H6.333c-.264 0-.398.068-.471.121a.73.73 0 00-.224.296 1.626 1.626 0 00-.138.59V15c0 .342.076.531.14.635.064.106.151.18.256.237a1.122 1.122 0 00.436.127l.013.001h7.322c.264 0 .398-.068.471-.121a.73.73 0 00.224-.296 1.627 1.627 0 00.138-.59V10c0-.342-.076-.531-.14-.635a.658.658 0 00-.255-.237 1.123 1.123 0 00-.45-.128zm.012-1H6.333C4.5 8 4.5 10 4.5 10v5c0 2 1.833 2 1.833 2h7.334c1.833 0 1.833-2 1.833-2v-5c0-2-1.833-2-1.833-2zM6.5 5a3.5 3.5 0 117 0v3h-1V5a2.5 2.5 0 00-5 0v3h-1V5z" clipRule="evenodd"/>
+											</svg>
+										</div>
 										Logout
 									</Link>
 								<Link to="/post">
@@ -163,13 +171,14 @@ export const App = () => {
 										</svg>
 									</div>
 										Login
-									</Link><br />
-								<Link to="/register">
-									<div className="icon">
-										<svg className="bi bi-person" width="1.2em" height="1.2em" viewBox="0 0 20 20" fill="currentColor">
-											<path fillRule="evenodd" d="M15 16s1 0 1-1-1-4-6-4-6 3-6 4 1 1 1 1h10zm-9.995-.944v-.002zM5.022 15h9.956a.274.274 0 00.014-.002l.008-.002c-.001-.246-.154-.986-.832-1.664C13.516 12.68 12.289 12 10 12c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664a1.05 1.05 0 00.022.004zm9.974.056v-.002zM10 9a2 2 0 100-4 2 2 0 000 4zm3-2a3 3 0 11-6 0 3 3 0 016 0z" clipRule="evenodd" />
-										</svg>
-									</div>
+									</Link><br/>
+									<Link to="/register">
+										<div className="icon">
+											<svg className="bi bi-pencil" width="1.2em" height="1.2em" viewBox="0 0 20 20" fill="currentColor">
+												<path fillRule="evenodd" d="M13.293 3.293a1 1 0 011.414 0l2 2a1 1 0 010 1.414l-9 9a1 1 0 01-.39.242l-3 1a1 1 0 01-1.266-1.265l1-3a1 1 0 01.242-.391l9-9zM14 4l2 2-9 9-3 1 1-3 9-9z" clipRule="evenodd"/>
+												<path fillRule="evenodd" d="M14.146 8.354l-2.5-2.5.708-.708 2.5 2.5-.708.708zM5 12v.5a.5.5 0 00.5.5H6v.5a.5.5 0 00.5.5H7v.5a.5.5 0 00.5.5H8v-1.5a.5.5 0 00-.5-.5H7v-.5a.5.5 0 00-.5-.5H5z" clipRule="evenodd"/>
+											</svg>
+										</div>
 										Register
 									</Link><br />
 							</div>
@@ -183,10 +192,17 @@ export const App = () => {
 					/>
 
 					<Route exact path="/register"
-						render={(props) => currentUser ? <Redirect to='/' /> : <Register {...props} onSuccess={(r) => login(r)} />}
+						render={(props) => currentUser
+							? <Redirect to='/' />
+							: <Register {...props} onSuccess={(r) => login(r)} />
+						}
 					/>
 					<Route exact path="/login"
-						render={(props) => currentUser ? <Redirect to='/' /> : <Login {...props} onSuccess={(r) => login(r)} />}
+						render={
+							(props) => currentUser
+							? <Redirect to='/' />
+							: <Login {...props} onSuccess={(r) => login(r)} />
+						}
 					/>
 					<Route exact path="/logout"
 						render={() => {
@@ -201,8 +217,7 @@ export const App = () => {
 					<Route exact path="/accounts/edit"
 						render={() => {
 							return loading ? 'loading' : (currentUser ? <EditProfile></EditProfile> : <Redirect to='/' />)
-						}
-						}
+						}}
 					/>
 				</Switch>
 			</Router>

@@ -13,6 +13,7 @@ public class CommentResponseDTO
 	private PictureDTO pictureDTO;
 	private int nbLikes;
 	private boolean editable;
+	private int likeCount;
 
 	public int getNbLikes()
 	{
@@ -82,6 +83,16 @@ public class CommentResponseDTO
 	public void setEditable(boolean editable)
 	{
 		this.editable = editable;
+	}
+
+	public int getLikeCount()
+	{
+		return likeCount;
+	}
+
+	public void setLikeCount(int likeCount)
+	{
+		this.likeCount = likeCount;
 	}
 
 }
