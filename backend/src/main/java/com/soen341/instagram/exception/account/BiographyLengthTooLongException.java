@@ -4,9 +4,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-public class AlreadyFollowingException extends RuntimeException
+public class BiographyLengthTooLongException extends RuntimeException
 {
-	public AlreadyFollowingException(String msg)
+	public BiographyLengthTooLongException()
+	{
+		super("Biography length is too long");
+	}
+	
+	public BiographyLengthTooLongException(String msg)
 	{
 		super(msg);
 	}

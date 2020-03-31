@@ -3,6 +3,7 @@
 .post-comment {
 	display: flex;
 	flex-flow: row nowrap;
+	justify-content: space-between;
 	align-items: center;
 	background-color: $primary-color-light;
 
@@ -10,7 +11,6 @@
 		resize: none;
 		border: none;
 		font-size: 14px;
-		min-width: 235px;
 		color: white;
 		background-color: $primary-color-light;
 		word-wrap: break-word;

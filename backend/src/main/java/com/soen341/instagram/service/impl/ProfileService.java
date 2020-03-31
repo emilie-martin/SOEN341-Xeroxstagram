@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 // Project
 import com.soen341.instagram.dao.impl.AccountRepository;
 import com.soen341.instagram.dao.impl.PictureRepository;
+import com.soen341.instagram.exception.account.BiographyLengthTooLongException;
 import com.soen341.instagram.model.Account;
 import com.soen341.instagram.utils.AccountVerifier;
 import com.soen341.instagram.utils.UserAccessor;
@@ -53,6 +54,10 @@ public class ProfileService
 	public void setBiography(final String biography)
 	{
 		final Account account = getCurrentAccount();
+		if (biography.length() > 150)
+		{
+			throw new BiographyLengthTooLongException("Biography length cannot exceed 150 characters");
+		}
 		account.setBiography(biography);
 		accountRepository.save(account);
 	}
@@ -68,14 +73,12 @@ public class ProfileService
 	{
 		final Account account = getCurrentAccount();
 
-		if (firstName != null)
-		{
+		if (firstName != null) {
 			AccountVerifier.checkNameFormat(firstName);
 			account.setFirstName(firstName);
 		}
 
-		if (lastName != null)
-		{
+		if (lastName != null) {
 			AccountVerifier.checkNameFormat(lastName);
 			account.setLastName(lastName);
 		}
