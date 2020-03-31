@@ -169,7 +169,9 @@ public class Account
 	{
 		if (this.equals(otherAccount)) {
 			throw new SameAccountException("You cannot follow yourself.");
-		} else if (getFollowing().contains(otherAccount)) {
+		}
+		else if (getFollowing().contains(otherAccount))
+		{
 			throw new AlreadyFollowingException("You are already following this user.");
 		}
 		getFollowing().add(otherAccount);
