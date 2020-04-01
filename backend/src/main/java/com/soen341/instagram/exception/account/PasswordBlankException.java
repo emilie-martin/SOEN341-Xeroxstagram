@@ -4,10 +4,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-public class AlreadyFollowingException extends RuntimeException
+public class PasswordBlankException extends RuntimeException
 {
-	public AlreadyFollowingException(String msg)
+	public PasswordBlankException()
 	{
-		super(msg);
+		super("Password cannot be blank");
 	}
 }

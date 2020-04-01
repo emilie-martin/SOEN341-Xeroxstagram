@@ -22,34 +22,35 @@ import javax.validation.Valid;
 public class LoginController
 {
 
-    @Autowired
-    private AccountRepository accountRepository;
+	@Autowired
+	private AccountRepository accountRepository;
 
-    @Autowired
-    private LoginService loginService;
+	@Autowired
+	private LoginService loginService;
 
-    @Autowired
-    private ModelMapper modelMapper;
+	@Autowired
+	private ModelMapper modelMapper;
 
-    @GetMapping(value = "account")
-    public AccountDTO getCurrentUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!(authentication.getPrincipal() instanceof UserDetails))
-            return null;
-        String username = ((UserDetails)authentication.getPrincipal()).getUsername();
-        Account user = accountRepository.findByUsername(username);
-        return modelMapper.map(user, AccountDTO.class);
-    }
+	@GetMapping(value = "account")
+	public AccountDTO getCurrentUser()
+	{
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (!(authentication.getPrincipal() instanceof UserDetails))
+			return null;
+		String username = ((UserDetails) authentication.getPrincipal()).getUsername();
+		Account user = accountRepository.findByUsername(username);
+		return modelMapper.map(user, AccountDTO.class);
+	}
 
-    @PostMapping(value = "account/login")
-    public ResponseEntity<String> login(@RequestBody @Valid LoginRequestDTO loginRequestDTO)
-    {
-        return loginService.login(loginRequestDTO.getUsername(), loginRequestDTO.getPassword());
-    }
+	@PostMapping(value = "account/login")
+	public ResponseEntity<String> login(@RequestBody @Valid LoginRequestDTO loginRequestDTO)
+	{
+		return loginService.login(loginRequestDTO.getUsername(), loginRequestDTO.getPassword());
+	}
 
-    @PostMapping(value = "account/refresh")
-    public ResponseEntity<String> refreshToken(@RequestBody @Valid RefreshLoginRequestDTO refreshLoginRequestDTO)
-    {
-        return loginService.refreshToken(refreshLoginRequestDTO.getToken());
-    }
+	@PostMapping(value = "account/refresh")
+	public ResponseEntity<String> refreshToken(@RequestBody @Valid RefreshLoginRequestDTO refreshLoginRequestDTO)
+	{
+		return loginService.refreshToken(refreshLoginRequestDTO.getToken());
+	}
 }

@@ -5,10 +5,7 @@ export const getCommentByPicture = (pictureId) => {
     return Axios.get(global.config.BACKEND_URL + `/comment/commentByPicture/${pictureId}`).then(response => {
         return response.data;
     }).catch((error) => {
-        //handle error later
-        //error possible is that picture is non existent
-        //return Promise.reject(error) this makes the return Promise a reject
-        console.log(error);
+        alert(error.response.data.message);
     });
 };
 
@@ -22,7 +19,7 @@ export const deleteComment = (commentId) => {
     return Axios.delete(global.config.BACKEND_URL + `/comment/commentRemoval/${commentId}`).then(response => {
         return response.status;
     }).catch((error) => {
-        console.log(error.response);
+        alert(error.response.data.message);
         return error;
     });
 }
@@ -31,7 +28,7 @@ export const editComment = (commentId, comment) => {
     return Axios.put(global.config.BACKEND_URL + `/comment/commentUpdate/${commentId}`, { comment }).then(response => {
         return response.data;
     }).catch(error => {
-        console.log(error.response);
+        alert(error.response.data.message);
     });
 }
 

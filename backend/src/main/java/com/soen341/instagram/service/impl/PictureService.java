@@ -10,6 +10,16 @@ import com.soen341.instagram.model.Account;
 import com.soen341.instagram.model.Picture;
 import com.soen341.instagram.utils.UserAccessor;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.imageio.ImageIO;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -23,22 +33,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import javax.imageio.ImageIO;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
-
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 @Service("pictureService")
-public class PictureService {
+public class PictureService
+{
+	private final static int MAX_RETRIES = 1000;
 	@Autowired
 	private AccountRepository accountRepository;
-
-	private final static int MAX_RETRIES = 1000;
-
 	@Autowired
 	private PictureRepository pictureRepository;
 	@Autowired
@@ -46,7 +47,8 @@ public class PictureService {
 	@Autowired
 	private EntityManager session;
 
-	public Picture uploadPicture(String caption, MultipartFile picture, Account user) {
+	public Picture uploadPicture(String caption, MultipartFile picture, Account user)
+	{
 		Picture newPicture = new Picture();
 		newPicture.setAccount(user);
 		newPicture.setCaption(caption);
@@ -75,12 +77,14 @@ public class PictureService {
 		return newPicture;
 	}
 
-	public PictureDTO getPictureDTOFromId(String id) {
+	public PictureDTO getPictureDTOFromId(String id)
+	{
 		Picture pic = getPictureFromId(id);
 		return toPictureDTO(pic);
 	}
 
-	public byte[] loadPicture(String id) {
+	public byte[] loadPicture(String id)
+	{
 		Picture pic = getPictureFromId(id);
 		Path picPath = Paths.get(pic.getFilePath());
 		if (!Files.exists(picPath)) {
@@ -94,13 +98,16 @@ public class PictureService {
 		}
 	}
 
-	public List<Long> getAccountPictures(Account account) {
+	public List<Long> getAccountPictures(Account account)
+	{
 		return pictureRepository.findByAccount(account).stream().map(pic -> pic.getId()).collect(Collectors.toList());
 	}
 
-	public PictureDTO toPictureDTO(Picture pic) {
+	public PictureDTO toPictureDTO(Picture pic)
+	{
 		PictureDTO picDTO = modelMapper.map(pic, PictureDTO.class);
 		picDTO.setAccount(pic.getAccount().getUsername());
+		picDTO.setLikeCount(pic.getLikeCount());
 		return picDTO;
 	}
 
@@ -116,7 +123,8 @@ public class PictureService {
 		return query.getResultList();
 	}
 
-	private Picture getPictureFromId(String id) {
+	private Picture getPictureFromId(String id)
+	{
 		long pictureId;
 		try {
 			pictureId = Long.valueOf(id);
@@ -130,7 +138,8 @@ public class PictureService {
 		return optionalPic.get();
 	}
 
-	private File createNewFileWithUniqueName(String directory) throws IOException {
+	private File createNewFileWithUniqueName(String directory) throws IOException
+	{
 		File pictureFile;
 		int retries = 0;
 		while (true) {
@@ -149,7 +158,8 @@ public class PictureService {
 		}
 	}
 
-	private BufferedImage compressImage(BufferedImage image) {
+	private BufferedImage compressImage(BufferedImage image)
+	{
 		BufferedImage compressedImage = new BufferedImage(image.getWidth(), image.getHeight(),
 				BufferedImage.TYPE_INT_RGB);
 		// change invisible pixels to white pixels (png to img)
@@ -157,19 +167,22 @@ public class PictureService {
 		return compressedImage;
 	}
 
-	// like service
-	public int likePicture(final String pictureId) {
+	public int likePicture(final String pictureId)
+	{
 		final Picture picture = getPictureFromId(pictureId);
 		final Set<Account> likedBy = picture.getLikedBy();
-		final boolean liked = likedBy.add(UserAccessor.getCurrentAccount(accountRepository));
-		if (!liked) {
-			throw new MultipleLikeException("You can only like this picture once.");
+		if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
+			final boolean liked = likedBy.add(UserAccessor.getCurrentAccount(accountRepository));
+			if (!liked) {
+				throw new MultipleLikeException("You can only like this picture once.");
+			}
+			pictureRepository.save(picture);
 		}
-		pictureRepository.save(picture);
 		return picture.getLikeCount();
 	}
 
-	public int unlikePicture(final String pictureId) {
+	public int unlikePicture(final String pictureId)
+	{
 		final Picture picture = getPictureFromId(pictureId);
 		final Set<Account> likedBy = picture.getLikedBy();
 		final boolean unliked = likedBy.remove(UserAccessor.getCurrentAccount(accountRepository));
@@ -179,4 +192,16 @@ public class PictureService {
 		pictureRepository.save(picture);
 		return picture.getLikeCount();
 	}
+
+	public boolean getLikeStatus(String pictureId)
+	{
+		if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
+			final Picture picture = getPictureFromId(pictureId);
+			final Set<Account> likedBy = picture.getLikedBy();
+			return likedBy.contains(UserAccessor.getCurrentAccount(accountRepository));
+		} else {
+			return false;
+		}
+	}
+
 }
