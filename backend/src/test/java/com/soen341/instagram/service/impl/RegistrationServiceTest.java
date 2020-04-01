@@ -1,4 +1,4 @@
-package com.soen341.instagram.service;
+package com.soen341.instagram.service.impl;
 
 import java.util.Date;
 

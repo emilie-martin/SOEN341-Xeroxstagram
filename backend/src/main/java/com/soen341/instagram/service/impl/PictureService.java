@@ -146,7 +146,7 @@ public class PictureService
 	{
 		BufferedImage compressedImage = new BufferedImage(image.getWidth(), image.getHeight(),
 				BufferedImage.TYPE_INT_RGB);
-		// change invisible pixels to white pixels (png to img)
+		// change invisible pixels to white pixels (png to jpg)
 		compressedImage.createGraphics().drawImage(image, 0, 0, Color.WHITE, null);
 		return compressedImage;
 	}
