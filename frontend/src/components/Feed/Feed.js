@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react';
 
 import Post from "../Post/Post";
 
+import "./Feed.scss";
+
 export default function Feed(props) {
     const [posts, setPosts] = useState([]);
     const [hasMorePosts, setHasMorePosts] = useState(true);
@@ -46,26 +48,38 @@ export default function Feed(props) {
     return (
         <div>
             {
-                props.currentUser &&
-                <InfiniteScroll
-                    loadMore={loadMorePosts}
-                    hasMore={hasMorePosts}
-                    initialLoad={false}
-                    threshold={0}
-                    loader={<div>Loading...</div>}>
-                    <div>
-                        {
-                            posts.map((id) =>
-                                <div className="single-post" key={id}>
-                                    <Post id={id}/>
-                                    <br/>
-                                </div>
-                            )
-                        }
-                    </div>
-                </InfiniteScroll>
-            }
-            {errorMsg && <div className="error">{errorMsg}</div>}
+                (!posts.length && !hasMorePosts) ?
+                    <div className="feed-text">
+                        <br/>
+                        <br/>
+                        <img src={require("./../../images/sad_face.png")} alt={"Sad face"}/>
+                        <br/>
+                        <br/>
+                        <div>Oops! Looks like nothing's here...</div>
+                        <br/>
+                        <div>Start following people to see their most recent posts!</div>
+                    </div> :
+                    props.currentUser &&
+                    <InfiniteScroll
+                        loadMore={loadMorePosts}
+                        hasMore={hasMorePosts}
+                        initialLoad={false}
+                        threshold={0}
+                        loader={<div className="feed-text" key={0}>Loading...</div>}
+                    >
+                        <div>
+                            {
+                                posts.map((id) =>
+                                    <div className="single-post" key={id}>
+                                        <Post id={id}/>
+                                        <br/>
+                                    </div>
+                                )
+                            }
+                        </div>
+                    </InfiniteScroll>
+                }
+                {errorMsg && <div className="error">{errorMsg}</div>}
         </div>
     );
 }

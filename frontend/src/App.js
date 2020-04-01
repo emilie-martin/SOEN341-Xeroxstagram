@@ -12,6 +12,7 @@ import Post from "./components/Post/Post";
 import PostPicture from "./components/Post/PostPicture";
 import Register from "./components/Register/Register"
 import User from "./components/User/User";
+import Welcome from "./components/Welcome/Welcome"
 
 import "./App.scss";
 
@@ -189,7 +190,10 @@ export const App = () => {
 				<hr />
 				<Switch>
 					<Route exact path="/"
-						   render={ () => <Feed currentUser={currentUser}/>}
+						   render={ () => currentUser
+							   ? <Feed currentUser={currentUser}/>
+							   : <Welcome/>
+						   }
 					/>
 
 					<Route exact path="/about"
