@@ -36,7 +36,7 @@ export default function User(props) {
 
     return (
         <div className="user-component">
-            <Profile username={props.username} />
+            <Profile currentUser={props.currentUser} username={props.username} />
             <div className="all-posts">
                 {
                     Pictures.map((id) => (
