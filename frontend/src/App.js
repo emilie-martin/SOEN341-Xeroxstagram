@@ -212,8 +212,8 @@ export const App = () => {
 					<Route exact path="/post"
 						render={(props) => { return currentUser ? <PostPicture {...props} /> : <Redirect to='/' />; }}
 					/>
-					<Route path="/post/:id" render={({ match }) => (<Post id={match.params.id} />)} />
-					<Route path="/account/:username" render={({ match }) => (<User username={match.params.username} />)} />
+					<Route path="/post/:id" render={({ match}) => (<Post currentUser={currentUser} id={match.params.id} />)} />
+					<Route path="/account/:username" render={({ match }) => (<User currentUser={currentUser} username={match.params.username} />)} />
 					<Route exact path="/accounts/edit"
 						render={() => {
 							return loading ? 'loading' : (currentUser ? <EditProfile></EditProfile> : <Redirect to='/' />)
