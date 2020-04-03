@@ -1,12 +1,16 @@
 package com.soen341.instagram.service.impl;
 
+import com.soen341.instagram.dao.impl.AccountRepository;
 import com.soen341.instagram.dao.impl.PictureRepository;
 import com.soen341.instagram.dto.picture.PictureDTO;
+import com.soen341.instagram.exception.like.MultipleLikeException;
+import com.soen341.instagram.exception.like.NoLikeException;
 import com.soen341.instagram.exception.picture.InvalidIdException;
 import com.soen341.instagram.exception.picture.NotAPictureException;
 import com.soen341.instagram.exception.picture.PictureNotFoundException;
 import com.soen341.instagram.model.Account;
 import com.soen341.instagram.model.Picture;
+import com.soen341.instagram.utils.UserAccessor;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -26,11 +30,12 @@ import java.io.FileInputStream;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(PictureService.class)
+@PrepareForTest({PictureService.class, UserAccessor.class})
 public class PictureServiceTest
 {
     @InjectMocks
@@ -38,6 +43,9 @@ public class PictureServiceTest
 
     @Mock
     private PictureRepository pictureRepository;
+
+    @Mock
+    private AccountRepository accountRepository;
 
     @Mock
     private ModelMapper modelMapper;
@@ -55,6 +63,9 @@ public class PictureServiceTest
     public void setup()
     {
         Mockito.when(account.getUsername()).thenReturn("test account");
+
+        PowerMockito.mockStatic(UserAccessor.class);
+        PowerMockito.when(UserAccessor.getCurrentAccount(accountRepository)).thenReturn(account);
 
         pic = new Picture();
         pic.setId(1);
@@ -133,6 +144,52 @@ public class PictureServiceTest
         } catch (final Exception e) {
         }
         return mockMultipartFile;
+    }
+
+    @Test
+    public void likePictureSuccessfully()
+    {
+        assertEquals(pictureService.likePicture(String.valueOf(pic.getId())), 1);
+    }
+
+    @Test(expected = MultipleLikeException.class)
+    public void likePictureMultipleTimes_ExpectMultipleLikeException()
+    {
+        pictureService.likePicture(String.valueOf(pic.getId()));
+        pictureService.likePicture(String.valueOf(pic.getId()));
+    }
+
+    @Test
+    public void unlikePictureSuccessfully()
+    {
+        //like the picture
+        final Set<Account> likedBy = pic.getLikedBy();
+        likedBy.add(account);
+
+        assertEquals(pic.getLikedBy().size(), 1);
+        assertEquals(pictureService.unlikePicture(String.valueOf(pic.getId())), 0);
+    }
+
+    @Test(expected = NoLikeException.class)
+    public void unlikeNotLikedPicture_ExpectNoLikeException()
+    {
+        assertEquals(pictureService.unlikePicture(String.valueOf(pic.getId())), 0);
+    }
+
+    @Test
+    public void getLikeStatus_ExpectTrue()
+    {
+        //like the picture
+        final Set<Account> likedBy = pic.getLikedBy();
+        likedBy.add(account);
+
+        assertEquals(pictureService.getLikeStatus(String.valueOf(pic.getId())), true);
+    }
+
+    @Test
+    public void getLikeStatus_ExpectFalse()
+    {
+        assertEquals(pictureService.getLikeStatus(String.valueOf(pic.getId())), false);
     }
 
     private void mockFileCreation()

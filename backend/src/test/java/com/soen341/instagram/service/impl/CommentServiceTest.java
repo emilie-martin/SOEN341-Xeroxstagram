@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Date;
 import java.util.Optional;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,10 +21,11 @@ import com.soen341.instagram.dao.impl.CommentRepository;
 import com.soen341.instagram.dao.impl.PictureRepository;
 import com.soen341.instagram.exception.comment.CommentLengthTooLongException;
 import com.soen341.instagram.exception.picture.PictureNotFoundException;
+import com.soen341.instagram.exception.like.MultipleLikeException;
+import com.soen341.instagram.exception.like.NoLikeException;
 import com.soen341.instagram.model.Account;
 import com.soen341.instagram.model.Comment;
 import com.soen341.instagram.model.Picture;
-import com.soen341.instagram.service.impl.CommentService;
 import com.soen341.instagram.utils.UserAccessor;
 
 @RunWith(PowerMockRunner.class)
@@ -108,4 +110,63 @@ public class CommentServiceTest
 		final Comment comment = this.commentService.editComment(String.valueOf(COMMENT_ID), newComment);
 		assertEquals(comment.getComment(), newComment);
 	}
+
+	@Test
+	public void likeCommentSuccessfully()
+	{
+		Mockito.when(commentRepository.findById(COMMENT_ID)).thenReturn(Optional.of(comment));
+
+		assertEquals(commentService.likeComment(String.valueOf(COMMENT_ID)), 1);
+	}
+
+	@Test(expected = MultipleLikeException.class)
+	public void likeCommentMultipleTimes_ExpectMultipleLikeException()
+	{
+		Mockito.when(commentRepository.findById(COMMENT_ID)).thenReturn(Optional.of(comment));
+
+		commentService.likeComment(String.valueOf(COMMENT_ID));
+		commentService.likeComment(String.valueOf(COMMENT_ID));
+	}
+
+	@Test
+	public void unlikeCommentSuccessfully()
+	{
+		//like the comment
+		final Set<Account> likedBy = comment.getLikedBy();
+		likedBy.add(account);
+
+		Mockito.when(commentRepository.findById(COMMENT_ID)).thenReturn(Optional.of(comment));
+
+		assertEquals(comment.getLikedBy().size(), 1);
+		assertEquals(commentService.unlikeComment(String.valueOf(COMMENT_ID)), 0);
+	}
+
+	@Test(expected = NoLikeException.class)
+	public void unlikeNotLikedComment_ExpectNoLikeException()
+	{
+		Mockito.when(commentRepository.findById(COMMENT_ID)).thenReturn(Optional.of(comment));
+
+		assertEquals(commentService.unlikeComment(String.valueOf(COMMENT_ID)), 0);
+	}
+
+	@Test
+	public void getLikeStatus_ExpectTrue()
+	{
+		//like the comment
+		final Set<Account> likedBy = comment.getLikedBy();
+		likedBy.add(account);
+
+		Mockito.when(commentRepository.findById(COMMENT_ID)).thenReturn(Optional.of(comment));
+
+		assertEquals(commentService.getLikeStatus(String.valueOf(COMMENT_ID)), true);
+	}
+
+	@Test
+	public void getLikeStatus_ExpectFalse()
+	{
+		Mockito.when(commentRepository.findById(COMMENT_ID)).thenReturn(Optional.of(comment));
+
+		assertEquals(commentService.getLikeStatus(String.valueOf(COMMENT_ID)), false);
+	}
+
 }
