@@ -78,6 +78,10 @@ This application is intended to implement the same core features of Instagram, s
 ![Follow/Unfollow](https://i.ibb.co/Yfp3zD6/following.jpg)
 > Once logged in, a user can follow another user. To do so, they must search a pre-existing user-name in the search bar and hit the `Search` button. If the username does not exist an error will pop up stating so, otherwise the specified user account will be shown. If the account isn't already being followed by the logged in user, the user will be able to follow the specified user. Otherwise, they will be able to unfollow them. The follower count will be adjusted accordingly. It is to note that is a user attempts to follow themself, an error will pop up.
 
+##### Test
+![Tests](https://cdn.discordapp.com/attachments/668551774344577025/695709736586313768/unknown.png)
+> All written tests succesfully pass when the code is run
+
 - - -
 
 ## Details on technology used
