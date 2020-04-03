@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -27,9 +29,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Service("pictureService")
@@ -42,6 +44,8 @@ public class PictureService
 	private PictureRepository pictureRepository;
 	@Autowired
 	private ModelMapper modelMapper;
+	@Autowired
+	private EntityManager session;
 
 	public Picture uploadPicture(String caption, MultipartFile picture, Account user)
 	{
@@ -105,6 +109,18 @@ public class PictureService
 		picDTO.setAccount(pic.getAccount().getUsername());
 		picDTO.setLikeCount(pic.getLikeCount());
 		return picDTO;
+	}
+
+	public List<Long> getFeed(int count, long after, Account currentUser) {
+		final String feedQuery = "Select p.id from Picture p " +
+				"where p.account IN (:following) " +
+				(after != 0 ? "AND p.id < " + after : "") +
+				"ORDER BY p.created DESC";
+
+		Query query = session.createQuery(feedQuery)
+				.setParameter("following", currentUser.getFollowing());
+		query.setMaxResults(count);
+		return query.getResultList();
 	}
 
 	private Picture getPictureFromId(String id)
