@@ -15,10 +15,8 @@ import com.soen341.instagram.utils.UserAccessor;
 @Service
 public class ProfileService
 {
-
 	@Autowired
 	AccountRepository accountRepository;
-
 	@Autowired
 	PictureRepository pictureRepository;
 

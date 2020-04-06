@@ -16,18 +16,14 @@ public class Picture extends Likable
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-
 	@ManyToOne
 	@NotNull
 	private Account account;
-
 	@Temporal(TemporalType.TIMESTAMP)
 	@NotNull
 	private Date created;
-
 	@NotNull
 	private String filePath;
-
 	private String caption;
 
 	public long getId()
@@ -79,5 +75,4 @@ public class Picture extends Likable
 	{
 		this.filePath = filePath;
 	}
-
 }

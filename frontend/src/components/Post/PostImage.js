@@ -1,7 +1,7 @@
-import '../../config';
+import "../../config";
 import React from "react";
 
-import "./PostImage.scss";
+import "./SCSS/PostImage.scss";
 
 export default function PostImage(props) {
 	return (

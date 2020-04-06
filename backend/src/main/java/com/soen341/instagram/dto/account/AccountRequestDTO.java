@@ -16,24 +16,24 @@ public class AccountRequestDTO
 		return email;
 	}
 
-	public Date getBirthday()
-	{
-		return birthday;
-	}
-
-	public String getPassword()
-	{
-		return password;
-	}
-
 	public void setEmail(String email)
 	{
 		this.email = email;
 	}
 
+	public Date getBirthday()
+	{
+		return birthday;
+	}
+
 	public void setBirthday(Date birthday)
 	{
 		this.birthday = birthday;
+	}
+
+		public String getPassword()
+	{
+		return password;
 	}
 
 	public void setPassword(String password)

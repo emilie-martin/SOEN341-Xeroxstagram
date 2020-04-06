@@ -3,7 +3,6 @@ package com.soen341.instagram.dto.picture;
 // TODO: Finish profile picture update
 public class ProfilePictureDTO
 {
-
 	private long id;
 
 	public long getId()
@@ -15,5 +14,4 @@ public class ProfilePictureDTO
 	{
 		this.id = id;
 	}
-
 }

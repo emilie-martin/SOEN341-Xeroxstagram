@@ -2,7 +2,7 @@ import "../../config";
 import axios from "axios";
 import React, { useState } from "react";
 
-import "./PostPicture.scss";
+import "./SCSS/PostPicture.scss";
 
 export default function PostPicture(props) {
   const [errorMsg, setErrorMsg] = useState("");
@@ -12,8 +12,9 @@ export default function PostPicture(props) {
     const data = new FormData();
     data.append("picture", event.target.picture.files[0]);
     data.append("caption", event.target.caption.value);
-    axios.post(global.config.BACKEND_URL + "/picture", data).then(
-      response => {
+    
+    axios.post(global.config.BACKEND_URL + "/picture", data)
+    .then((response) => {
         props.history.push(`/post/${response.data.id}`);
       },
       e => {

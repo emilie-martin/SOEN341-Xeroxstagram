@@ -16,7 +16,6 @@ import com.soen341.instagram.service.impl.AccountService;
 @RestController
 public class AccountController
 {
-
 	@Autowired
 	private AccountService accountService;
 

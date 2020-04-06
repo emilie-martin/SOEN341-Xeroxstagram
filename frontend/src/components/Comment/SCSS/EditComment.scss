@@ -7,6 +7,7 @@
     background-color: black;
     width: 100%;
     padding: 50px 20px;
+    outline: none;
     border: none;
     border-bottom: 1px solid white;
     font-weight: bold;
@@ -53,9 +54,23 @@
     border: 1px solid $primary-color-light;
     outline: none;
     resize: none;
+    width: 300px;
     overflow-y: auto;
     font-size: $h6-fontsize;
     word-wrap: break-word;
+
+
+    textarea {
+      // TABLET
+      @media #{$medium-and-down} {
+        max-width: 320px;
+      }
+
+      // MOBILE
+      @media #{$small-and-down} {
+        max-width: 105px;
+      }
+    }
   }
   
   .update-comment-btn {

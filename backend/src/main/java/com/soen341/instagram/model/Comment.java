@@ -17,18 +17,14 @@ public class Comment extends Likable
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-
 	@NotNull
 	private String comment;
-
 	@Temporal(TemporalType.TIMESTAMP)
 	@NotNull
 	private Date created;
-
 	@ManyToOne
 	@NotNull
 	private Account account;
-
 	@ManyToOne
 	@NotNull
 	private Picture picture;
@@ -82,5 +78,4 @@ public class Comment extends Likable
 	{
 		this.account = account;
 	}
-
 }

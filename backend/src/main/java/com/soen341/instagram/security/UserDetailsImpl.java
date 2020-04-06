@@ -2,9 +2,11 @@ package com.soen341.instagram.security;
 
 import java.util.Collection;
 
+// Spring Boot
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+// Project
 import com.soen341.instagram.model.Account;
 
 public class UserDetailsImpl implements UserDetails
@@ -60,5 +62,4 @@ public class UserDetailsImpl implements UserDetails
 	{
 		return true;
 	}
-
 }
