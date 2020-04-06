@@ -15,7 +15,6 @@ import About from "./pages/About";
 import "./App.scss";
 
 export const App = () => {
-	
 	const [username, setUsername] = useState();
 	const [currentUser, setCurrentUser] = useState(undefined);
 	const [loading, setLoading] = useState(true);

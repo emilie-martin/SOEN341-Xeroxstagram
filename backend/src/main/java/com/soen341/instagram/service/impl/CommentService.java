@@ -37,7 +37,6 @@ public class CommentService
 	private AccountRepository accountRepository;
 	@Autowired
 	private PictureRepository pictureRepository;
-
 	private final static int MAX_COMMENT_LENGTH = 250;
 
 	public Comment createComment(final String commentContent, final long pictureId)
@@ -60,8 +59,9 @@ public class CommentService
 		comment.setCreated(new Date());
 		comment.setAccount(account);
 		comment.setPicture(picture.get());
-
+		
 		commentRepository.save(comment);
+
 		return comment;
 	}
 

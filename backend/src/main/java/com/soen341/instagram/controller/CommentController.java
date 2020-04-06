@@ -33,13 +33,10 @@ public class CommentController
 {
 	@Autowired
 	private CommentService commentService;
-	
 	@Autowired
-	PictureRepository rep;
-	
+	PictureRepository repository;
 	@Autowired
-	AccountRepository acrep;
-	
+	Accountrepositoryository accRepository;
 	@Autowired
 	private ModelMapper modelMapper;
 
@@ -122,5 +119,4 @@ public class CommentController
 	{
 		return commentService.getLikeStatus(commentId);
 	}
-
 }

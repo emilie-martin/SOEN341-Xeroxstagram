@@ -22,16 +22,6 @@ public class CreateAccountRequestDTO
 	@NotNull
 	private Date dateOfBirth;
 
-	public Date getDateOfBirth()
-	{
-		return dateOfBirth;
-	}
-
-	public void setDateOfBirth(Date dateOfBirth)
-	{
-		this.dateOfBirth = dateOfBirth;
-	}
-
 	public String getUsername()
 	{
 		return username;
@@ -90,5 +80,15 @@ public class CreateAccountRequestDTO
 	public void setDisplayName(String displayName)
 	{
 		this.displayName = displayName;
+	}
+	
+	public Date getDateOfBirth()
+	{
+		return dateOfBirth;
+	}
+
+	public void setDateOfBirth(Date dateOfBirth)
+	{
+		this.dateOfBirth = dateOfBirth;
 	}
 }

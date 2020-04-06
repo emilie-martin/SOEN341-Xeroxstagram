@@ -10,7 +10,7 @@ import LikePicture from "../LikeButtonPicture/LikeButtonPicture";
 import PostImage from "./PostImage";
 import timeElapsedSincePosted from "../../services/TimeService";
 
-import "./Post.scss";
+import "./SCSS/Post.scss";
 
 export default function Post(props) {
 	const [Picture, setPicture] = useState(undefined);

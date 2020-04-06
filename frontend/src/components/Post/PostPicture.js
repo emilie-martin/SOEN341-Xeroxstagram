@@ -2,7 +2,7 @@ import "../../config";
 import axios from "axios";
 import React, { useState } from "react";
 
-import "./PostPicture.scss";
+import "./SCSS/PostPicture.scs";
 
 export default function PostPicture(props) {
   const [errorMsg, setErrorMsg] = useState("");

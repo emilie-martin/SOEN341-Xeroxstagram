@@ -25,15 +25,15 @@ public class Account
 	private String lastName;
 	@Temporal(TemporalType.DATE)
 	@NotNull
+	private String displayName;
+	@ManyToMany(fetch = FetchType.LAZY)
+	private Set<Account> following;
 	private Date dateOfBirth;
 	@Temporal(TemporalType.DATE)
 	@NotNull
 	private Date created;
 	private String biography;
 	@NotNull
-	private String displayName;
-	@ManyToMany(fetch = FetchType.LAZY)
-	private Set<Account> following;
 	@ManyToMany
 	private Set<Account> followers;
 	@OneToOne
