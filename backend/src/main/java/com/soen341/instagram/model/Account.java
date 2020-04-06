@@ -23,7 +23,6 @@ public class Account
 	private String firstName;
 	@NotNull
 	private String lastName;
-	@Temporal(TemporalType.DATE)
 	@NotNull
 	private String displayName;
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -145,6 +144,7 @@ public class Account
 		{
 			following = new HashSet<>();
 		}
+
 		return following;
 	}
 
@@ -154,6 +154,7 @@ public class Account
 		{
 			followers = new HashSet<>();
 		}
+
 		return followers;
 	}
 
@@ -167,6 +168,7 @@ public class Account
 		{
 			throw new AlreadyFollowingException("You are already following this user.");
 		}
+		
 		getFollowing().add(otherAccount);
 	}
 
@@ -174,10 +176,15 @@ public class Account
 	public boolean equals(Object o)
 	{
 		if (this == o)
+		{
 			return true;
+		}
 		if (o == null || getClass() != o.getClass())
+		{
 			return false;
+		}
 		Account account = (Account) o;
+
 		return username.equals(account.username);
 	}
 
