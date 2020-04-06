@@ -31,9 +31,6 @@ public class PictureController
 	// Can't use RequestBody with multi-part, so have to use RequestParam
 	public PictureDTO uploadPicture(@RequestParam(required = false) String caption, @RequestParam MultipartFile picture)
 	{
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String username = ((UserDetails) authentication.getPrincipal()).getUsername();
-		Account user = accountRepository.findByUsername(username);
 		Picture newPic = pictureService.uploadPicture(caption, picture, UserAccessor.getCurrentAccount(accountRepository));
 		
 		return pictureService.toPictureDTO(newPic);

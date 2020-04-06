@@ -1,21 +1,25 @@
 package com.soen341.instagram.service.impl;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.Date;
 import java.util.Optional;
 import java.util.Set;
 
+// Testing
+import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+
+// Project
 import com.soen341.instagram.dao.impl.AccountRepository;
 import com.soen341.instagram.dao.impl.CommentRepository;
 import com.soen341.instagram.dao.impl.PictureRepository;
@@ -49,9 +53,9 @@ public class CommentServiceTest
 	private final static Optional<Picture> EMPTY_PICTURE = Optional.empty();
 	private final static Optional<Picture> PICTURE = Optional.of(new Picture());
 	private final String COMMENT_LENGTH_273 = "sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
-			+ "ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
-			+ "sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
-			+ "sssssssssssssssssssssssssssssssssssss";
+		+ "ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
+		+ "sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
+		+ "sssssssssssssssssssssssssssssssssssss";
 
 	private static Comment comment;
 
@@ -79,6 +83,7 @@ public class CommentServiceTest
 	public void createCommentWithInvalidPictureID_ExpectPictureNotFoundException()
 	{
 		Mockito.when(pictureRepository.findById(PICTURE_ID)).thenReturn(EMPTY_PICTURE);
+
 		commentService.createComment(VALID_COMMENT, PICTURE_ID);
 	}
 
@@ -86,7 +91,9 @@ public class CommentServiceTest
 	public void createCommentSuccessfully()
 	{
 		Mockito.when(pictureRepository.findById(PICTURE_ID)).thenReturn(PICTURE);
+
 		final Comment comment = commentService.createComment(VALID_COMMENT, PICTURE_ID);
+
 		assertEquals(comment.getComment(), VALID_COMMENT);
 	}
 
@@ -94,9 +101,10 @@ public class CommentServiceTest
 	public void editComment_withLengthTooLong_ExpectCommentLengthTooLongException()
 	{
 		final String commentLength273 = "sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
-				+ "ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
-				+ "sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
-				+ "sssssssssssssssssssssssssssssssssssss";
+			+ "ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
+			+ "sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
+			+ "sssssssssssssssssssssssssssssssssssss";
+
 		commentService.editComment(String.valueOf(COMMENT_ID), commentLength273);
 	}
 
@@ -106,7 +114,9 @@ public class CommentServiceTest
 		final String newComment = "This is a new comment";
 		Mockito.when(commentRepository.findById(COMMENT_ID)).thenReturn(Optional.of(comment));
 		Mockito.when(account.getUsername()).thenReturn("username");
+
 		commentRepository.save(comment);
+		
 		final Comment comment = this.commentService.editComment(String.valueOf(COMMENT_ID), newComment);
 		assertEquals(comment.getComment(), newComment);
 	}
@@ -131,7 +141,7 @@ public class CommentServiceTest
 	@Test
 	public void unlikeCommentSuccessfully()
 	{
-		//like the comment
+		// Mock having liked the comment previously
 		final Set<Account> likedBy = comment.getLikedBy();
 		likedBy.add(account);
 
@@ -152,7 +162,7 @@ public class CommentServiceTest
 	@Test
 	public void getLikeStatus_ExpectTrue()
 	{
-		//like the comment
+		// Mock having liked the comment previously
 		final Set<Account> likedBy = comment.getLikedBy();
 		likedBy.add(account);
 
@@ -168,5 +178,4 @@ public class CommentServiceTest
 
 		assertEquals(commentService.getLikeStatus(String.valueOf(COMMENT_ID)), false);
 	}
-
 }

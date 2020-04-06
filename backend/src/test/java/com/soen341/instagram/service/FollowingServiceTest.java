@@ -1,25 +1,29 @@
 package com.soen341.instagram.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.jeasy.random.FieldPredicates.isAnnotatedWith;
-import static org.mockito.Mockito.when;
-
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
-
 import java.util.Set;
+
+// Testing
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
+import static org.jeasy.random.FieldPredicates.isAnnotatedWith;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.when;
+
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+// Project
 import com.soen341.instagram.dao.impl.AccountRepository;
 import com.soen341.instagram.exception.account.AccountNotFoundException;
 import com.soen341.instagram.exception.account.AlreadyFollowingException;
@@ -32,100 +36,96 @@ import com.soen341.instagram.utils.UserAccessor;
 @PrepareForTest(UserAccessor.class)
 public class FollowingServiceTest
 {
+	@InjectMocks
+	private FollowingService followingService;
+	@Mock
+	private AccountRepository accountRepository;
+	private Account follower;
+	private Account beingFollowed;
+	@Before
+	public void beforeEach()
+	{
+		EasyRandomParameters parameters = new EasyRandomParameters()
+			.excludeField(isAnnotatedWith(OneToOne.class)
+			.or(isAnnotatedWith(ManyToMany.class)));
+		EasyRandom easyRandom = new EasyRandom(parameters);
+		follower = easyRandom.nextObject(Account.class);
+		beingFollowed = easyRandom.nextObject(Account.class);
 
-    @InjectMocks
-    private FollowingService followingService;
+		PowerMockito.mockStatic(UserAccessor.class);
+		PowerMockito.when(UserAccessor.getCurrentAccount(accountRepository)).thenReturn(follower);
 
-    @Mock
-    private AccountRepository accountRepository;
+		when(accountRepository.findByUsername(beingFollowed.getUsername())).thenReturn(beingFollowed);
+	}
 
-    private Account follower;
-    private Account beingFollowed;
+	@Test
+	public void isFollowingAnotherAccount_ExpectTrue()
+	{
+		when(accountRepository.doesUserFollow(follower.getUsername(), beingFollowed.getUsername())).thenReturn(1);
 
-    @Before
-    public void beforeEach()
-    {
+		assertThat(followingService.isFollowing(beingFollowed.getUsername())).isTrue();
+	}
 
-        EasyRandomParameters parameters = new EasyRandomParameters().excludeField(
-                isAnnotatedWith(OneToOne.class).or(isAnnotatedWith(ManyToMany.class)));
-        EasyRandom easyRandom = new EasyRandom(parameters);
-        follower = easyRandom.nextObject(Account.class);
-        beingFollowed = easyRandom.nextObject(Account.class);
+	@Test
+	public void isNotFollowingAnotherAccount_ExpectFalse()
+	{
+		when(accountRepository.doesUserFollow(follower.getUsername(), beingFollowed.getUsername())).thenReturn(0);
 
-        PowerMockito.mockStatic(UserAccessor.class);
-        PowerMockito.when(UserAccessor.getCurrentAccount(accountRepository)).thenReturn(follower);
+		assertThat(followingService.isFollowing(beingFollowed.getUsername())).isFalse();
+	}
 
-        when(accountRepository.findByUsername(beingFollowed.getUsername())).thenReturn(beingFollowed);
-    }
+	@Test
+	public void followNewAccountSuccessfully()
+	{
+		followingService.follow(beingFollowed.getUsername());
 
-    @Test
-    public void isFollowingAnotherAccount_ExpectTrue()
-    {
-        when(accountRepository.doesUserFollow(follower.getUsername(), beingFollowed.getUsername())).thenReturn(1);
+		assertThat(follower.getFollowing().contains(beingFollowed)).isTrue();
+		assertThat(beingFollowed.getFollowers().contains(follower)).isTrue();
+	}
 
-        assertThat(followingService.isFollowing(beingFollowed.getUsername())).isTrue();
-    }
+	@Test(expected = SameAccountException.class)
+	public void followSameAccount_ExpectSameAccountException()
+	{
+		when(accountRepository.findByUsername(follower.getUsername())).thenReturn(follower);
 
-    @Test
-    public void isNotFollowingAnotherAccount_ExpectFalse()
-    {
-        when(accountRepository.doesUserFollow(follower.getUsername(), beingFollowed.getUsername())).thenReturn(0);
+		followingService.follow(follower.getUsername());
+	}
 
-        assertThat(followingService.isFollowing(beingFollowed.getUsername())).isFalse();
-    }
+	@Test(expected = AlreadyFollowingException.class)
+	public void followAlreadyFollowingAccount_ExpectAlreadyFollowingException()
+	{
+		followingService.follow(beingFollowed.getUsername());
+		followingService.follow(beingFollowed.getUsername());
+	}
 
-    @Test
-    public void followNewAccountSuccessfully()
-    {
-        followingService.follow(beingFollowed.getUsername());
+	@Test
+	public void unfollowAccountSuccessfully()
+	{
+		// Start following
+		Set<Account> followingSet = follower.getFollowing();
+		followingSet.add(beingFollowed);
 
-        assertThat(follower.getFollowing().contains(beingFollowed)).isTrue();
-        assertThat(beingFollowed.getFollowers().contains(follower)).isTrue();
-    }
+		// Add follower
+		Set<Account> followerSet = beingFollowed.getFollowers();
+		followerSet.add(follower);
 
-    @Test(expected = SameAccountException.class)
-    public void followSameAccount_ExpectSameAccountException()
-    {
-        when(accountRepository.findByUsername(follower.getUsername())).thenReturn(follower);
+		followingService.unfollow(beingFollowed.getUsername());
 
-        followingService.follow(follower.getUsername());
-    }
+		assertThat(follower.getFollowing().contains(beingFollowed)).isFalse();
+		assertThat(beingFollowed.getFollowers().contains(follower)).isFalse();
+	}
 
-    @Test(expected = AlreadyFollowingException.class)
-    public void followAlreadyFollowingAccount_ExpectAlreadyFollowingException()
-    {
-        followingService.follow(beingFollowed.getUsername());
-        followingService.follow(beingFollowed.getUsername());
-    }
+	@Test(expected = SameAccountException.class)
+	public void unfollowSameAccount_ExpectSameAccountException()
+	{
+		when(accountRepository.findByUsername(follower.getUsername())).thenReturn(follower);
 
-    @Test
-    public void unfollowAccountSuccessfully()
-    {
-        //start following
-        Set<Account> followingSet = follower.getFollowing();
-        followingSet.add(beingFollowed);
+		followingService.unfollow(follower.getUsername());
+	}
 
-        //add follower
-        Set<Account> followerSet = beingFollowed.getFollowers();
-        followerSet.add(follower);
-
-        followingService.unfollow(beingFollowed.getUsername());
-
-        assertThat(follower.getFollowing().contains(beingFollowed)).isFalse();
-        assertThat(beingFollowed.getFollowers().contains(follower)).isFalse();
-    }
-
-    @Test(expected = SameAccountException.class)
-    public void unfollowSameAccount_ExpectSameAccountException()
-    {
-        when(accountRepository.findByUsername(follower.getUsername())).thenReturn(follower);
-
-        followingService.unfollow(follower.getUsername());
-    }
-
-    @Test(expected = AccountNotFoundException.class)
-    public void unfollowNotFollowingAccount_ExpectAccountNotFoundException()
-    {
-        followingService.unfollow(beingFollowed.getUsername());
-    }
+	@Test(expected = AccountNotFoundException.class)
+	public void unfollowNotFollowingAccount_ExpectAccountNotFoundException()
+	{
+		followingService.unfollow(beingFollowed.getUsername());
+	}
 }

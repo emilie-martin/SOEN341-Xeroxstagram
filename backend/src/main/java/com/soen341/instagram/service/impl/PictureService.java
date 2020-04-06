@@ -128,12 +128,12 @@ public class PictureService
 
 	public List<Long> getFeed(int count, long after, Account currentUser) {
 		final String feedQuery = "Select p.id from Picture p " +
-				"where p.account IN (:following) " +
-				(after != 0 ? "AND p.id < " + after : "") +
-				"ORDER BY p.created DESC";
+			"where p.account IN (:following) " +
+			(after != 0 ? "AND p.id < " + after : "") +
+			"ORDER BY p.created DESC";
 
 		Query query = session.createQuery(feedQuery)
-				.setParameter("following", currentUser.getFollowing());
+			.setParameter("following", currentUser.getFollowing());
 		query.setMaxResults(count);
 		return query.getResultList();
 	}
@@ -174,9 +174,10 @@ public class PictureService
 			
 			String currentDateString = String.valueOf(new Date().getTime());
 			pictureFile = new File(directory + "/" + currentDateString + ".jpg");
-			pictureFile.getParentFile().mkdirs(); // create parent directories if they don't exist
+			pictureFile.getParentFile().mkdirs(); // Create parent directories if they don't exist
 			
-			if (pictureFile.createNewFile()) { // if file didn't exist previous and creation successful, exit loop
+			// If file didn't exist previously and creation successful, exit loop
+			if (pictureFile.createNewFile()) {
 				return pictureFile;
 			}
 			

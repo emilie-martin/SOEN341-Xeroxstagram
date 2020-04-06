@@ -36,7 +36,7 @@ public class CommentController
 	@Autowired
 	PictureRepository repository;
 	@Autowired
-	Accountrepositoryository accRepository;
+	AccountRepository accRepository;
 	@Autowired
 	private ModelMapper modelMapper;
 
