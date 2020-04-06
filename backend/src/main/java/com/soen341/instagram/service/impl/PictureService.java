@@ -20,19 +20,21 @@ import com.soen341.instagram.model.Picture;
 import com.soen341.instagram.utils.UserAccessor;
 
 // Other libraries
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Service("pictureService")
@@ -45,6 +47,8 @@ public class PictureService
 	private PictureRepository pictureRepository;
 	@Autowired
 	private ModelMapper modelMapper;
+	@Autowired
+	private EntityManager session;
 
 	public Picture uploadPicture(String caption, MultipartFile picture, Account user)
 	{
@@ -120,6 +124,18 @@ public class PictureService
 		picDTO.setLikeCount(pic.getLikeCount());
 		
 		return picDTO;
+	}
+
+	public List<Long> getFeed(int count, long after, Account currentUser) {
+		final String feedQuery = "Select p.id from Picture p " +
+				"where p.account IN (:following) " +
+				(after != 0 ? "AND p.id < " + after : "") +
+				"ORDER BY p.created DESC";
+
+		Query query = session.createQuery(feedQuery)
+				.setParameter("following", currentUser.getFollowing());
+		query.setMaxResults(count);
+		return query.getResultList();
 	}
 
 	private Picture getPictureFromId(String id)

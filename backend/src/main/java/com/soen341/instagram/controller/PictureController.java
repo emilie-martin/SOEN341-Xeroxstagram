@@ -6,9 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,6 +16,7 @@ import com.soen341.instagram.exception.account.AccountNotFoundException;
 import com.soen341.instagram.model.Account;
 import com.soen341.instagram.model.Picture;
 import com.soen341.instagram.service.impl.PictureService;
+import com.soen341.instagram.utils.UserAccessor;
 
 @RestController
 public class PictureController
@@ -36,9 +34,15 @@ public class PictureController
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = ((UserDetails) authentication.getPrincipal()).getUsername();
 		Account user = accountRepository.findByUsername(username);
-		Picture newPic = pictureService.uploadPicture(caption, picture, user);
+		Picture newPic = pictureService.uploadPicture(caption, picture, UserAccessor.getCurrentAccount(accountRepository));
 		
 		return pictureService.toPictureDTO(newPic);
+	}
+
+	@GetMapping(value = "/picture/feed")
+	public List<Long> getFeed(@RequestParam(defaultValue = "10") int count, @RequestParam(defaultValue = "0") long after)
+	{
+		return pictureService.getFeed(count, after, UserAccessor.getCurrentAccount(accountRepository));
 	}
 
 	@GetMapping(value = "/picture/{id}")
@@ -83,5 +87,4 @@ public class PictureController
 	{
 		return pictureService.getLikeStatus(pictureId);
 	}
-
 }

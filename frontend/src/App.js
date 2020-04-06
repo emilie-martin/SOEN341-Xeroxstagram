@@ -5,11 +5,13 @@ import { BrowserRouter as Router, Switch, Route, Link, withRouter, Redirect } fr
 import localStorageService from "./services/LocalStorageService";
 
 import EditProfile from "./components/EditProfile/EditProfile";
+import Feed from "./components/Feed/Feed";
 import Login from "./components/Login/Login";
 import Post from "./components/Post/Post";
 import PostPicture from "./components/Post/PostPicture";
 import Register from "./components/Register/Register";
 import User from "./components/User/User";
+import Welcome from "./components/Welcome/Welcome"
 import About from "./pages/About";
 
 import "./App.scss";
@@ -85,7 +87,7 @@ export const App = () => {
 	const logout = () => {
 		localStorageService.clearAllTokens();
 		delete axios.defaults.headers.common.Authorization;
-		setLoggedInState();
+		setCurrentUser(null);
 	}
 
 	const handleChangeUser = (e) => {
@@ -192,20 +194,13 @@ export const App = () => {
 				</div>
 				<hr />
 				<Switch>
-					<Route exact path="/about" render={() => <About />} />
-
+					<Route exact path="/" render={() => currentUser ? <Feed currentUser={currentUser}/> : <Welcome/>}/>
+					<Route exact path="/about" render={() => <About />}/>
 					<Route exact path="/register"
-						render={(props) => currentUser
-							? <Redirect to='/' />
-							: <Register {...props} onSuccess={(r) => login(r)} />
-						}
+						render={(props) => currentUser ? <Redirect to='/' /> : <Register {...props} onSuccess={(r) => login(r)} />}
 					/>
 					<Route exact path="/login"
-						render={
-							(props) => currentUser
-							? <Redirect to='/' />
-							: <Login {...props} onSuccess={(r) => login(r)} />
-						}
+						render={(props) => currentUser ? <Redirect to='/' /> : <Login {...props} onSuccess={(r) => login(r)} />}
 					/>
 					<Route exact path="/logout"
 						render={() => {
@@ -216,8 +211,10 @@ export const App = () => {
 					<Route exact path="/post"
 						render={(props) => { return currentUser ? <PostPicture {...props} /> : <Redirect to='/' />; }}
 					/>
-					<Route path="/post/:id" render={({ match }) => (<Post id={match.params.id} />)} />
-					<Route path="/account/:username" render={({ match }) => (<User username={match.params.username} />)} />
+					<Route path="/post/:id" render={({ match}) => (<Post currentUser={currentUser} id={match.params.id} />)} />
+					<Route path="/account/:username"
+						render={({ match }) => (<User currentUser={currentUser} username={match.params.username} />)}
+					/>
 					<Route exact path="/accounts/edit"
 						render={() => { return loading ? 'loading' : (currentUser ? <EditProfile></EditProfile> : <Redirect to='/' />)}}
 					/>

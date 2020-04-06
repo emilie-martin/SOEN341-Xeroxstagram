@@ -19,11 +19,15 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter
 	@Override
 	public void configure(HttpSecurity http) throws Exception
 	{
-		http.cors().and().headers().frameOptions().disable().and().authorizeRequests().antMatchers("/picture")
-			.authenticated().antMatchers("/**/likeStatus/**").permitAll()
+		http.cors().and().headers().frameOptions().disable().and().authorizeRequests()
+			.antMatchers("/picture").authenticated()
+			.antMatchers("/**/likeStatus/**").permitAll()
+			.antMatchers("/picture/feed").authenticated()
 			.antMatchers("/comment/commentByPicture/**", "/comment/commentById/**").permitAll()
-			.antMatchers("/comment/**").authenticated().antMatchers("/account/profile/{username}").permitAll()
-			.antMatchers("/account/profile/**").authenticated().antMatchers("/account/following/{username}").permitAll().antMatchers("/account/following/**")
-			.authenticated();
+			.antMatchers("/comment/**").authenticated()
+			.antMatchers("/account/profile/{username}").permitAll()
+			.antMatchers("/account/profile/**").authenticated()
+			.antMatchers("/account/following/{username}").permitAll()
+			.antMatchers("/account/following/**").authenticated();
 	}
 }

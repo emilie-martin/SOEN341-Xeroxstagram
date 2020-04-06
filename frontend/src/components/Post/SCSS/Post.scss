@@ -10,9 +10,12 @@
   background-color: whitesmoke;
   border: $border-color;
 
-  .image-wrapper img {
-    height: 100%;
-    width: 100%;
+  .image-wrapper {
+    flex: 1;
+    img {
+      height: 100%;
+      width: 100%;
+    }
   }
 
   .text-wrapper {
